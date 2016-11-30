@@ -40,6 +40,26 @@ str(leadership)
 
 library(reshape) # use the raname() in reshape library 
 leadership<-rename(leadership, c(manager="managerID", date="testDate"))
-
 names(leadership[2])<-"testDate" # finally, you can use the names() to rename a var. Note, you will have to provide the index. In R the index numbers begin from 1
 
+# Sorting a dataset
+newdata <- leadership[order(leadership$age),]
+View(newdata)
+
+# Subsetting Datasets
+
+## 1. Selecting (keeping) variables
+newdata <- leadership[, c(6:10)] # method #1
+View(newdata)
+
+myvars <- c("q1", "q2", "q3", "q4", "q5") # method #2
+newdata <-leadership[myvars]
+View(newdata)
+
+myvars <- paste("q", 1:5, sep="") # method #3
+newdata <- leadership[myvars]
+View(newdata)
+
+## 2. Dropping variables
+myvars <- names(leadership) %in% c("q3", "q4") 
+leadership[!myvars]
