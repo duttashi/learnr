@@ -5,6 +5,7 @@
 ## 4. Sorting, merging and subsetting datasets
 ## 5. Selecting and dropping vars
 
+sessionInfo()
 ## Creating tha dataset
 # leadership dataset
 manager <- c(1,2,3,4,5)
@@ -63,3 +64,21 @@ View(newdata)
 ## 2. Dropping variables
 myvars <- names(leadership) %in% c("q3", "q4") 
 leadership[!myvars]
+
+## 3. Selecting observations
+newdata <- leadership[1:3,]
+newdata <- leadership[leadership$gender=="M" &
+                        leadership$age > 30,]
+
+## 4. Using the subset() function
+newdata <- subset(leadership, age >= 35 | age < 24,
+                  select=c(q1, q2, q3, q4))
+newdata <- subset(leadership, gender=="M" & age > 25,select = gender:q4)
+
+## 5. Using SQL statements to manipulate data frames
+library(sqldf)
+newdf <- sqldf("select * from mtcars where carb=1 order by mpg",
+               row.names=TRUE)
+newdf
+sqldf("select avg(mpg) as avg_mpg, avg(disp) as avg_disp, gear
+      from mtcars where cyl in (4, 6) group by gear")
