@@ -46,3 +46,11 @@ str(status)
 status<-factor(status, ordered = TRUE, levels = c("Poor", "Improved", "Excellent"))
 str(status) # Now as you can see, 1=Poor, 2=Improved, 3=Excellent
 
+# Lists: is the most complex of the R data types. It is an ordered collection of diverse datatypes
+# Creating a list
+g <- "My First List"
+h <- c(25, 26, 18, 39)
+j <- matrix(1:10, nrow=5)
+k <- c("one", "two", "three")
+mylist <- list(title=g, ages=h, j, k)
+mylist
