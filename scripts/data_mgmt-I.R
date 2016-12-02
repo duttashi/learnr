@@ -1,4 +1,5 @@
 # Creating a Dataset
+# Examples given in this script are from the book "R in Action",Chapter 4
 
 # clear the workspace
 rm(list=ls())

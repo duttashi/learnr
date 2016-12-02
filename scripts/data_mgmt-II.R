@@ -1,5 +1,5 @@
 # Advanced data management
-# Examples in this file are from the book "R in Action",Chapter 5
+# Examples given in this script are from the book "R in Action",Chapter 5
 
 #clear the workspace
 rm(list=ls())
