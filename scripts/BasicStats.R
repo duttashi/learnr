@@ -3,6 +3,7 @@
 #                   pastecs, psych, doBy to be installed              #
 # install.packages(c("ggm", "gmodels", "vcd", "Hmisc",                #
 #                    "pastecs", "psych", "doBy"))                     #
+# Examples given in this script are from the book "R in Action",Chapter 7
 
 mt <- mtcars[c("mpg", "hp", "wt", "am")]
 head(mt)
