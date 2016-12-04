@@ -30,8 +30,8 @@ patientdata <- data.frame(patientID, age, diabetes, status)
 patientdata
 table(patientdata$diabetes, patientdata$status)
 
-# Factors: the variables can be described as nominal, ordinal or continuous. The nominal
-# variables are categorical without an implied order example, Diabetes (Type1, Type2)
+# Factors: the variables can be described as nominal, ordinal or continuous. 
+# The nominal variables are categorical without an implied order example, Diabetes (Type1, Type2)
 # Ordinal variables imply an order but not amount. exmp: Status(poor,improved,excellent)
 # The categorical (ordinal) and ordered categorical (ordinal) variables in R are called Factors.
 # The function factor() stores the categorical values as a vector of integers in the range [1..k](where k is the number of unique values in the nominal variable)
