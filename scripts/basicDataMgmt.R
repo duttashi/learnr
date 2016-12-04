@@ -5,7 +5,9 @@
 ## 4. Sorting, merging and subsetting datasets
 ## 5. Selecting and dropping vars
 
+rm(list = ls()) # clear the workspace
 sessionInfo()
+
 ## Creating tha dataset
 # leadership dataset
 manager <- c(1,2,3,4,5)
@@ -22,13 +24,15 @@ leadership <- data.frame(manager,date,gender,age,q1,q2,q3,q4,q5,
 summary(leadership)
 
 ## a. Recoding variables.
-## Lets say you want to change the age of managers in leadership dataset from continuous var age
-## to categorical variable agecat(Young, Middle, Aged, Elder)
+## Lets say you want to change the age of managers in leadership dataset from continuous
+# variable, age to categorical variable agecat(Young, Middle, Aged, Elder)
+leadership$age # peek at the age variable
 leadership$age[leadership$age == 99]<- NA # recode missing value to NA
 leadership$agecat[leadership$age > 75] <- "Elder"
 leadership$agecat[leadership$age >= 55 &
                     leadership$age <= 75] <- "Middle Aged"
 leadership$agecat[leadership$age < 55] <- "Young"
+leadership$agecat
 ## This code could have been written more compactly using the within() 
 leadership <- within(leadership,{
   agecat <- NA
@@ -41,7 +45,10 @@ str(leadership)
 
 library(reshape) # use the raname() in reshape library 
 leadership<-rename(leadership, c(manager="managerID", date="testDate"))
-names(leadership[2])<-"testDate" # finally, you can use the names() to rename a var. Note, you will have to provide the index. In R the index numbers begin from 1
+names(leadership) # names() will show the column names
+names(leadership[2])<-"testDate" # finally, you can use the names() to rename a variable.
+# Note, you will have to provide the index. In R the index numbers begin from 1
+names(leadership)
 
 # Sorting a dataset
 newdata <- leadership[order(leadership$age),]
