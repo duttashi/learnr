@@ -21,16 +21,19 @@ roster <- data.frame(Student, math, science, english,
 # Solutions:
 # 1. Combine the scores to determine a single performance indicator of each student
 roster
-# Issue A: the scores in the three exams are not comparable. They have different means and standard deviations
+# Issue A: the scores in the three exams are not comparable. They have different means 
+#and standard deviations
 # solution: transform the scores into comparable units
-# Issue B: We need a method to determine the student's percentile rank based on the score to assign a grade.
+# Issue B: We need a method to determine the student's percentile rank based on the score
+# to assign a grade.
 # Issue C: Break the names into first and last names to sort them
 
-# Problem 1: Issue A- Solution: The scale() function standardizes the specified columns of a matrix or a data frame to a mean of 0 and a standard deviation of 1
+# Problem 1: Issue A- Solution: The scale() function standardizes the specified columns 
+# of a matrix or a data frame to a mean of 0 and a standard deviation of 1
 z<- scale(roster[,2:4]) # Note: , means use all rows and 2:4 means select columns 2 to 4.
                         # In R the column numbering begins from 1
 score<- apply(z,1,mean)
-roster<-cbind(roster, score)
+roster<-cbind(roster, score) #cbind means bind the columns tigether
 roster
 
 # Problem 2: Issue B- Solution: Grade students
