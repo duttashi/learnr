@@ -12,7 +12,6 @@ str(mtcars)
 
 class(mtcars) # check the data type.  
 
-
 #select rows 1 & 2
 
 mtcars[1:2,]
