@@ -2,10 +2,8 @@
 rm(list=ls())
 
 # Data: Flights data
-# http://cran-logs.rstudio.com/
 # Data source: http://stat-computing.org/dataexpo/2009/the-data.html
 # Detailed dataset description: http://www.transtats.bts.gov/Fields.asp?Table_ID=236
-# http://r-exercises.com/2016/10/19/descriptive-analytics-part-0-data-exploration/
 # Objective: Explore the flights dataset of year 2008 
 
 # Load the required libraries
