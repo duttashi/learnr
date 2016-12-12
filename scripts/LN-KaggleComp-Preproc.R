@@ -179,3 +179,20 @@ train.data$ParentschoolSatisfaction<-NULL
 train.data$StudentAbsenceDays<-NULL
 train.data$Class<-NULL
 
+# Visualization for highly correlated predictors
+library(corrplot)
+library(caret)
+correl<-cor(train.data,use = "complete.obs", method = "kendall")
+corrplot(correl, method="ellipse", type="lower",  sig.level = 0.01, insig = "blank")
+# Detect and remove highly correlated predictors
+highCorr<- findCorrelation(correl, cutoff = 0.80)
+names(highCorr) # No variable is highly correlated
+# check for skewness
+library(moments)
+skewness(train.data)
+kurtosis(train.data)
+
+# Check for outliers
+## The best tool for outlier identification is the boxplot.  It visualizes the median and the spread of the data.
+## https://www.r-bloggers.com/use-box-plots-to-assess-the-distribution-and-to-identify-the-outliers-in-your-dataset/
+boxplot(train.data$raisedhands, main="Boxplot", ylab="Raised Hands")
