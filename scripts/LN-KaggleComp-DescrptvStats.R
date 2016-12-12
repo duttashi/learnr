@@ -37,6 +37,10 @@ library(ggplot2)
 # Create a scatterplot
 ggplot(data = stud.data)+
   geom_point(mapping = aes(x=VisITedResources, y=raisedhands, color=gender))
+
+# fitting a smooth line. From this graph we can see a linear relationship between checking course resources and asking questions
+ggplot(data = stud.data)+
+  geom_smooth(mapping = aes(x=VisITedResources, y=raisedhands, color=gender))
 # H2: students accessing more course resources also check for course announcements
 ggplot(data = stud.data)+
   geom_point(mapping = aes(x=VisITedResources, y=AnnouncementsView, color=gender))
