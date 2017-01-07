@@ -7,7 +7,7 @@ sf.lib.data<- read.csv("data/Library_Usage.csv", header = TRUE, sep = ",")
 ## make a copy of the original data frame. All experiments will be conducted for now on the copy
 temp.data<-sf.lib.data
 # check data structure
-str(sf.lib.data)
+str(temp.data)
 # replace the "-" with "miss"
 temp.data<-as.data.frame(lapply(temp.data, gsub, pattern = "-", replacement = "miss", fixed = TRUE))
 # Now check globally for missing values
