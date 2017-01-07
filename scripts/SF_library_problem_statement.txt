@@ -1,0 +1,6 @@
+Data Source: https://www.kaggle.com/datasf/sf-library-usage-data
+Initial problem statement: 
+    ## (a) What attributes are most associated with library activity (# of checkouts, # of renewals)?
+    ## (b) Can you group the data into type of patrons? What classifiers would you use to predict patron type?
+
+
