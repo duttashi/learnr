@@ -38,23 +38,34 @@ vif(lm.fit) # VIF is used to detect multicollinearity among the predictors.
 # Reference: http://stackoverflow.com/questions/3042117/screening-multicollinearity-in-a-regression-model
 boston.new<-Boston[,c(1:9,11:14)]  # here dropping the tax variable
 lm.fit.new<- lm(medv~.,data = boston.new)
+summary(lm.fit.new)
 vif(lm.fit.new) # multicolinearity is under control now
 
 # Method 2: Use Partial Least Squares (PLS) or Principal Component Ananlysis (PCA) regression methods that cut the number of predictors to a smaller set of uncorrelated components.
 #compute standard deviation of each principal component
 #Reference: https://www.analyticsvidhya.com/blog/2016/03/practical-guide-principal-component-analysis-python/
-std_dev<-PC$sdev
-# compute variance
-pr_var<-std_dev^2
-#proportion of variance explained
-prop_varex<- pr_var/sum(pr_var)
-prop_varex
-#This shows that first principal component explains 46.7% variance. 
-#Second component explains 11% variance. 
-#Third component explains 9.6% variance and so on. 
+# reference: http://www.instantr.com/2012/12/18/performing-a-principal-component-analysis-in-r/
+boston.pca<- princomp(boston.new)
+
+# To view the proportion of the total variance explained by each component, use the command summary()
+summary(boston.pca)
+# from the summary, we can see that 94% (Add the Proportion of variance for Comp.1 & Comp.2) is shown by the first two components
+# To view the loadings use the command loadings()
+boston.pca$loadings
+
 #So, how do we decide how many components should we select for modeling stage ?
 #The answer to this question is provided by a scree plot. 
 #A scree plot is used to access components or factors which explains the most of variability in the data. It represents values in descending order.
+screeplot(boston.pca)
+
+
+
+
+
+
+
+
+
 #scree plot
 plot(prop_varex, xlab = "Principal Component",
        ylab = "Proportion of Variance Explained",type = "b")
