@@ -102,6 +102,13 @@ vif(linearMod)
 # Check for Autocorrelation of residuals
 durbinWatsonTest(linearMod)
 
+# some important regression model stats
+anova(lmMod) # ANOVA table
+coefficients(lmMod) # Model coefficients
+confint(lmMod) # Confidence intervals for the regression coefficients
+deviance(lmMod) # Residual sum of squares
+fitted(lmMod) # Vector of fitted y values
+residuals(lmMod) # Model residuals
 
 
 
