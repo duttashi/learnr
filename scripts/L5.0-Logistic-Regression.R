@@ -1,5 +1,6 @@
 # Logistic Regression
 getwd()
+
 # Load the raw training data.titanic and replace missing values with NA
 training.data.raw<-read.csv("data/titanic/train.csv", header = TRUE, sep = ",", na.strings = c(""))
 # Output the number of missing values for each column
