@@ -1,4 +1,4 @@
-# Logistic Regression
+# Logistic Regression Tutorial
 getwd()
 
 # Load the raw training data.titanic and replace missing values with NA
