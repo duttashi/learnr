@@ -1,8 +1,18 @@
 # kNN 
-# load the data
+
 # reference: https://www.analyticsvidhya.com/blog/2015/08/learning-concept-knn-algorithms-programming/
+
+
+# load the data
 prc<-read.csv("data/Prostate_Cancer.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
+# set seed 
+set.seed(51)
+# EDA
+# check first five rows of data
 head(prc,5)
+# check last five rows of data
+tail(prc,5)
+# check data structure
 str(prc)
 prc <- prc[-1]  #removes the first variable(id) from the data set.
 table(prc$diagnosis_result)  # it helps us to get the numbers of patients
@@ -27,6 +37,7 @@ prc_train_labels <- prc[1:65, 1]
 prc_test_labels <- prc[66:100, 1]   #This code takes the diagnosis factor in column 1 of the prc data frame and on turn creates prc_train_labels and prc_test_labels data frame.
 
 # Model training
+install.packages("class")
 library(class) # to use the knn(). if you dont have this library, then install it
 prc_test_pred <- knn(train = prc_train, test = prc_test,cl = prc_train_labels, k=10)
 ## Note: The value for k is generally chosen as the square root of the number of observations.
