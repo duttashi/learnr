@@ -1,6 +1,6 @@
 # Case Study: Predicting Breast Cancer
 # Libraries used: class, gmodels
-# Algorithm: kNN
+# Algorithm: kNN classifier
 # Code file name: L5.3-kNN.R
 
 # Step 1. Read in the data
