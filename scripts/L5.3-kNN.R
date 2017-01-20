@@ -9,7 +9,7 @@ wbcd<- read.csv("data/wisc_bc_data.csv", sep = ",", stringsAsFactors = FALSE)
 # Step 2. Exploratory Data analysis
 ## A peak at the data dimensions and structure
 dim(wbcd)
-names(wbcd)
+#names(wbcd)
 str(wbcd)
 
 # Step 3: Data Management
