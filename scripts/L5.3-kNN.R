@@ -1,8 +1,5 @@
 # kNN 
 
-# reference: https://www.analyticsvidhya.com/blog/2015/08/learning-concept-knn-algorithms-programming/
-
-
 # load the data
 prc<-read.csv("data/Prostate_Cancer.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
 # set seed 
