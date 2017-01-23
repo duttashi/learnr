@@ -52,25 +52,18 @@ sm <- ma(AP, order=12) # 12 month moving average
 lines(sm, col="red") # plot the moving average line on the previous plot
 
 # Exponential smoothing
-## first plot the AP data to check for seasonal trends
-plot(AP)
-AP.smth<- stl(AP, "periodic")
-plot(AP.smth)
-Comp.hw1 <- HoltWinters(AP, beta = 0, gamma = 0)
-plot(Comp.hw1)
-Comp.hw1
-Comp.hw1$SSE
+library(forecast)
 
-# simple exponential smoothing: level only
-model <- hw(AP, initial = "optimal", h=12, beta = NULL, gamma = NULL)
-plot(model)
+# Simple exponential smoothing: Level Only
+model <- hw(AP, initial = "optimal", h=(12), beta=NULL, gamma=NULL) # h is the no. periods to forecast
+
 # Double Exponential smoothing: Level and Trend components
-model <- hw(AP, initial = "optimal", h=12, gamma = NULL)
-plot(model)
+model <- hw(AP, initial = "optimal", h=(12), gamma=NULL)
+
 # Holt Winters: Level, Trend and Seasonality
-model <- hw(AP, initial = "optimal", h=12)
+model <- hw(AP, initial = "optimal", h=(12))
 plot(model)
-accuracy(model)
+accuracy(model) # calculate accuracy measures
 
 # De-seasonlize a time series so as to see he seasonal pattern in the time series and helps to model the data without the seasonal effects.
 library(forecast)
