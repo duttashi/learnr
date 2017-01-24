@@ -1,16 +1,21 @@
 # Time series: Basic Introduction
-# This lecture is adapted from the book, "Introductory Time Series with R" by Paul S.P. Cowpertwait & A. Metcalfe, Springer series
-
-# Time Series R code
 # Load the built in Air Passengers Time Series dataset
-data("AirPassengers") 
-AP<-AirPassengers
+AP<- ts(AirPassengers)
+# Step 1: Initial data exploration
+View(AP)
 class(AP)
 start(AP)
 end(AP)
 frequency(AP) 
 summary(AP)
-# creating time plot
+sum(is.na(AP)) # check for missing values
+
+# Step 2: Data exploration
+# a. Outlier detection
+library(tsoutliers) 
+AP.outliers<- tso(AP)
+AP.outliers
+# b. Initial Data Visualization
 plot(AP, ylab="Passengers (1000s)")
 # it is apparent that the number of passengers travelling on the airline is increasing with time. In general, a systematic change in a time series that does not appear to be periodic is known as a trend.
 # A repeating pattern within each year is known as seasonal variation, although the term is applied more generally to repeating patterns within any fixed period, such as restaurant bookings on different days of the week. There is clear seasonal variation in the air passenger time series.
@@ -25,7 +30,7 @@ boxplot(AP~cycle(AP))
 
 # You can see an increasing trend in the annual series and the seasonal effects in the boxplot. More people travelled during the summer months of June to September
 
-# Decomposition in R
+# Step 3: Decomposition in R
 # In R, the function decompose estimates trends and seasonal effects using a moving average method. Nesting the function within plot (e.g., using                                                            plot(stl())) produces a single figure showing the original series xt and the decomposed series mt, st, and zt. 
 plot(decompose(AP))
 AP.decom <- decompose(AP, type = "mult") # # use type = "additive" for additive components
@@ -37,7 +42,6 @@ Seasonal<- AP.decom$seasonal
 Error<- AP.decom$x
 plot(Error)
 ts.plot(cbind(Trend, Trend * Seasonal), lty = 1:2) # Electricity production data: trend with superimposed multiplicative seasonal effects.
-
 
 # How to test if a time series is stationary?
 library(tseries)
@@ -75,12 +79,12 @@ plot(AirPassengers, type="l")  # original series
 plot(AP.deseason, type="l") # seasonal adjusted
 seasonplot(AP.deseason, 12, col=rainbow(12), year.labels=TRUE, main="Seasonal plot: Airpassengers") # seasonal frequency set as 12 for monthly data.
 
-#ARIMA
-#The forecast package offers auto.arima() function to fit ARIMA models. It can also be manually fit using Arima(). A drawback with ARIMA models in R is that it does not have the functionality to fit long seasonality of more than 350 periods eg: 365 days for daily data or 24 hours for 15 sec data.
-# Fit and forecast with auto.arima()
-autoArimaFit <- auto.arima(AP)
-plot(forecast(autoArimaFit, h=20))
-# Fit and forecast with Arima()
-arimaFit <- Arima(AP,order=c(3,1,0))
-plot(forecast(arimaFit,h=20))
+# Step 4: Find optimal parameters
+acf(log(AP))
+pacf(diff(log(AirPassengers)))
+
+# Step 5: ARIMA model and prediction
+fit <- arima(log(AirPassengers), c(0, 1, 1),seasonal = list(order = c(0, 1, 1), period = 12))
+pred <- predict(fit, n.ahead = 10*12)
+ts.plot(AirPassengers,2.718^pred$pred, log = "y", lty = c(1,3))
 
