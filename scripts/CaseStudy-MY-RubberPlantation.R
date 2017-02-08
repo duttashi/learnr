@@ -67,7 +67,8 @@ library(Hmisc)
 describe(df.master)
 library(psych)
 describe(df.master)
-# Basic Data Visualization
+
+######### Data Visualization
 
 # Univariate visualization- Histogram (Continuous data- use density plot, histogram)
 ggplot(df.master) +
@@ -115,7 +116,8 @@ cor(df.master$AreaPlantedHect, df.master$TotalPaidEmployee) # very strong positi
 
 correlations<- cor(df.master)
 # Visualizing the high correlations
-corrplot(correlations, method="number") 
+corrplot(correlations, method="number")
+
 # we can see that vars 'TotalPaidEmployee','AreaPlantedHect','ProduceTonee' and 'TapAreaHect' are high positive correlated.
 # Year and YieldPerHect have low positive correlation; TotalPaidEmployee and YieldHect have semi-strong negative correlation;
 # AreaPlantedHect and YieldPerHect has strong netaive correlation
@@ -144,6 +146,29 @@ pm= ggpairs(data = df.master,
             title = "Correlations among predictors"
             )
 print(pm)
+
+## Checking relationship between TotalPaidEmployee, AreaPlantedHect, ProduceTonne, TapAreaHect
+plot1<-ggpairs(data=Training, columns=2:5,
+               mapping = aes(color = "dark green"),
+               axisLabels="show")
+plot1
+
+boxplot1=boxplot(YieldperHectKg~TapAreaHect, data = Training, 
+                 col=(c("gold","darkgreen")),
+                 main="Yield (Hectare) vs. Rubber tapped area (Hectare)", 
+                 xlab="Rubber tapped area (Hectare)", ylab="Yield (Hectare)")
+
+library(RColorBrewer)
+#we will select the first 4 colors in the Set1 palette
+cols<-brewer.pal(n=4,name="Set1")
+#cols contain the names of four different colors
+
+plot(Training$AreaPlantedHect, Training$YieldperHectKg, pch=16,col=cols,
+     main=" Does high plantation area yield more rubber?",
+     xlab = "Area planted (in hectare)",
+     ylab = "Yield in Kg (per hectare)"
+     )
+
 
 ### Data Transformation: skewed variable treatment
 
@@ -179,15 +204,13 @@ cat("\n\nRelevant Attributes:\n")
 getSelectedAttributes(bor.results)
 plot(bor.results)
 
-# create a sample vector of test values
-test.n <- sample(1:nrow(df.master), nrow(df.master)/3, replace = F)
-# test dataset
-test <- df.master[test.n,]
-# train dataset
-train <- df.master[-test.n,]
+######## Splitting the dataset 
+ratio = sample(1:nrow(df.master), size = 0.25*nrow(df.master))
+Test = df.master[ratio,] #Test dataset 25% of total
+Training = df.master[-ratio,] #Train dataset 75% of total
 
-dim(train)
-dim(test)
+dim(Training)
+dim(Test)
 
 # Evaluation metric function
 RMSE <- function(x,y){
