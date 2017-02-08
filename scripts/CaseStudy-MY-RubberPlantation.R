@@ -71,31 +71,41 @@ describe(df.master)
 
 # Univariate visualization- Histogram (Continuous data- use density plot, histogram)
 ggplot(df.master) +
-  geom_histogram(aes(x=YieldperHectKg), fill="gray")
+  geom_histogram(aes(x=AreaPlantedHect), fill="gray", binwidth = 250, stat = "bin", position = "stack")
+
+
 # density plot
 d<- density(df.master$AreaPlantedHect)
 plot(d, main = "Kernel Density of Area Planted per Hectare")
 polygon(d, col="red", border = "blue")
 rug(df.master$AreaPlantedHect, col = "brown")
 
-ggplot(df.master) + geom_density(aes(x=TotalPaidEmployee))
+ggplot(df.master) + geom_density(aes(x=TotalPaidEmployee, colour="red"))
 ggplot(df.master) + geom_density(aes(x=AreaPlantedHect))
 ggplot(df.master) + geom_density(aes(x=ProduceTonne))
 ggplot(df.master) + geom_density(aes(x=TapAreaHect))
 ggplot(df.master) + geom_density(aes(x=YieldperHectKg))
 
 # boxplots for continuous variables
-boxplot(df.master$TotalPaidEmployee, main="Box plot", ylab="Total Paid Employees")
-boxplot(df.master$AreaPlantedHect, main="Box plot", ylab="Area Planted in Hectare")
-boxplot(df.master$ProduceTonne, main="Box plot", ylab="Production in Tonnes")
-boxplot(df.master$TapAreaHect, main="Box plot", ylab="Tapped Area in Hectare")
-boxplot(df.master$YieldperHectKg, main="Box plot", ylab="Yield per Hectare (Kg)") # outliers present
+library(magrittr) # for the pipe operator
+library(dplyr) # for select() 
+
+# Method 1: selecting individual predictor name
+boxplot(df.master %>% 
+          # Note that the ‘%>%’ (pipe) passes data from the command before to the one after.
+          select(AreaPlantedHect,YieldperHectKg,ProduceTonne,TapAreaHect,TotalPaidEmployee))
+# Method 2: Use the minus sign before the predictor you dont want to plot such that the remaining predictors are plotted
+boxplot(df.master %>%
+          select(-Year),
+        col = c("red","sienna","palevioletred1","royalblue2","brown"),
+        ylab="Count", xlab="Predictors"
+        )
 
 #	Line plots- visualizing relationship between two variables
-ggplot(df.master)+ geom_line(aes(x=AreaPlantedHect, y=YieldperHectKg)) # interesting: the yield per hectare decline (after 600 hectares) as planted area size increases
-ggplot(df.master)+ geom_line(aes(x=AreaPlantedHect, y=ProduceTonne)) # produce increases with area but then it begins to decline after 600 hectares
-ggplot(df.master)+ geom_line(aes(x=AreaPlantedHect, y=TapAreaHect)) # there is a positive linear relationship between area planted and tap area
-ggplot(df.master)+ geom_line(aes(x=AreaPlantedHect, y=TotalPaidEmployee)) # again, a positive linear realtionship between area planted and paid employees but there is a sharp decline at 600 hectares
+ggplot(df.master)+ geom_line(aes(x=AreaPlantedHect, y=YieldperHectKg, color="red")) # interesting: the yield per hectare decline (after 600 hectares) as planted area size increases
+ggplot(df.master)+ geom_line(aes(x=AreaPlantedHect, y=ProduceTonne, color="red")) # produce increases with area but then it begins to decline after 600 hectares
+ggplot(df.master)+ geom_line(aes(x=AreaPlantedHect, y=TapAreaHect, color="red")) # there is a positive linear relationship between area planted and tap area
+ggplot(df.master)+ geom_line(aes(x=AreaPlantedHect, y=TotalPaidEmployee, color="red")) # Again, a positive linear realtionship between area planted and paid employees but there is a sharp decline at 600 hectares
 
 ## Checking for High correlation
 cor(df.master$AreaPlantedHect, df.master$YieldperHectKg) # negative correlation, proving the point above that the yield per hectare decreases as plantation size increases
