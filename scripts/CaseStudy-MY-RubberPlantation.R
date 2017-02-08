@@ -2,7 +2,7 @@
 rm(list=ls())
 # Load the required libraries
 library(ggplot2)
-library(GGally)
+library(GGally) # for the ggpairs()
 library(corrplot)
 library(plyr)
 library(mice)
@@ -115,7 +115,7 @@ cor(df.master$AreaPlantedHect, df.master$TotalPaidEmployee) # very strong positi
 
 correlations<- cor(df.master)
 # Visualizing the high correlations
-corrplot(correlations, method="square") 
+corrplot(correlations, method="number") 
 # we can see that vars 'TotalPaidEmployee','AreaPlantedHect','ProduceTonee' and 'TapAreaHect' are high positive correlated.
 # Year and YieldPerHect have low positive correlation; TotalPaidEmployee and YieldHect have semi-strong negative correlation;
 # AreaPlantedHect and YieldPerHect has strong netaive correlation
@@ -136,7 +136,7 @@ plot(Year,TotalPaidEmployee)# strong negative correlation
 # Basic scatterplot matrix
 pairs(~., data = df.master, lower.panel=panel.smooth,pch=20, 
       main="Rubber production Scatterplot Matrix") # where panel.smooth can be used to plot a loess curve for each plot in a scatterplot matrix
-scatterplotMatrix(~., data=df.master, main="Correlations among predictors")
+
 ggpairs(~., data=df.master)
 pm= ggpairs(data = df.master,
             columns = 1:ncol(df.master),
@@ -147,15 +147,15 @@ print(pm)
 
 ### Data Transformation: skewed variable treatment
 
-#A variable is considered ‘highly skewed’ if its absolute value is greater than 1.
-#A variable is considered ‘moderately skewed’ if its absolute value is greater than 0.5.
+# A variable is considered ‘highly skewed’ if its absolute value is greater than 1.
+# A variable is considered ‘moderately skewed’ if its absolute value is greater than 0.5.
 skewedVars <- NA
 
-for(i in names(train)){
-  if(is.numeric(train[,i])){
+for(i in names(df.master)){
+  if(is.numeric(df.master[,i])){
     if(i != "YieldperHectKg"){
       # Enters this block if variable is non-categorical
-      skewVal <- skewness(train[,i])
+      skewVal <- skewness(df.master[,i])
       print(paste(i, skewVal, sep = ": "))
       if(abs(skewVal) > 0.5){
         skewedVars <- c(skewedVars, i)
@@ -179,25 +179,39 @@ cat("\n\nRelevant Attributes:\n")
 getSelectedAttributes(bor.results)
 plot(bor.results)
 
-
-
-# Multiple Linear regression
-linear.mod<- lm(AreaPlantedHect~., data = df.master)
-summary(linear.mod)
-
 # create a sample vector of test values
 test.n <- sample(1:nrow(df.master), nrow(df.master)/3, replace = F)
 # test dataset
 test <- df.master[test.n,]
 # train dataset
 train <- df.master[-test.n,]
-# remove not required objects from the environment
-rm(test.n, df1,df2,df3,df4,df5,highCor,linear.mod,d,pm,df.m1,df.m2,df.m3,df.1,correlations,row_indic)
+
+dim(train)
+dim(test)
+
 # Evaluation metric function
 RMSE <- function(x,y){
   a <- sqrt(sum((log(x)-log(y))^2)/length(y))
   return(a)
 }
+
+# Multiple Linear regression
+linear.mod<- lm(YieldperHectKg~., data = train)
+summary(linear.mod)
+plot(linear.mod, pch=16, which = 1)
+predict<- predict(linear.mod, test)
+
+RMSE0<- RMSE(predict, test$YieldperHectKg)
+RMSE0 # 0.05
+plot0 <- predict-test$YieldperHectKg
+plot(plot0)
+
+# Regression model with significant predictors only
+linear.mod.1<- lm(YieldperHectKg~ TotalPaidEmployee+AreaPlantedHect+Year, data = train)
+summary(linear.mod.1)
+predict<- predict(linear.mod.1, test)
+RMSE0<- RMSE(predict, test$YieldperHectKg)
+RMSE0
 
 #### R, Regression Trees, function rpart(), method "anova" ####
 model <- rpart(YieldperHectKg ~., data = train, method = "anova")
