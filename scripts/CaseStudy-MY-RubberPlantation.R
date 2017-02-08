@@ -13,7 +13,7 @@ library(gbm)
 library(moments) # for skewness function
 library(tidyr) # for the gather()
 # Data source
-
+# Department of Statistics, Malaysia: http://www.dosm.gov.my/v1/index.php?r=column3/accordion&menu_id=aHhRYUpWS3B4VXlYaVBOeUF0WFpWUT09
 # load the rubber estate data
 df1<- read.csv("data/rubberestate/rubber-paidemployee.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE) 
 df2<- read.csv("data/rubberestate/rubber-plantedarea.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE) 
@@ -22,12 +22,20 @@ df4<- read.csv("data/rubberestate/rubber-taparea.csv", header = TRUE, sep = ",",
 df5<- read.csv("data/rubberestate/rubber-yield.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE) 
 
 # Exploratory Data Analysis
-head(df1) # You cannt have employees in decimals. Round this variable
+dim(df1)
+dim(df2)
+dim(df3)
+dim(df4)
+dim(df5)
+
 names(df1) # observation: column name too long. rename them
 names(df2) # additional space after column names. do formatting
 names(df3)
 names(df4)
 names(df5)
+
+head(df1) # You cannot have employees in decimals. Round this variable
+
 names(df.master)
 
 # Basic Data Management 
@@ -51,9 +59,14 @@ summary(df.master)
 # Missing data treatment
 colSums(is.na(df.master)) # There is only 1 missing row
 tempData <- mice(df.master,m=5,maxit=50,meth='pmm',seed=1234)
-df.master<- complete(tempData,1)
+df.master<- mice::complete(tempData,1) 
 colSums(is.na(df.master))
 
+# Describe the data
+library(Hmisc)
+describe(df.master)
+library(psych)
+describe(df.master)
 # Basic Data Visualization
 
 # Univariate visualization- Histogram (Continuous data- use density plot, histogram)
