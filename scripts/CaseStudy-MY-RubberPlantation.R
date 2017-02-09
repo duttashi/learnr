@@ -163,8 +163,8 @@ library(RColorBrewer)
 cols<-brewer.pal(n=4,name="Set1")
 #cols contain the names of four different colors
 
-plot(Training$AreaPlantedHect, Training$YieldperHectKg, pch=16,col=cols,
-     main=" Does high plantation area yield more rubber?",
+plot(Training$AreaPlantedHect, Training$YieldperHectKg, pch=16, col=cols,
+     main=" Does larger plantation area yield more rubber?",
      xlab = "Area planted (in hectare)",
      ylab = "Yield in Kg (per hectare)"
      )
