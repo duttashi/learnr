@@ -204,7 +204,7 @@ cat("\n\nRelevant Attributes:\n")
 getSelectedAttributes(bor.results)
 plot(bor.results)
 
-######## Splitting the dataset 
+######## Splitting the dataset into train and test#####
 ratio = sample(1:nrow(df.master), size = 0.25*nrow(df.master))
 Test = df.master[ratio,] #Test dataset 25% of total
 Training = df.master[-ratio,] #Train dataset 75% of total
@@ -219,51 +219,75 @@ RMSE <- function(x,y){
 }
 
 # Multiple Linear regression
-linear.mod<- lm(YieldperHectKg~., data = train)
+linear.mod<- lm(YieldperHectKg~., data = Training)
 summary(linear.mod)
 plot(linear.mod, pch=16, which = 1)
-predict<- predict(linear.mod, test)
+predict<- predict(linear.mod, Test)
 
-RMSE0<- RMSE(predict, test$YieldperHectKg)
-RMSE0 # 0.05
-plot0 <- predict-test$YieldperHectKg
-plot(plot0)
+RMSE0<- RMSE(predict, Test$YieldperHectKg)
+RMSE0
+
+# Calculate prediction accuracy and error rates
+actuals_preds <- data.frame(cbind(actuals=Test$YieldperHectKg, predicteds=predict)) # make actuals_predicteds dataframe.
+correlation_accuracy <- cor(actuals_preds)
+correlation_accuracy
+
+min_max_accuracy <- mean (apply(actuals_preds, 1, min) / apply(actuals_preds, 1, max))
+min_max_accuracy
+
+mape <- mean(abs((actuals_preds$predicteds - actuals_preds$actuals))/actuals_preds$actuals)
+mape
+
+# Model Diagnostics
+# Check the AIC and BIC
+AIC(linear.mod)
+BIC(linear.mod)
+
+## creating another model to compare the AIC and BIC
+linear.mod1<- lm(YieldperHectKg~ProduceTonne+TapAreaHect, data = Training)
+AIC(linear.mod1)
+BIC(linear.mod1)
 
 # Regression model with significant predictors only
 linear.mod.1<- lm(YieldperHectKg~ TotalPaidEmployee+AreaPlantedHect+Year, data = train)
 summary(linear.mod.1)
-predict<- predict(linear.mod.1, test)
-RMSE0<- RMSE(predict, test$YieldperHectKg)
+
+predict<- predict(linear.mod, Test)
+RMSE0<- RMSE(predict, Test$YieldperHectKg)
 RMSE0
 
+
+
 #### R, Regression Trees, function rpart(), method "anova" ####
-model <- rpart(YieldperHectKg ~., data = train, method = "anova")
-predict <- predict(model, test)
+model <- rpart(YieldperHectKg ~., data = Training, method = "anova")
+predict <- predict(model, Test)
 # RMSE
-RMSE1 <- RMSE(predict, test$YieldperHectKg)
+RMSE1 <- RMSE(predict, Test$YieldperHectKg)
 RMSE1 <- round(RMSE1, digits = 3)
-RMSE1 #0.07
-plot1 <- predict-test$YieldperHectKg
+RMSE1 #0.098
+plot1 <- predict-Test$YieldperHectKg
 
 ### R, Random Forests, function randomForest(), method "anova" ####
 help("randomForest")
-model.forest <- randomForest(YieldperHectKg ~., data = train, method = "anova",
+model.forest <- randomForest(YieldperHectKg ~., data = Training, method = "anova",
                       ntree = 300,
                       mtry = 2, #mtry is sqrt(6)
                       replace = F,
                       nodesize = 1,
                       importance = T)
-varImpPlot(model.forest) # Look at the IncNodePurity plot. From this plot we see that important vars are year, areaplantedhect. tapareahect. totalpaidemployee
-prediction <- predict(model.forest,test)
-rmse <- sqrt(mean((log(prediction)-log(test$YieldperHectKg))^2))
-round(rmse, digits = 3) # 0.028
+varImpPlot(model.forest) # Look at the IncNodePurity plot. From this plot we see that important vars are `TotalPaidEmployee`, `ProduceTonne` and `TapAreaHect`
+prediction <- predict(model.forest,Test)
+rmse <- sqrt(mean((log(prediction)-log(Test$YieldperHectKg))^2))
+round(rmse, digits = 3) # 0.049
+
 # Alternative way to caluclaute RMSE
-RMSE2 <- RMSE(predict, test$YieldperHectKg)
-RMSE2 <- round(RMSE2, digits = 3) #.029
-plot2 <- predict-test$YieldperHectKg
+RMSE2 <- RMSE(predict, Test$YieldperHectKg)
+RMSE2 <- round(RMSE2, digits = 3) #.098
+plot2 <- predict-Test$YieldperHectKg
 #### CONCLUSION: TO PREDICT Yield per Hectare in Kg
-#Regression Tree RMSE: 0.07
-#Random Forest RMSE:  0.028
-#Random Forest gives the most accutate result in predicting
+# Linear Regression: 0.04533296
+#Regression Tree RMSE: 0.098
+#Random Forest RMSE:  0.049
+#Regression Tree gives the most accutate result in predicting
 
 
