@@ -104,6 +104,6 @@ colSums(is.na(df6))
 df.m1<- merge(df1,df2, by="Year")
 df.m2<- merge(df3,df4, by="Year")
 df.m3<- merge(df.m2, df5, by="Year")
-df.master<- merge(df.m1, df.m3, by="Year")
+#df.master<- merge(df.m1, df.m3, by="Year") # this code is problematic..  DO NOT EXECUTE. MEMORY ALLOCATION ERROR
 
 
