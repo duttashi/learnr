@@ -12,6 +12,7 @@ library(randomForest)
 library(gbm)
 library(moments) # for skewness function
 library(tidyr) # for the gather()
+library(VIM) # for missing data visualization
 # Data source
 # Department of Statistics, Malaysia: http://www.dosm.gov.my/v1/index.php?r=column3/accordion&menu_id=aHhRYUpWS3B4VXlYaVBOeUF0WFpWUT09
 # load the rubber estate data
@@ -57,6 +58,10 @@ df.master<- merge(df.m1, df.m3, by="Year")
 summary(df.master)
 
 # Missing data treatment
+aggr_plot <- aggr(df.master, col=c('navyblue','red'), numbers=TRUE, sortVars=TRUE, 
+                  labels=names(df.master), cex.axis=.7, gap=3, 
+                  ylab=c("Histogram of missing data","Pattern"))
+
 colSums(is.na(df.master)) # There is only 1 missing row
 tempData <- mice(df.master,m=5,maxit=50,meth='pmm',seed=1234)
 df.master<- mice::complete(tempData,1) 
