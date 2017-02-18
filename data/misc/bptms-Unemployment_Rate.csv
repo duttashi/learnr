@@ -1,0 +1,545 @@
+Year,State/Country, Unemployment Rate (Percentage) 
+1982,Malaysia,3.4
+1983,Malaysia,3.8
+1984,Malaysia,5
+1985,Malaysia,5.6
+1986,Malaysia,7.4
+1987,Malaysia,7.3
+1988,Malaysia,7.2
+1989,Malaysia,5.7
+1990,Malaysia,4.5
+1992,Malaysia,3.7
+1993,Malaysia,4.1
+1995,Malaysia,3.1
+1996,Malaysia,2.5
+1997,Malaysia,2.4
+1998,Malaysia,3.2
+1999,Malaysia,3.4
+2000,Malaysia,3
+2001,Malaysia,3.5
+2002,Malaysia,3.5
+2003,Malaysia,3.6
+2004,Malaysia,3.5
+2005,Malaysia,3.5
+2006,Malaysia,3.3
+2007,Malaysia,3.2
+2008,Malaysia,3.3
+2009,Malaysia,3.7
+2010,Malaysia,3.3
+2011,Malaysia,3.1
+2012,Malaysia,3
+2013,Malaysia,3.1
+2014,Malaysia,2.9
+2015,Malaysia,3.1
+1982,Johor,3.5
+1983,Johor,4.2
+1984,Johor,4.5
+1985,Johor,5.3
+1986,Johor,6.8
+1987,Johor,6.3
+1988,Johor,5.4
+1989,Johor,4.6
+1990,Johor,3.7
+1992,Johor,2.2
+1993,Johor,2.9
+1995,Johor,2.6
+1996,Johor,2.1
+1997,Johor,1.7
+1998,Johor,1.7
+1999,Johor,3
+2000,Johor,2.2
+2001,Johor,3.4
+2002,Johor,2.9
+2003,Johor,3.5
+2004,Johor,3.6
+2005,Johor,3.3
+2006,Johor,2.1
+2007,Johor,2
+2008,Johor,2.2
+2009,Johor,3.2
+2010,Johor,2.4
+2011,Johor,2.5
+2012,Johor,3.1
+2013,Johor,2.8
+2014,Johor,2.6
+2015,Johor,3.1
+1982,Kedah,3.7
+1983,Kedah,3.8
+1984,Kedah,5.6
+1985,Kedah,7.1
+1986,Kedah,8.1
+1987,Kedah,8
+1988,Kedah,7.4
+1989,Kedah,5.7
+1990,Kedah,4.4
+1992,Kedah,3.7
+1993,Kedah,3.6
+1995,Kedah,2
+1996,Kedah,2.5
+1997,Kedah,2.5
+1998,Kedah,3.4
+1999,Kedah,3.2
+2000,Kedah,2.9
+2001,Kedah,3.6
+2002,Kedah,3.2
+2003,Kedah,3.3
+2004,Kedah,3.8
+2005,Kedah,3.7
+2006,Kedah,3.8
+2007,Kedah,3.3
+2008,Kedah,3.8
+2009,Kedah,4.2
+2010,Kedah,2.8
+2011,Kedah,3.5
+2012,Kedah,2.9
+2013,Kedah,2.4
+2014,Kedah,2.7
+2015,Kedah,2.6
+1982,Kelantan,4.8
+1983,Kelantan,6.2
+1984,Kelantan,5.5
+1985,Kelantan,6
+1986,Kelantan,6.8
+1987,Kelantan,6.5
+1988,Kelantan,7.7
+1989,Kelantan,6.3
+1990,Kelantan,3.4
+1992,Kelantan,5.3
+1993,Kelantan,4.7
+1995,Kelantan,3.5
+1996,Kelantan,3.3
+1997,Kelantan,3.6
+1998,Kelantan,4.1
+1999,Kelantan,3.2
+2000,Kelantan,2.6
+2001,Kelantan,3.1
+2002,Kelantan,3.9
+2003,Kelantan,3.2
+2004,Kelantan,4.1
+2005,Kelantan,3.4
+2006,Kelantan,2.4
+2007,Kelantan,2.7
+2008,Kelantan,2.9
+2009,Kelantan,2.4
+2010,Kelantan,2.4
+2011,Kelantan,2
+2012,Kelantan,2.3
+2013,Kelantan,2.8
+2014,Kelantan,3.3
+2015,Kelantan,3.6
+1982,Melaka,4
+1983,Melaka,2.8
+1984,Melaka,5.4
+1985,Melaka,5.5
+1986,Melaka,9.5
+1987,Melaka,8
+1988,Melaka,8.1
+1989,Melaka,6
+1990,Melaka,4.2
+1992,Melaka,3.3
+1993,Melaka,3.2
+1995,Melaka,2.3
+1996,Melaka,1.5
+1997,Melaka,1.7
+1998,Melaka,2.5
+1999,Melaka,1.9
+2000,Melaka,1.3
+2001,Melaka,1.8
+2002,Melaka,2.9
+2003,Melaka,2.8
+2004,Melaka,1.6
+2005,Melaka,1.2
+2006,Melaka,1.3
+2007,Melaka,2.1
+2008,Melaka,1.1
+2009,Melaka,2.4
+2010,Melaka,1
+2011,Melaka,0.7
+2012,Melaka,0.5
+2013,Melaka,0.7
+2014,Melaka,0.9
+2015,Melaka,1
+1982,Negeri Sembilan,2.9
+1983,Negeri Sembilan,3.8
+1984,Negeri Sembilan,4.9
+1985,Negeri Sembilan,4.7
+1986,Negeri Sembilan,7
+1987,Negeri Sembilan,7.6
+1988,Negeri Sembilan,6
+1989,Negeri Sembilan,4.9
+1990,Negeri Sembilan,3.8
+1992,Negeri Sembilan,3.3
+1993,Negeri Sembilan,2.8
+1995,Negeri Sembilan,3.1
+1996,Negeri Sembilan,2.5
+1997,Negeri Sembilan,2.6
+1998,Negeri Sembilan,3.6
+1999,Negeri Sembilan,3.8
+2000,Negeri Sembilan,3.4
+2001,Negeri Sembilan,3.2
+2002,Negeri Sembilan,3.7
+2003,Negeri Sembilan,3.5
+2004,Negeri Sembilan,3.5
+2005,Negeri Sembilan,3.6
+2006,Negeri Sembilan,4
+2007,Negeri Sembilan,3.6
+2008,Negeri Sembilan,3.1
+2009,Negeri Sembilan,3.9
+2010,Negeri Sembilan,3.1
+2011,Negeri Sembilan,3
+2012,Negeri Sembilan,3
+2013,Negeri Sembilan,3.1
+2014,Negeri Sembilan,3
+2015,Negeri Sembilan,3.1
+1982,Pahang,3.4
+1983,Pahang,2.7
+1984,Pahang,4.6
+1985,Pahang,4.3
+1986,Pahang,4.9
+1987,Pahang,5.1
+1988,Pahang,6.2
+1989,Pahang,3.7
+1990,Pahang,3.1
+1992,Pahang,2.8
+1993,Pahang,3.7
+1995,Pahang,3.6
+1996,Pahang,2.6
+1997,Pahang,3
+1998,Pahang,2.6
+1999,Pahang,3
+2000,Pahang,2.7
+2001,Pahang,3.1
+2002,Pahang,2.9
+2003,Pahang,3.6
+2004,Pahang,3.3
+2005,Pahang,3.3
+2006,Pahang,2.4
+2007,Pahang,3.2
+2008,Pahang,2.6
+2009,Pahang,3
+2010,Pahang,2.9
+2011,Pahang,2.6
+2012,Pahang,2.7
+2013,Pahang,2.8
+2014,Pahang,2.7
+2015,Pahang,2.9
+1982,Pulau Pinang,3.5
+1983,Pulau Pinang,3.8
+1984,Pulau Pinang,3.6
+1985,Pulau Pinang,5
+1986,Pulau Pinang,8.4
+1987,Pulau Pinang,6.5
+1988,Pulau Pinang,6.7
+1989,Pulau Pinang,3.9
+1990,Pulau Pinang,2.8
+1992,Pulau Pinang,1.7
+1993,Pulau Pinang,2.2
+1995,Pulau Pinang,1.4
+1996,Pulau Pinang,0.7
+1997,Pulau Pinang,1.1
+1998,Pulau Pinang,2.3
+1999,Pulau Pinang,2.4
+2000,Pulau Pinang,1.9
+2001,Pulau Pinang,2.5
+2002,Pulau Pinang,2.2
+2003,Pulau Pinang,1.7
+2004,Pulau Pinang,1.8
+2005,Pulau Pinang,2.1
+2006,Pulau Pinang,1.7
+2007,Pulau Pinang,2.1
+2008,Pulau Pinang,2
+2009,Pulau Pinang,2.5
+2010,Pulau Pinang,2.2
+2011,Pulau Pinang,1.9
+2012,Pulau Pinang,2
+2013,Pulau Pinang,1.7
+2014,Pulau Pinang,1.6
+2015,Pulau Pinang,1.6
+1982,Perak,5.4
+1983,Perak,5.1
+1984,Perak,5.4
+1985,Perak,6.1
+1986,Perak,8.7
+1987,Perak,8
+1988,Perak,8.1
+1989,Perak,5.5
+1990,Perak,4.1
+1992,Perak,3.7
+1993,Perak,4.3
+1995,Perak,3.9
+1996,Perak,3.2
+1997,Perak,2.2
+1998,Perak,3.9
+1999,Perak,4.3
+2000,Perak,3.5
+2001,Perak,4
+2002,Perak,3.9
+2003,Perak,4.8
+2004,Perak,3.3
+2005,Perak,3.3
+2006,Perak,3.5
+2007,Perak,2.9
+2008,Perak,3.8
+2009,Perak,3.5
+2010,Perak,3
+2011,Perak,2.6
+2012,Perak,3
+2013,Perak,3.8
+2014,Perak,3.4
+2015,Perak,3.2
+1982,Perlis,4.1
+1983,Perlis,3.2
+1984,Perlis,4.6
+1985,Perlis,7.6
+1986,Perlis,8
+1987,Perlis,6.6
+1988,Perlis,7.6
+1989,Perlis,6.4
+1990,Perlis,4.3
+1992,Perlis,2.7
+1993,Perlis,1.4
+1995,Perlis,1.4
+1996,Perlis,2
+1997,Perlis,2.3
+1998,Perlis,4.3
+1999,Perlis,3.4
+2000,Perlis,2.9
+2001,Perlis,3.5
+2002,Perlis,3.1
+2003,Perlis,4.4
+2004,Perlis,3.3
+2005,Perlis,2.9
+2006,Perlis,3.2
+2007,Perlis,3
+2008,Perlis,2.9
+2009,Perlis,3.3
+2010,Perlis,3.3
+2011,Perlis,4
+2012,Perlis,3.9
+2013,Perlis,3.7
+2014,Perlis,3.3
+2015,Perlis,2.9
+1982,Selangor,2.2
+1983,Selangor,2.3
+1984,Selangor,4
+1985,Selangor,4.7
+1986,Selangor,5.7
+1987,Selangor,5.6
+1988,Selangor,5.9
+1989,Selangor,3.9
+1990,Selangor,2.1
+1992,Selangor,2.1
+1993,Selangor,2.7
+1995,Selangor,2
+1996,Selangor,0.9
+1997,Selangor,1
+1998,Selangor,1.8
+1999,Selangor,1.9
+2000,Selangor,2
+2001,Selangor,2.4
+2002,Selangor,3
+2003,Selangor,3.2
+2004,Selangor,2.7
+2005,Selangor,3.1
+2006,Selangor,3.2
+2007,Selangor,3
+2008,Selangor,3.1
+2009,Selangor,3.6
+2010,Selangor,3.2
+2011,Selangor,2.4
+2012,Selangor,2.3
+2013,Selangor,2.4
+2014,Selangor,2
+2015,Selangor,2.4
+1982,Terengganu,2.7
+1983,Terengganu,2.5
+1984,Terengganu,6.8
+1985,Terengganu,7.2
+1986,Terengganu,9.5
+1987,Terengganu,11.7
+1988,Terengganu,9.4
+1989,Terengganu,12.3
+1990,Terengganu,6.9
+1992,Terengganu,5.5
+1993,Terengganu,7
+1995,Terengganu,5.9
+1996,Terengganu,3.3
+1997,Terengganu,3.6
+1998,Terengganu,4
+1999,Terengganu,3.9
+2000,Terengganu,3
+2001,Terengganu,2.7
+2002,Terengganu,3.2
+2003,Terengganu,2.9
+2004,Terengganu,3.2
+2005,Terengganu,3.1
+2006,Terengganu,3.6
+2007,Terengganu,2.6
+2008,Terengganu,3.4
+2009,Terengganu,3.8
+2010,Terengganu,3.7
+2011,Terengganu,3.2
+2012,Terengganu,3
+2013,Terengganu,3.4
+2014,Terengganu,4.1
+2015,Terengganu,4
+1982,Sabah,3
+1983,Sabah,4.1
+1984,Sabah,6
+1985,Sabah,6.4
+1986,Sabah,8.2
+1987,Sabah,9
+1988,Sabah,8.2
+1989,Sabah,7.4
+1990,Sabah,9
+1992,Sabah,6.2
+1993,Sabah,7.1
+1995,Sabah,5.5
+1996,Sabah,3.9
+1997,Sabah,4.6
+1998,Sabah,4.9
+1999,Sabah,5.6
+2000,Sabah,5.8
+2001,Sabah,6.6
+2002,Sabah,5.9
+2003,Sabah,5.4
+2004,Sabah,6.5
+2005,Sabah,6.4
+2006,Sabah,5.7
+2007,Sabah,5.5
+2008,Sabah,4.9
+2009,Sabah,5.5
+2010,Sabah,5.5
+2011,Sabah,5.6
+2012,Sabah,5.6
+2013,Sabah,5.3
+2014,Sabah,4.9
+2015,Sabah,5
+1982,Sarawak,2.8
+1983,Sarawak,5.2
+1984,Sarawak,6.7
+1985,Sarawak,7.1
+1986,Sarawak,9
+1987,Sarawak,9.8
+1988,Sarawak,10.3
+1989,Sarawak,9.6
+1990,Sarawak,9.9
+1992,Sarawak,7.8
+1993,Sarawak,7
+1995,Sarawak,4.8
+1996,Sarawak,4.4
+1997,Sarawak,3.9
+1998,Sarawak,5
+1999,Sarawak,4.6
+2000,Sarawak,4.3
+2001,Sarawak,4.4
+2002,Sarawak,4
+2003,Sarawak,3.9
+2004,Sarawak,3.8
+2005,Sarawak,4.1
+2006,Sarawak,4.1
+2007,Sarawak,4.3
+2008,Sarawak,5.3
+2009,Sarawak,4.6
+2010,Sarawak,4.4
+2011,Sarawak,4.1
+2012,Sarawak,3.5
+2013,Sarawak,3.7
+2014,Sarawak,3.1
+2015,Sarawak,3.5
+1982,W.P. Kuala Lumpur,1.9
+1983,W.P. Kuala Lumpur,2
+1984,W.P. Kuala Lumpur,3.8
+1985,W.P. Kuala Lumpur,3.5
+1986,W.P. Kuala Lumpur,5.5
+1987,W.P. Kuala Lumpur,5.7
+1988,W.P. Kuala Lumpur,5.9
+1989,W.P. Kuala Lumpur,3.7
+1990,W.P. Kuala Lumpur,2.6
+1992,W.P. Kuala Lumpur,2.4
+1993,W.P. Kuala Lumpur,3
+1995,W.P. Kuala Lumpur,1.7
+1996,W.P. Kuala Lumpur,1.8
+1997,W.P. Kuala Lumpur,1.4
+1998,W.P. Kuala Lumpur,2.5
+1999,W.P. Kuala Lumpur,2.9
+2000,W.P. Kuala Lumpur,2.6
+2001,W.P. Kuala Lumpur,2.7
+2002,W.P. Kuala Lumpur,2.8
+2003,W.P. Kuala Lumpur,3.4
+2004,W.P. Kuala Lumpur,2.9
+2005,W.P. Kuala Lumpur,2.3
+2006,W.P. Kuala Lumpur,2.8
+2007,W.P. Kuala Lumpur,2.9
+2008,W.P. Kuala Lumpur,2.7
+2009,W.P. Kuala Lumpur,2.9
+2010,W.P. Kuala Lumpur,3.1
+2011,W.P. Kuala Lumpur,3
+2012,W.P. Kuala Lumpur,2.7
+2013,W.P. Kuala Lumpur,3.3
+2014,W.P. Kuala Lumpur,2.9
+2015,W.P. Kuala Lumpur,3.3
+1982,W.P Labuan,
+1983,W.P Labuan,
+1984,W.P Labuan,7.6
+1985,W.P Labuan,7.7
+1986,W.P Labuan,10.9
+1987,W.P Labuan,9.7
+1988,W.P Labuan,10.9
+1989,W.P Labuan,8.6
+1990,W.P Labuan,5.7
+1992,W.P Labuan,3.3
+1993,W.P Labuan,5.9
+1995,W.P Labuan,4.7
+1996,W.P Labuan,5.1
+1997,W.P Labuan,3.3
+1998,W.P Labuan,2.5
+1999,W.P Labuan,4
+2000,W.P Labuan,4.7
+2001,W.P Labuan,5.4
+2002,W.P Labuan,3.2
+2003,W.P Labuan,4.5
+2004,W.P Labuan,5
+2005,W.P Labuan,5.1
+2006,W.P Labuan,9.4
+2007,W.P Labuan,4.5
+2008,W.P Labuan,5.6
+2009,W.P Labuan,5.6
+2010,W.P Labuan,6
+2011,W.P Labuan,4.2
+2012,W.P Labuan,4.6
+2013,W.P Labuan,4.1
+2014,W.P Labuan,5.1
+2015,W.P Labuan,5
+1982,W.P.Putrajaya,
+1983,W.P.Putrajaya,
+1984,W.P.Putrajaya,
+1985,W.P.Putrajaya,
+1986,W.P.Putrajaya,
+1987,W.P.Putrajaya,
+1988,W.P.Putrajaya,
+1989,W.P.Putrajaya,
+1990,W.P.Putrajaya,
+1992,W.P.Putrajaya,
+1993,W.P.Putrajaya,
+1995,W.P.Putrajaya,
+1996,W.P.Putrajaya,
+1997,W.P.Putrajaya,
+1998,W.P.Putrajaya,
+1999,W.P.Putrajaya,
+2000,W.P.Putrajaya,
+2001,W.P.Putrajaya,
+2002,W.P.Putrajaya,
+2003,W.P.Putrajaya,
+2004,W.P.Putrajaya,
+2005,W.P.Putrajaya,
+2006,W.P.Putrajaya,
+2007,W.P.Putrajaya,
+2008,W.P.Putrajaya,
+2009,W.P.Putrajaya,
+2010,W.P.Putrajaya,
+2011,W.P.Putrajaya,1.1
+2012,W.P.Putrajaya,1.5
+2013,W.P.Putrajaya,1.2
+2014,W.P.Putrajaya,1.2
+2015,W.P.Putrajaya,1

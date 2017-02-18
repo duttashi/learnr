@@ -1,0 +1,545 @@
+Year,State/Country, Labour Force ('000) 
+1982,Malaysia,"5,431.40"
+1983,Malaysia,"5,671.80"
+1984,Malaysia,"5,862.50"
+1985,Malaysia,"5,990.10"
+1986,Malaysia,"6,222.10"
+1987,Malaysia,"6,456.80"
+1988,Malaysia,"6,637.00"
+1989,Malaysia,"6,779.40"
+1990,Malaysia,"7,000.20"
+1992,Malaysia,"7,319.00"
+1993,Malaysia,"7,700.10"
+1995,Malaysia,"7,893.10"
+1996,Malaysia,"8,616.00"
+1997,Malaysia,"8,784.00"
+1998,Malaysia,"8,883.60"
+1999,Malaysia,"9,151.50"
+2000,Malaysia,"9,556.10"
+2001,Malaysia,"9,699.40"
+2002,Malaysia,"9,886.20"
+2003,Malaysia,"10,239.60"
+2004,Malaysia,"10,346.20"
+2005,Malaysia,"10,413.40"
+2006,Malaysia,"10,628.90"
+2007,Malaysia,"10,889.50"
+2008,Malaysia,"11,028.10"
+2009,Malaysia,"11,315.30"
+2010,Malaysia,"12,303.90"
+2011,Malaysia,"12,740.70"
+2012,Malaysia,"13,221.70"
+2013,Malaysia,"13,980.50"
+2014,Malaysia,"14,263.60"
+2015,Malaysia,"14,518.00"
+1982,Johor,653.1
+1983,Johor,650.9
+1984,Johor,688.2
+1985,Johor,710.4
+1986,Johor,751.2
+1987,Johor,781.8
+1988,Johor,837
+1989,Johor,861.8
+1990,Johor,949.1
+1992,Johor,947.1
+1993,Johor,"1,003.00"
+1995,Johor,915.4
+1996,Johor,"1,018.40"
+1997,Johor,"1,076.90"
+1998,Johor,"1,044.30"
+1999,Johor,"1,060.40"
+2000,Johor,"1,222.40"
+2001,Johor,"1,279.00"
+2002,Johor,"1,259.00"
+2003,Johor,"1,315.30"
+2004,Johor,"1,278.80"
+2005,Johor,"1,280.00"
+2006,Johor,"1,285.80"
+2007,Johor,"1,313.60"
+2008,Johor,"1,313.10"
+2009,Johor,"1,350.00"
+2010,Johor,"1,453.50"
+2011,Johor,"1,499.90"
+2012,Johor,"1,529.40"
+2013,Johor,"1,598.90"
+2014,Johor,"1,621.10"
+2015,Johor,"1,633.20"
+1982,Kedah,403.9
+1983,Kedah,388.2
+1984,Kedah,442.6
+1985,Kedah,445.4
+1986,Kedah,455
+1987,Kedah,456.5
+1988,Kedah,496.1
+1989,Kedah,470
+1990,Kedah,489.3
+1992,Kedah,514
+1993,Kedah,492.8
+1995,Kedah,531.7
+1996,Kedah,549.8
+1997,Kedah,616.6
+1998,Kedah,587.1
+1999,Kedah,701.4
+2000,Kedah,645.2
+2001,Kedah,727.4
+2002,Kedah,666.5
+2003,Kedah,680.1
+2004,Kedah,680.3
+2005,Kedah,677.8
+2006,Kedah,682.4
+2007,Kedah,693.1
+2008,Kedah,703
+2009,Kedah,732.6
+2010,Kedah,746.9
+2011,Kedah,770
+2012,Kedah,810.3
+2013,Kedah,862.8
+2014,Kedah,884.1
+2015,Kedah,905.3
+1982,Kelantan,319.4
+1983,Kelantan,301.3
+1984,Kelantan,341
+1985,Kelantan,344.3
+1986,Kelantan,365.1
+1987,Kelantan,375
+1988,Kelantan,393.9
+1989,Kelantan,388.3
+1990,Kelantan,390.7
+1992,Kelantan,404.1
+1993,Kelantan,413.7
+1995,Kelantan,427.6
+1996,Kelantan,460.8
+1997,Kelantan,429.3
+1998,Kelantan,449.1
+1999,Kelantan,451.1
+2000,Kelantan,437.2
+2001,Kelantan,448
+2002,Kelantan,439.7
+2003,Kelantan,491.6
+2004,Kelantan,455.1
+2005,Kelantan,454.2
+2006,Kelantan,469.8
+2007,Kelantan,486.2
+2008,Kelantan,500.9
+2009,Kelantan,517.8
+2010,Kelantan,547.2
+2011,Kelantan,555.4
+2012,Kelantan,592.3
+2013,Kelantan,619.8
+2014,Kelantan,646.2
+2015,Kelantan,676.2
+1982,Melaka,174.1
+1983,Melaka,170.3
+1984,Melaka,171.8
+1985,Melaka,180
+1986,Melaka,187.7
+1987,Melaka,192.1
+1988,Melaka,190.9
+1989,Melaka,197.8
+1990,Melaka,187.8
+1992,Melaka,214.4
+1993,Melaka,225.6
+1995,Melaka,227.9
+1996,Melaka,240.6
+1997,Melaka,261.5
+1998,Melaka,248.6
+1999,Melaka,247.9
+2000,Melaka,256.9
+2001,Melaka,272.6
+2002,Melaka,236.2
+2003,Melaka,280.6
+2004,Melaka,269.5
+2005,Melaka,274.5
+2006,Melaka,276.7
+2007,Melaka,290.4
+2008,Melaka,290
+2009,Melaka,290.9
+2010,Melaka,338.6
+2011,Melaka,343.3
+2012,Melaka,358.8
+2013,Melaka,378.3
+2014,Melaka,398.3
+2015,Melaka,402.4
+1982,Negeri Sembilan,222.8
+1983,Negeri Sembilan,223.5
+1984,Negeri Sembilan,234.9
+1985,Negeri Sembilan,221.1
+1986,Negeri Sembilan,229.5
+1987,Negeri Sembilan,240
+1988,Negeri Sembilan,242.5
+1989,Negeri Sembilan,241
+1990,Negeri Sembilan,224.5
+1992,Negeri Sembilan,259.8
+1993,Negeri Sembilan,292.6
+1995,Negeri Sembilan,305.6
+1996,Negeri Sembilan,327.5
+1997,Negeri Sembilan,315.7
+1998,Negeri Sembilan,315.7
+1999,Negeri Sembilan,285.8
+2000,Negeri Sembilan,359.6
+2001,Negeri Sembilan,362.8
+2002,Negeri Sembilan,337.2
+2003,Negeri Sembilan,352.3
+2004,Negeri Sembilan,373.6
+2005,Negeri Sembilan,386.7
+2006,Negeri Sembilan,394.5
+2007,Negeri Sembilan,395.8
+2008,Negeri Sembilan,399.3
+2009,Negeri Sembilan,402.2
+2010,Negeri Sembilan,418.3
+2011,Negeri Sembilan,429.1
+2012,Negeri Sembilan,455.7
+2013,Negeri Sembilan,478.9
+2014,Negeri Sembilan,480.9
+2015,Negeri Sembilan,483.6
+1982,Pahang,279.6
+1983,Pahang,342.6
+1984,Pahang,321.7
+1985,Pahang,342.7
+1986,Pahang,331.6
+1987,Pahang,354.1
+1988,Pahang,374.8
+1989,Pahang,393.8
+1990,Pahang,442.5
+1992,Pahang,428.9
+1993,Pahang,393.2
+1995,Pahang,385.1
+1996,Pahang,417
+1997,Pahang,407.6
+1998,Pahang,374.8
+1999,Pahang,396.2
+2000,Pahang,459.1
+2001,Pahang,451.6
+2002,Pahang,419
+2003,Pahang,477.1
+2004,Pahang,544
+2005,Pahang,542.7
+2006,Pahang,571.3
+2007,Pahang,580.2
+2008,Pahang,605.7
+2009,Pahang,622.3
+2010,Pahang,608.4
+2011,Pahang,624.6
+2012,Pahang,650.9
+2013,Pahang,678.9
+2014,Pahang,702.1
+2015,Pahang,718.2
+1982,Pulau Pinang,396
+1983,Pulau Pinang,421
+1984,Pulau Pinang,397.9
+1985,Pulau Pinang,408.5
+1986,Pulau Pinang,427.2
+1987,Pulau Pinang,432.8
+1988,Pulau Pinang,427.8
+1989,Pulau Pinang,453.9
+1990,Pulau Pinang,470.3
+1992,Pulau Pinang,521.4
+1993,Pulau Pinang,543.1
+1995,Pulau Pinang,492.7
+1996,Pulau Pinang,452.4
+1997,Pulau Pinang,558
+1998,Pulau Pinang,599.3
+1999,Pulau Pinang,617.5
+2000,Pulau Pinang,682.3
+2001,Pulau Pinang,733.3
+2002,Pulau Pinang,657.2
+2003,Pulau Pinang,686.3
+2004,Pulau Pinang,636.7
+2005,Pulau Pinang,634.9
+2006,Pulau Pinang,658.9
+2007,Pulau Pinang,667.6
+2008,Pulau Pinang,688.4
+2009,Pulau Pinang,707.1
+2010,Pulau Pinang,759
+2011,Pulau Pinang,787.5
+2012,Pulau Pinang,795.8
+2013,Pulau Pinang,826.1
+2014,Pulau Pinang,852.5
+2015,Pulau Pinang,848.1
+1982,Perak,638.6
+1983,Perak,704.9
+1984,Perak,697.2
+1985,Perak,713.1
+1986,Perak,734.2
+1987,Perak,728.8
+1988,Perak,715
+1989,Perak,726.5
+1990,Perak,706.8
+1992,Perak,719.7
+1993,Perak,699.6
+1995,Perak,659.9
+1996,Perak,746.9
+1997,Perak,760.6
+1998,Perak,712.7
+1999,Perak,715.4
+2000,Perak,771.3
+2001,Perak,761.3
+2002,Perak,820.6
+2003,Perak,771.4
+2004,Perak,818.3
+2005,Perak,828.8
+2006,Perak,845.5
+2007,Perak,877.9
+2008,Perak,892.6
+2009,Perak,923.7
+2010,Perak,906
+2011,Perak,944.6
+2012,Perak,955.4
+2013,Perak,985.2
+2014,Perak,987.2
+2015,Perak,"1,014.30"
+1982,Perlis,58.1
+1983,Perlis,66
+1984,Perlis,64.8
+1985,Perlis,65.5
+1986,Perlis,62.6
+1987,Perlis,64.9
+1988,Perlis,70.9
+1989,Perlis,70.9
+1990,Perlis,59.7
+1992,Perlis,68.8
+1993,Perlis,71.7
+1995,Perlis,71.8
+1996,Perlis,71.5
+1997,Perlis,71.8
+1998,Perlis,74.2
+1999,Perlis,81.2
+2000,Perlis,77
+2001,Perlis,85.9
+2002,Perlis,58.8
+2003,Perlis,80.1
+2004,Perlis,76.3
+2005,Perlis,76.2
+2006,Perlis,77
+2007,Perlis,82.5
+2008,Perlis,84
+2009,Perlis,84.3
+2010,Perlis,83.6
+2011,Perlis,86.8
+2012,Perlis,90.6
+2013,Perlis,97.9
+2014,Perlis,98.5
+2015,Perlis,101.1
+1982,Selangor,691.9
+1983,Selangor,757.2
+1984,Selangor,718.8
+1985,Selangor,740.6
+1986,Selangor,823.7
+1987,Selangor,916.6
+1988,Selangor,949
+1989,Selangor,936.8
+1990,Selangor,"1,060.00"
+1992,Selangor,"1,092.80"
+1993,Selangor,"1,110.10"
+1995,Selangor,"1,366.00"
+1996,Selangor,"1,371.10"
+1997,Selangor,"1,343.00"
+1998,Selangor,"1,457.00"
+1999,Selangor,"1,455.00"
+2000,Selangor,"1,715.30"
+2001,Selangor,"1,552.50"
+2002,Selangor,"1,803.20"
+2003,Selangor,"1,895.30"
+2004,Selangor,"2,028.10"
+2005,Selangor,"2,048.80"
+2006,Selangor,"2,084.40"
+2007,Selangor,"2,128.00"
+2008,Selangor,"2,159.80"
+2009,Selangor,"2,173.30"
+2010,Selangor,"2,634.40"
+2011,Selangor,"2,710.80"
+2012,Selangor,"2,842.60"
+2013,Selangor,"3,006.20"
+2014,Selangor,"3,096.00"
+2015,Selangor,"3,212.90"
+1982,Terengganu,227.2
+1983,Terengganu,243.1
+1984,Terengganu,219.3
+1985,Terengganu,228.9
+1986,Terengganu,241.4
+1987,Terengganu,236.5
+1988,Terengganu,253.6
+1989,Terengganu,262.1
+1990,Terengganu,244.6
+1992,Terengganu,267.7
+1993,Terengganu,302.1
+1995,Terengganu,284.9
+1996,Terengganu,308.1
+1997,Terengganu,292.9
+1998,Terengganu,305.6
+1999,Terengganu,312.3
+2000,Terengganu,315.4
+2001,Terengganu,307.1
+2002,Terengganu,288.9
+2003,Terengganu,355.1
+2004,Terengganu,347.9
+2005,Terengganu,353.1
+2006,Terengganu,364.6
+2007,Terengganu,372.7
+2008,Terengganu,388.8
+2009,Terengganu,405.6
+2010,Terengganu,380.6
+2011,Terengganu,403.2
+2012,Terengganu,401.8
+2013,Terengganu,421.3
+2014,Terengganu,432.8
+2015,Terengganu,438
+1982,Sabah,354.3
+1983,Sabah,393.8
+1984,Sabah,425.9
+1985,Sabah,431
+1986,Sabah,441.6
+1987,Sabah,466.5
+1988,Sabah,462.6
+1989,Sabah,477.5
+1990,Sabah,479.9
+1992,Sabah,524.3
+1993,Sabah,725.3
+1995,Sabah,764.7
+1996,Sabah,"1,032.30"
+1997,Sabah,"1,048.50"
+1998,Sabah,"1,123.70"
+1999,Sabah,"1,167.20"
+2000,Sabah,991.6
+2001,Sabah,"1,048.00"
+2002,Sabah,"1,093.20"
+2003,Sabah,"1,134.50"
+2004,Sabah,"1,156.90"
+2005,Sabah,"1,181.90"
+2006,Sabah,"1,230.40"
+2007,Sabah,"1,267.70"
+2008,Sabah,"1,294.20"
+2009,Sabah,"1,345.30"
+2010,Sabah,"1,480.70"
+2011,Sabah,"1,562.50"
+2012,Sabah,"1,627.90"
+2013,Sabah,"1,801.70"
+2014,Sabah,"1,831.60"
+2015,Sabah,"1,863.40"
+1982,Sarawak,539.7
+1983,Sarawak,569.5
+1984,Sarawak,616.7
+1985,Sarawak,632.7
+1986,Sarawak,674.8
+1987,Sarawak,712.2
+1988,Sarawak,710.3
+1989,Sarawak,760
+1990,Sarawak,775.4
+1992,Sarawak,771.1
+1993,Sarawak,810.2
+1995,Sarawak,828.6
+1996,Sarawak,869.5
+1997,Sarawak,864.9
+1998,Sarawak,868.1
+1999,Sarawak,906.9
+2000,Sarawak,915.7
+2001,Sarawak,918
+2002,Sarawak,955.8
+2003,Sarawak,946.4
+2004,Sarawak,955.2
+2005,Sarawak,950.3
+2006,Sarawak,958
+2007,Sarawak,997.4
+2008,Sarawak,973
+2009,Sarawak,"1,024.20"
+2010,Sarawak,"1,093.70"
+2011,Sarawak,"1,103.40"
+2012,Sarawak,"1,184.90"
+2013,Sarawak,"1,234.20"
+2014,Sarawak,"1,271.40"
+2015,Sarawak,"1,258.30"
+1982,W.P. Kuala Lumpur,472.6
+1983,W.P. Kuala Lumpur,439.6
+1984,W.P. Kuala Lumpur,504.5
+1985,W.P. Kuala Lumpur,509.7
+1986,W.P. Kuala Lumpur,481.3
+1987,W.P. Kuala Lumpur,485.5
+1988,W.P. Kuala Lumpur,498.7
+1989,W.P. Kuala Lumpur,524.3
+1990,W.P. Kuala Lumpur,503.9
+1992,W.P. Kuala Lumpur,569.6
+1993,W.P. Kuala Lumpur,598.6
+1995,W.P. Kuala Lumpur,598.4
+1996,W.P. Kuala Lumpur,710.8
+1997,W.P. Kuala Lumpur,700.7
+1998,W.P. Kuala Lumpur,685.6
+1999,W.P. Kuala Lumpur,710.4
+2000,W.P. Kuala Lumpur,680.4
+2001,W.P. Kuala Lumpur,723.2
+2002,W.P. Kuala Lumpur,816.9
+2003,W.P. Kuala Lumpur,740.3
+2004,W.P. Kuala Lumpur,691.6
+2005,W.P. Kuala Lumpur,691.4
+2006,W.P. Kuala Lumpur,696.1
+2007,W.P. Kuala Lumpur,702.4
+2008,W.P. Kuala Lumpur,701
+2009,W.P. Kuala Lumpur,698.3
+2010,W.P. Kuala Lumpur,812.9
+2011,W.P. Kuala Lumpur,837.6
+2012,W.P. Kuala Lumpur,842.9
+2013,W.P. Kuala Lumpur,907.3
+2014,W.P. Kuala Lumpur,877
+2015,W.P. Kuala Lumpur,882.6
+1982,W.P Labuan,
+1983,W.P Labuan,
+1984,W.P Labuan,17.3
+1985,W.P Labuan,16.3
+1986,W.P Labuan,15.3
+1987,W.P Labuan,13.6
+1988,W.P Labuan,13.8
+1989,W.P Labuan,14.7
+1990,W.P Labuan,15.7
+1992,W.P Labuan,15.4
+1993,W.P Labuan,18.4
+1995,W.P Labuan,32.6
+1996,W.P Labuan,39.4
+1997,W.P Labuan,35.9
+1998,W.P Labuan,37.9
+1999,W.P Labuan,42.9
+2000,W.P Labuan,26.7
+2001,W.P Labuan,28.7
+2002,W.P Labuan,34
+2003,W.P Labuan,33.3
+2004,W.P Labuan,34
+2005,W.P Labuan,32.2
+2006,W.P Labuan,33.7
+2007,W.P Labuan,34.1
+2008,W.P Labuan,34.5
+2009,W.P Labuan,37.6
+2010,W.P Labuan,40
+2011,W.P Labuan,40.3
+2012,W.P Labuan,41.3
+2013,W.P Labuan,41.8
+2014,W.P Labuan,43
+2015,W.P Labuan,41.5
+1982,W.P.Putrajaya,
+1983,W.P.Putrajaya,
+1984,W.P.Putrajaya,
+1985,W.P.Putrajaya,
+1986,W.P.Putrajaya,
+1987,W.P.Putrajaya,
+1988,W.P.Putrajaya,
+1989,W.P.Putrajaya,
+1990,W.P.Putrajaya,
+1992,W.P.Putrajaya,
+1993,W.P.Putrajaya,
+1995,W.P.Putrajaya,
+1996,W.P.Putrajaya,
+1997,W.P.Putrajaya,
+1998,W.P.Putrajaya,
+1999,W.P.Putrajaya,
+2000,W.P.Putrajaya,
+2001,W.P.Putrajaya,
+2002,W.P.Putrajaya,
+2003,W.P.Putrajaya,
+2004,W.P.Putrajaya,
+2005,W.P.Putrajaya,
+2006,W.P.Putrajaya,
+2007,W.P.Putrajaya,
+2008,W.P.Putrajaya,
+2009,W.P.Putrajaya,
+2010,W.P.Putrajaya,
+2011,W.P.Putrajaya,41.9
+2012,W.P.Putrajaya,40.9
+2013,W.P.Putrajaya,41.2
+2014,W.P.Putrajaya,40.8
+2015,W.P.Putrajaya,38.9
