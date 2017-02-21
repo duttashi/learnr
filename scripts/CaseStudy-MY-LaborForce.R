@@ -11,11 +11,11 @@ library(plyr) # for the rename ()
 library(missForest) # for missForest()
 
 # Load the data
-df1<- read.csv("data/bptms-Employed_by_State.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
-df2<- read.csv("data/bptms-Labour_force_by_State.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
-df3<- read.csv("data/bptms-Labour_Force_Participation_rate_by_State.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
-df4<- read.csv("data/bptms-Outside_labour_force_by_State.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
-df5<- read.csv("data/bptms-Unemployment_Rate.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
+df1<- read.csv("data/misc/bptms-Employed_by_State.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
+df2<- read.csv("data/misc/bptms-Labour_force_by_State.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
+df3<- read.csv("data/misc/bptms-Labour_Force_Participation_rate_by_State.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
+df4<- read.csv("data/misc/bptms-Outside_labour_force_by_State.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
+df5<- read.csv("data/misc/bptms-Unemployment_Rate.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
 #df6<- read.csv("data/bptms-Employed_less_than_30_hours.csv", header = TRUE, sep = ",", stringsAsFactors = FALSE)
 
 # Exploratory Data Analysis
@@ -97,6 +97,17 @@ imputdata<- missForest(df.master)
 imputdata$ximp
 # assign imputed values to a data frame
 df.cmplt<- imputdata$ximp
+str(df.cmplt)
+## FACTOR TO NUMERIC CONVERSION ##
+str(df.cmplt)
+levels(df.cmplt$State)
+table(df.cmplt$State)
+
+df.cmplt$State<-as.factor(gsub("W.P.Putrajaya","Putrajaya", df.cmplt$State,ignore.case=T))
+df.cmplt$State<-as.factor(gsub("W.P. Kuala Lumpur","Kuala Lumpur", df.cmplt$State,ignore.case=T))
+df.cmplt$State<-as.factor(gsub("W.P Labuan","Labuan", df.cmplt$State,ignore.case=T))
+df.cmplt$State<- as.numeric(df.cmplt$State)
+
 # check for missing values in the new data frame
 colSums(is.na(df.cmplt))
 
@@ -229,19 +240,23 @@ p3+ ggtitle("Outside Labour Force in Malaysia (1982-2014)")+
 par(mfrow=c(1,1))
 
 # OUTLIER TREATMENT
-# subset the data 
+# subset the data and name it as subst.data.3
+
 subst.data.3<- subset(df.cmplt, 
-                      (LabrFrc<=1600 & LabrFrcPerct>=60 & LabrFrcPerct <=70) & 
+                      (LabrFrc<=1200 & LabrFrcPerct>=60 & LabrFrcPerct <=70) & 
                         (UnempRatePerct>=2.5 & UnempRatePerct<=5.0)
                       )
-dim(subst.data.3)
-str(subst.data.3)
 
-p1<-ggplot(data= subst.data.3, aes(x="", y=Employed))+
+## DATA VISUALIZATION for the Subset containing no outlier values to determine relationships
+str(subst.data.3)
+library(ggplot2)
+p1<-ggplot(data= df.cmplt, aes(x="", y=Employed))+
   geom_boxplot(outlier.size=2,outlier.colour="red")
-p2<-ggplot(data= subst.data.3, aes(x="", y=LabrFrc))+
+
+p2<-ggplot(data= df.cmplt, aes(x="", y=LabrFrc))+
   geom_boxplot(outlier.size=2,outlier.colour="red")
-p3<-ggplot(data= subst.data.3, aes(x="", y=OutLabrFrc))+
+
+p3<-ggplot(data= df.cmplt, aes(x="", y=OutLabrFrc))+
   geom_boxplot(outlier.size=2,outlier.colour="red")
 
 p1+ ggtitle("Employed in Malaysia (1982-2014)")+
@@ -251,16 +266,13 @@ p2+ ggtitle("Labour Force in Malaysia (1982-2014)")+
 p3+ ggtitle("Outside Labour Force in Malaysia (1982-2014)")+
   xlab("")+ylab("Outside Labour Force")
 
-## DATA VISUALIZATION for the Subset containing no outlier values to determine relationships
-str(subst.data.3)
- 
 # Univariate Visualization: Plots you can use to understand each attribute standalone.
 
 ## bar plot for categorical data
 ggplot(data = subst.data.3, aes(x=State))+
   geom_bar(stat = "count", show.legend = TRUE)
 
-## Desnity and Boxplot for continuous data
+## Density and Boxplot for continuous data
 ggplot(subst.data.3)+
   geom_density(aes(x=Employed, fill="red")) # two-peaked
 ggplot(subst.data.3)+
@@ -308,9 +320,59 @@ pairs(State~., data = subst.data.3, col=subst.data.3$State)
 library(psych) #Calls: pairs.panels
 pairs.panels(subst.data.3)
 
-## Convert Year to 
-temp<- subst.data.3
-temp$Year<- as.numeric(temp$Year)
+## FACTOR TO NUMERIC CONVERSION ##
+str(subst.data.3)
+levels(subst.data.3$State)
+
+subst.data.3$State<-as.factor(gsub("W.P.Putrajaya","Putrajaya", subst.data.3$State,ignore.case=T))
+subst.data.3$State<-as.factor(gsub("W.P. Kuala Lumpur","Kuala Lumpur", subst.data.3$State,ignore.case=T))
+subst.data.3$State<-as.factor(gsub("W.P Labuan","Labuan", subst.data.3$State,ignore.case=T))
+subst.data.3$State<- as.numeric(subst.data.3$State)
+table(subst.data.3$State)
+
+### Data Transformation: skewed variable treatment
+library(moments) # for skewness function
+# A variable is considered ‘highly skewed’ if its absolute value is greater than 1.
+# A variable is considered ‘moderately skewed’ if its absolute value is greater than 0.5.
+skewedVars <- NA
+
+for(i in names(df.cmplt)){
+  if(is.numeric(df.cmplt[,i])){
+    if(i != "UnempRatePerct"){
+      # Enters this block if variable is non-categorical
+      skewVal <- skewness(df.cmplt[,i])
+      print(paste(i, skewVal, sep = ": "))
+      if(abs(skewVal) > 0.5){
+        skewedVars <- c(skewedVars, i)
+      }
+    }
+  }
+}
+# We find that the variables, `Employed`, `LabrFrc` and `OutLabrFrc` are highly skewed.
+
+##### SKEWED VARIABLE TREATMENT
+
+## reorder the columns in df.cmplt data frame
+df.cmplt<- df.cmplt[c(1:2,4:5,3,6:7)]
+str(df.cmplt)
+# Log transform the skewed variables
+df.cmplt.norm<-df.cmplt
+str(df.cmplt.norm)
+
+df.cmplt.norm[,3:7]<- log(df.cmplt[3:7],2) # where 2 is log base 2
+# check for skewness again
+for(i in names(df.cmplt.norm)){
+  if(is.numeric(df.cmplt.norm[,i])){
+    if(i != "UnempRatePerct"){
+      # Enters this block if variable is non-categorical
+      skewVal <- skewness(df.cmplt.norm[,i])
+      print(paste(i, skewVal, sep = ": "))
+      if(abs(skewVal) > 0.5){
+        skewedVars <- c(skewedVars, i)
+      }
+    }
+  }
+}
 
 ## CORRELATION PLOTS
 
@@ -318,9 +380,11 @@ temp$Year<- as.numeric(temp$Year)
 #LOAD LIBRARY
 library(corrplot)
 # calculate the correlations
-correlations<- cor(subst.data.3[,3:7])
+correlations<- cor(df.cmplt.norm)
+
 # plot the correlations
 corrplot(correlations, method = "number")
+
 # High Correlations: Employed - LaborForce; Employed - OutsideLaborForce; LaborForce - OutsideLaborForce;
 # OutsideLaborForce - Employed
 # correlation measures the relationship between two variables. When these two variables are so highly correlated that they explain each other (to the point that you can predict the one variable with the other), then we have collinearity (or multicollinearity).
@@ -328,91 +392,75 @@ corrplot(correlations, method = "number")
 
 ## VIF plot for checking multicollinearity
 # A simple approach to identify collinearity among explanatory variables is the use of variance inflation factors (VIF).
-library(car) # for the vif () 
-mod<- lm(UnempRatePerct~., data=subst.data.3[,3:7])
+library(DAAG) # for the vif () 
+mod<- lm(Employed~., data=df.cmplt.norm)
 # Use function `vif` to calculate variance inflation factors for each variable in the model
-vif(mod)
+vfit<-vif(mod)
+sqrt(vif(mod)) > 2
 
 ## MULTICOLLINEARITY TREATMENT
-## Method 1: Principal Component Analysis (PCA) reduces the number of predictors to a smaller set of uncorrelated components.
-# PCA can be applied only on numerical data. We’ll convert these categorical variables into numeric using one hot encoding.
 
-library(dummies)
-## find out how to dummy code the factors to numeric
-## reference: 
-df.convrtd<- subst.data.3
+## Method: Principal Component Analysis (PCA) reduces the number of predictors to a smaller set of uncorrelated components.
+# PCA can be applied only on numerical data. 
+library(stats) # for princomp()
+df.cmplt.norm.pca<- princomp(df.cmplt.norm, cor = TRUE)
+summary(df.cmplt.norm.pca) # Here, Comp.1 explains 44% variance, Comp.2 explains 20 variance and so on. Also we can see that Comp.1 to Comp.5 have the highest standard deviation
 
+# Plotting
+biplot(df.cmplt.norm.pca) # Notice the closeness of the arrows for variables, `OutLabrFrc`,`Employed` and `LabrFrc` indicates strong correlation. Again, notice the mild closeness of arrows for variable `LabrFrcPerct`,`State` and `UnempRatePerct` indicate mild correlation. Finally, notice the perpendicular distance between variables, `Year` and `OutLabrFrc` indicates no correlation.
+# http://stackoverflow.com/questions/12760108/principal-components-analysis-how-to-get-the-contribution-of-each-paramete
 
-for(level in unique(subst.data.3$State)){
-  df.convrtd[paste("dummy", level, sep = "_")] <- ifelse(subst.data.3$State == level, 1, 0)
-}
-head(df.convrtd)
-df.convrtd$Year<- as.numeric(df.convrtd$Year)
-str(df.convrtd)
-# drop variable State as its been dummy coded now
-df.convrtd$State<-NULL
-
-######## Splitting the dataset into train and test#####
-ratio = sample(1:nrow(df.convrtd), size = 0.25*nrow(df.convrtd))
-pca.test = df.convrtd[ratio,] #Test dataset 25% of total
-pca.train = df.convrtd[-ratio,] #Train dataset 75% of total
-
-#principal component analysis
-
-prin_comp <- prcomp(pca.train, scale. = T)
-names(prin_comp)
-biplot(prin_comp, scale = 0)
-#compute standard deviation of each principal component
-std_dev <- prin_comp$sdev
+##########################################
 #compute variance
-pr_var <- std_dev^2
-#check variance of first 10 components
-pr_var[1:10]
+std_dev<- df.cmplt.norm.pca$sdev
+df.cmplt.norm.pca.var<- std_dev^2
+round(df.cmplt.norm.pca.var)
 #proportion of variance explained
-prop_varex <- pr_var/sum(pr_var)
-prop_varex[1:22]
-
+prop_varex <- df.cmplt.norm.pca.var/sum(df.cmplt.norm.pca.var)
+round(prop_varex,3)
+#scree plot
 plot(prop_varex, xlab = "Principal Component",
      ylab = "Proportion of Variance Explained",
-     type = "b") #15 components show max variance
-
+     type = "b")
+#cumulative scree plot
 plot(cumsum(prop_varex), xlab = "Principal Component",
      ylab = "Cumulative Proportion of Variance Explained",
-     type = "b")
+     type = "b") # 5 principal components
 
-train.data <- df.convrtd[,1:15]
-library(rpart)
-rpart.model <- rpart(UnempRatePerct ~ .,data = train.data, method = "anova")
-rpart.model
+biplot(df.cmplt.norm.pca, scale = 0)
 
-#transform test into PCA
-test.data <- predict(prin_comp, newdata = pca.test)
-test.data <- as.data.frame(test.data)
-#select the first 15 components
-test.data <- test.data[,1:15]
-#make prediction on test data
-rpart.prediction <- predict(rpart.model, test.data) # ERROR, object Year not found
+######################################
 
-### Feature Importance ###
-### work done on 15/Feb/2017 ###
+df.cmplt.norm.pca$loadings[1:5,1:5]
+df.cmplt.norm.pca$loadings # the relevant data is in the loadings component. If using the prcomp method then the relevant loadings are in the rotation component
+# If you want this as a relative contribution then sum up the loadings per column and express each loading as a proportion of the column (loading) sum, taking care to use the absolute values to account for negative loadings.
 
-library(Boruta)
-# run boruta analysis
-set.seed(1234)
-# pull out the response variable
-response <- subst.data.3$UnempRatePerct
-bor.results <- Boruta(subst.data.3,response,
-                      maxRuns=101,
-                      doTrace=0)
-bor.results # basically, all the variables are considered important for response variable prediction
-cat("\n\nRelevant Attributes:\n")
-getSelectedAttributes(bor.results) # "Year"           "State"          "Employed"       "LabrFrc"        "OutLabrFrc"     "UnempRatePerct"
-plot(bor.results)
+load <- with(df.cmplt.norm.pca, unclass(loadings))
+round(load,3)
 
-######## Splitting the dataset into train and test#####
-ratio = sample(1:nrow(subst.data.3), size = 0.25*nrow(subst.data.3))
-Test = subst.data.3[ratio,] #Test dataset 25% of total
-Training = subst.data.3[-ratio,] #Train dataset 75% of total
+# This final step then yields the proportional contribution to the each principal component
+aload <- abs(load) ## save absolute values
+
+round(sweep(aload, 2, colSums(aload), "/"),3)
+colSums(sweep(aload, 2, colSums(aload), "/"))
+
+##########################################
+
+# To make inference from the biplot above, focus on the extreme ends (top, bottom, left, right) of this graph.
+# We infer than first principal component corresponds to a measure of UnempRatePerct, State, LabrFrcPerct, the second principal component refers to Employed, LaborForce, Outside Labor Force
+
+# Therefore, the principal components to retain for further modeling are the variables, Employed, LabrFrc, OutLabrFrc, Year and LabrFrcPerct
+vars_to_retain<- c("Year","Employed","UnempRatePerct","LabrFrc","LabrFrcPerct","OutLabrFrc")
+newdata<- df.cmplt.norm[,vars_to_retain]
+dim(newdata)
+str(newdata)
+### Now that we have determined the variables with maximum variance. Let’s divide the data into test and train.
+ratio = sample(1:nrow(newdata), size = 0.25*nrow(newdata))
+test.data = newdata[ratio,] #Test dataset 25% of total
+train.data = newdata[-ratio,] #Train dataset 75% of total
+dim(train.data)
+dim(test.data)
+
 # Evaluation metric function
 RMSE <- function(x,y){
   a <- sqrt(sum((log(x)-log(y))^2)/length(y))
@@ -420,21 +468,65 @@ RMSE <- function(x,y){
 }
 
 # Multiple Linear regression
-linear.mod<- lm(UnempRatePerct~., data = Training)
+linear.mod<- lm(Employed~., data = train.data)
 summary(linear.mod)
 plot(linear.mod, pch=16, which = 1)
-predict<- predict(linear.mod, Test)
+predict<- predict(linear.mod, test.data)
 
-RMSE0<- RMSE(predict, Test$UnempRatePerct)
+# RMSE
+RMSE0<- RMSE(predict, test.data$Employed)
+RMSE0<- round(RMSE0, digits = 3) #0.003
 RMSE0
 
 # Calculate prediction accuracy and error rates
-actuals_preds <- data.frame(cbind(actuals=Test$UnempRatePerct, predicteds=predict)) # make actuals_predicteds dataframe.
+actuals_preds <- data.frame(cbind(actuals=test.data$Employed, predicteds=predict)) # make actuals_predicteds dataframe.
 correlation_accuracy <- cor(actuals_preds)
-correlation_accuracy # 73% prediction accuracy
+correlation_accuracy # 99%
 
 min_max_accuracy <- mean (apply(actuals_preds, 1, min) / apply(actuals_preds, 1, max))
-min_max_accuracy # 89%
+min_max_accuracy #.99%
 
 mape <- mean(abs((actuals_preds$predicteds - actuals_preds$actuals))/actuals_preds$actuals)
-mape # 11%
+mape
+
+# Model Diagnostics
+# Check the AIC and BIC
+AIC(linear.mod)
+BIC(linear.mod)
+
+### Model Performance on various supervised algorithms
+
+### Regression Tree method
+
+library(rpart)
+model <- rpart(Employed ~., data = train.data, method = "anova")
+predict <- predict(model, test.data)
+# RMSE
+RMSE1 <- RMSE(predict, test.data$Employed)
+RMSE1 <- round(RMSE1, digits = 3) #0.037
+RMSE1
+
+### R, Random Forests, function randomForest(), method "anova" ####
+library(randomForest)
+model.forest <- randomForest(Employed ~., data = train.data, method = "anova",
+                             ntree = 300,
+                             mtry = 2, #mtry is sqrt(6)
+                             replace = F,
+                             nodesize = 1,
+                             importance = T)
+varImpPlot(model.forest) # Look at the IncNodePurity plot. From this plot we see that important vars are `State`, `Employed` and `LabourForce`
+prediction <- predict(model.forest,test.data)
+RMSE3 <- sqrt(mean((log(prediction)-log(test.data$Employed))^2))
+round(RMSE3, digits = 3) # 0.009
+
+
+#### CONCLUSION: TO PREDICT Employment rate in Malaysia
+# Multiple Linear Regression RMSE: 0.003
+#Random Forest RMSE:  0.009
+#Regression Tree RMSE: 0.037
+
+
+
+
+
+
