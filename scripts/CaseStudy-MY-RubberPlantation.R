@@ -63,7 +63,8 @@ aggr_plot <- aggr(df.master, col=c('navyblue','red'), numbers=TRUE, sortVars=TRU
                   ylab=c("Histogram of missing data","Pattern"))
 
 colSums(is.na(df.master)) # There is only 1 missing row
-tempData <- mice(df.master,m=5,maxit=50,meth='pmm',seed=1234)
+#PMM (Predictive Mean Matching)  – For numeric variables
+tempData <- mice(df.master,m=5,maxit=50,meth='pmm',seed=1234) 
 df.master<- mice::complete(tempData,1) 
 colSums(is.na(df.master))
 
@@ -177,8 +178,10 @@ plot(Training$AreaPlantedHect, Training$YieldperHectKg, pch=16, col=cols,
 
 ### Data Transformation: skewed variable treatment
 
-# A variable is considered ‘highly skewed’ if its absolute value is greater than 1.
-# A variable is considered ‘moderately skewed’ if its absolute value is greater than 0.5.
+# A variable is considered ‘highly skewed’ if its absolute value is 
+# greater than 1.
+# A variable is considered ‘moderately skewed’ if its absolute value is 
+# greater than 0.5.
 skewedVars <- NA
 
 for(i in names(df.master)){
@@ -226,6 +229,7 @@ RMSE <- function(x,y){
 # Multiple Linear regression
 linear.mod<- lm(YieldperHectKg~., data = Training)
 summary(linear.mod)
+help(plot)
 plot(linear.mod, pch=16, which = 1)
 predict<- predict(linear.mod, Test)
 
@@ -254,7 +258,7 @@ AIC(linear.mod1)
 BIC(linear.mod1)
 
 # Regression model with significant predictors only
-linear.mod.1<- lm(YieldperHectKg~ TotalPaidEmployee+AreaPlantedHect+Year, data = train)
+linear.mod.1<- lm(YieldperHectKg~ TotalPaidEmployee+AreaPlantedHect+Year, data = Training)
 summary(linear.mod.1)
 
 predict<- predict(linear.mod, Test)
