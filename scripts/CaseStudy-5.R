@@ -141,3 +141,26 @@ hist(custdata.complete$income.log)
 
 custdata.complete$income<- NULL # dropping the skewed variable
 str(custdata.complete)
+
+## Checking for High correlation
+str(custdata.complete)
+cor(custdata.complete$num.vehicles, custdata.complete$age) # very weak negative correlation between age and num of vehicle owned
+cor(custdata.complete$num.vehicles, custdata.complete$income) # weak positive correlation
+cor(custdata.complete$age, custdata.complete$income) # very weak positive correlation
+
+######## Sampling for modeling and validation
+#Sample Indexes
+indexes = sample(1:nrow(custdata.complete), size=0.2*nrow(custdata.complete))
+# Split data
+cust.test = custdata.complete[indexes,]
+dim(cust.test)  # 200 11 20% data for testing
+cust.train = custdata.complete[-indexes,]
+dim(cust.train) # 800 11 80% data for training
+
+##### MODEL BUILDING ######
+
+## MULTIPLE LINEAR REGRESSION MODEL expects dependent var to be numeric 
+str(cust.train)
+linear.mod<- lm(age~., data = cust.train)
+summary(linear.mod)
+

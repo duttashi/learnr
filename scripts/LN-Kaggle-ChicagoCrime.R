@@ -11,6 +11,7 @@ library(plyr)
 library(dplyr)
 library(lubridate)
 library(ggmap)
+library(extrafont)
 
 coltypes <-
   list(Dates = col_datetime("%Y-%m-%d %H:%M:%S"))
@@ -91,15 +92,15 @@ map<-get_map(location= chicago, zoom=13, maptype = "roadmap",
 lims <- coord_map(xlim=c(-122.47, -122.37), ylim=c(37.70, 37.81))
 
 ggmap(map, extent='panel', legend="topright") +
-  geom_point(aes(x=longitude, y=latitude, colour=primtype), data=mapdata.cmplt,
-             alpha=.5) +
+  geom_point(aes(x=longitude, y=latitude, colour=primtype), 
+             data=mapdata.cmplt,alpha=.5, size=3) +
   ggtitle('Violent Crime in Chicago')+
-  theme(axis.title = element_blank(), text = element_text(size = 12))
+  theme(axis.title = element_blank(),text = element_text(size = 12))
 
 # Observation: Not quite a useful plot. The colors are overlapping each other. No patterns are visible. Lets see if it can be made more interesting
 ggmap(map, extent='panel') +
-  geom_point(aes(x=longitude, y=latitude, colour=primtype), data=mapdata, 
-             alpha=.5, na.rm = T) +
+  geom_point(aes(x=longitude, y=latitude, colour=primtype), data=mapdata.cmplt, 
+             alpha=.5, na.rm = T, size=3) +
   scale_colour_discrete(guide='none') +
   facet_wrap(~primtype) +
   ggtitle('Violent Crime in Chicago')+
@@ -108,11 +109,16 @@ ggmap(map, extent='panel') +
 # Observation: Not quite useful still even after breaking it down by categories. Lets try the contour plot
 contours <- stat_density2d(
   aes(x=longitude, y=latitude, fill = ..level..),
-  size = 0.1, data = mapdata.cmplt, n=200,
+  size = 0.5, data = mapdata.cmplt, n=200,
   geom = "polygon")
 
 ########### Below this scripts not working properly. The crimes are not shown on the map ########
-ggmap(map, extent='panel', legend="topright") + contours +
+levels(mapdata.cmplt$primtype) # 33 levels
+breaks<- levels(mapdata.cmplt$primtype)
+
+
+
+ggmap(map, extent='panel', legend="topright") + 
   scale_alpha_continuous(range=c(0.25,0.1), guide='none') +
   scale_fill_gradient('Violent\nCrime\nDensity')+
   ggtitle('Violent Crime in Chicago')
@@ -159,6 +165,7 @@ contoursCSA <- stat_density2d(
 ################################################################################
 
 ##### From here, the plots are working #####
+
 ggplot(data=mapdata.cmplt, aes(x=Month)) +
   geom_bar(colour="black", fill="skyblue") +
   ylab('Count') 
@@ -167,5 +174,53 @@ ggplot(data=mapdata.cmplt, aes(x=Month)) +
   geom_bar(colour="black", fill="skyblue") +
   ylab('Count') +
   facet_wrap(~primtype, scales='free')
+
+ggplot(data=mapdata.cmplt, aes(x=Hour)) +
+  geom_bar(colour="black", fill="skyblue") +
+  ylab('Count') 
+
+ggplot(data=mapdata.cmplt, aes(x=Hour)) +
+  geom_bar(colour="black", fill="skyblue") +
+  ylab('Count') +
+  facet_wrap(~primtype, scales='free')
+
+ggplot(data=filter(mapdata, primtype=='ASSAULT'), aes(x=Hour)) +
+  geom_bar(colour="black", fill="skyblue") +
+  ylab('Count of Assault') +
+  facet_wrap(~Month, scales='free')+
+  ggtitle("Monthly & Hourly cases for Assault")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(data=filter(mapdata, primtype=='ROBBERY'), aes(x=Hour)) +
+  geom_bar(colour="black", fill="skyblue") +
+  ylab('Count of Robbery') +
+  facet_wrap(~Month, scales='free')+
+  ggtitle("Monthly & Hourly cases for Robbery")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+############ 31 Jan 2017 ##############
+# Mapping the data 
+library(maps)
+library(mapdata)
+
+# Get the State maps
+state_map <- map_data("state",region="illinois")
+# Zoom in on Chicago and get the counties
+chicago_df<- subset(state_map, region=="illinois")
+head(chicago_df)
+## Get the counties too
+county_map_data <- map_data("county", region="illinois")
+chic_county <- subset(county_map_data, region == "illinois")
+head(chic_county)
+## Plot the state
+chic_base <- ggplot(data = chicago_df, mapping = aes(x = long, y = lat, group = group)) + 
+  coord_fixed(1.3) + 
+  geom_polygon(color = "black", fill = "gray")
+chic_base + theme_nothing()
+## Now plot the county boundaries in white
+chic_base + theme_nothing() + 
+  geom_polygon(data = chic_county, fill = NA, color = "white") +
+  geom_polygon(color = "black", fill = NA)  # get the state border back on top
+
 
 

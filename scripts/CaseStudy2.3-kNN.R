@@ -14,6 +14,7 @@ str(wbcd)
 # Step 3: Data Management
 # drop the id feature
 wbcd<-wbcd[,-1]
+
 # the variable diagnosis is our response variable that we have to predict. Let's explore it
 table(wbcd$diagnosis) # 357 benign tumours and 212 malignant
 str(wbcd$diagnosis) # is a character variable. Lets recode it as factor
