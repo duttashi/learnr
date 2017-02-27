@@ -114,3 +114,62 @@ ggplot(adult.cmplt)+
 ggplot(adult.cmplt)+
   geom_density(aes(x=education.num , fill="red")) # majority data between 8 to 15
 
+# subset the data based on observations from denisty plot
+adult.cmplt.sub1<- subset(adult.cmplt, age<=75 & hoursperweek<=65)
+
+# Boxplot for subset data and to check for outliers
+library(magrittr) # for the pipe operator
+library(dplyr) # for select() 
+str(subst.data.1)
+
+boxplot(adult.cmplt.sub1 %>% 
+          # Note that the ‘%>%’ (pipe) passes data from the command before to the one after.
+          select(hoursperweek)) # outliers between 0 to 35 and 55 and above
+
+# subset the data again based on boxplot outlier above
+adult.cmplt.sub1.1<- subset(adult.cmplt, hoursperweek==40 & age<=75)
+boxplot(adult.cmplt.sub1.1 %>% 
+          select(hoursperweek, age)) # Outliers removed for hoursperweek and age. This means that good data lies in age <=75 and hoursperweek=40
+
+boxplot(adult.cmplt %>% 
+          select(capital.gain))
+adult.cmplt.sub1.2<- subset(adult.cmplt, capital.gain<=10)
+boxplot(adult.cmplt.sub1.2 %>% 
+          select(capital.gain))
+boxplot(adult.cmplt %>% 
+          select(capital.loss))
+boxplot(adult.cmplt %>% 
+          select(fnlwgt))
+adult.cmplt.sub1.3<- subset(adult.cmplt, fnlwgt<=300000)
+boxplot(adult.cmplt.sub1.3 %>% 
+          select(fnlwgt)) # no outliers so fnlwght<=300000 is ok
+
+boxplot(adult.cmplt %>% 
+          select(education.num))
+adult.cmplt.sub1.4<- subset(adult.cmplt, education.num>=5)
+boxplot(adult.cmplt.sub1.4 %>% 
+          select(education.num))# no outliers so education.num>=5 is ok
+
+## Final Subset
+adult.cmplt.subset<- subset(adult.cmplt,hoursperweek==40 & age<=75 & fnlwgt<=300000 & 
+                             education.num>=5)
+
+
+# Note: The predictor capital.gain and capital.loss has maximum 0 values. Dropping these predictors
+adult.cmplt$capital.gain<-NULL
+adult.cmplt$capital.loss<- NULL
+
+# Now lets look at the density plots on this subset data
+ggplot(adult.cmplt.sub1.1)+
+  geom_density(aes(x=age , fill="red")) # looks better now. majority of the people are aged 20-65 years
+
+# remove the subsets not required anymore
+rm(adult.cmplt.sub1)
+rm(adult.cmplt.sub1.2)
+rm(adult.cmplt.sub1.4)
+rm(adult.cmplt.sub1.3)
+rm(adult.cmplt.sub1.1)
+
+# Outlier treatment completed. For subsequent analysis, use the data frame `adult.cmplt.subset`
+str(adult.cmplt.subset)
+
