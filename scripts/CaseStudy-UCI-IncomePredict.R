@@ -10,15 +10,11 @@ adult.data<- read.table(file = theUrl, header = FALSE, sep = ",",
                         strip.white = TRUE, stringsAsFactors = TRUE)
 adult<- adult.data # make a copy of the data 
 
-str(adult.data)
-
 # Exploratory Data Analysis
 ## a. Structure 
 dim(adult.data)
 str(adult.data) # Observations: add column headers; 
-sum(is.na(adult.data)) # No missing values
-colSums(is.na(adult.data))
-head(adult.data)
+
 # add column header
 colnames(adult.data)<- c("age","workclass","fnlwgt","education","education.num","marital.status","occupation",
                "relationship","race","sex","capital.gain","capital.loss","hoursperweek","native.country",
@@ -94,12 +90,27 @@ aggr_plot <- aggr(adult.cmplt, col=c('navyblue','red'), numbers=TRUE, sortVars=T
                   labels=names(adult.data), cex.axis=.7, gap=3, 
                   ylab=c("Histogram of missing data","Pattern"))
 
-# Test of independence for the categorical variable
-library(vcd) # for xtabs() and assocstats()
-mytable<- xtabs(~native.country+workclass, data= adult.cmplt)
-chisq.test(mytable) # native.country and workclass are related as p value is less than 0.005
-#############################################################
+# Get the data summary
+summary(adult.cmplt) 
+# avg age is 38 years, maximum workforce is in private class, graduates are maximum followed by secondaryschool; majority are married; 
+
+
+table(adult.data$occupation)
+
+# Data Visualization
 library(ggplot2)
 
-p = ggplot(adult.cmplt,aes(x=education, y=age, color=race))
-p + geom_jitter(alpha=0.3) 
+# Univariate data visualization. Density plots for continuous predictors and bar plots for categorical predictors
+str(adult.cmplt)
+ggplot(adult.cmplt)+
+  geom_density(aes(x=age, fill="red"))
+
+ggplot(adult.cmplt)+
+  geom_density(aes(x=capital.gain, fill="red")) # majority data between 0 to <20000
+ggplot(adult.cmplt)+
+  geom_density(aes(x=capital.loss, fill="red")) # majority data between 0 to 20 and 1000 to 2000
+ggplot(adult.cmplt)+
+  geom_density(aes(x=hoursperweek, fill="red")) # majority data between 25 to 60
+ggplot(adult.cmplt)+
+  geom_density(aes(x=education.num , fill="red")) # majority data between 8 to 15
+
