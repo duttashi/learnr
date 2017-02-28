@@ -11,12 +11,9 @@ adult.data<- read.table(file = theUrl, header = FALSE, sep = ",",
                         strip.white = TRUE, stringsAsFactors = TRUE,
                         col.names=c("age","workclass","fnlwgt","education","educationnum","maritalstatus",
                           "occupation","relationship","race","sex","capitalgain","capitalloss",
-                          "hoursperweek","nativecountry","income")
+                        "hoursperweek","nativecountry","income")
                         )
 adult<- adult.data # make a copy of the data 
-
-# load the required libraries
-library(gridExtra) # for grid.arrange()
 
 # Exploratory Data Analysis
 ## a. Structure 
@@ -45,15 +42,10 @@ levels(adult.data$occupation)<- list(misLevel=c("?"), clerical=c("Adm-clerical")
                                      highskillabr=c("Sales","Tech-support","Transport-moving","Armed-Forces"),
                                      agricultr=c("Farming-fishing")
                                      )
-table(adult.data$occupation)
-table(adult.data$relationship)
 
 levels(adult.data$relationship)<- list(husband=c("Husband"), wife=c("Wife"), outofamily=c("Not-in-family"),
                                        unmarried=c("Unmarried"), relative=c("Other-relative"), 
                                        ownchild=c("Own-child"))
-
-levels(adult.data$race)
-levels(adult.data$sex)
 
 levels(adult.data$nativecountry)<- list(misLevel=c("?","South"),SEAsia=c("Vietnam","Laos","Cambodia","Thailand"),
                                            Asia=c("China","India","HongKong","Iran","Philippines","Taiwan"),
@@ -68,7 +60,7 @@ levels(adult.data$nativecountry)<- list(misLevel=c("?","South"),SEAsia=c("Vietna
                                            Oceania=c("Outlying-US(Guam-USVI-etc)")
                                            )
 
-levels(adult.data$income)
+levels(adult.data$income)<- list(leseq50K=c("<=50K"), gr50K=c(">50K"))
 
 # check for missing values
 colSums(is.na(adult.data)) # missing values in, education(11077) occupation(4066) and native.country(20)
@@ -77,7 +69,8 @@ str(adult.data)
 library(VIM)
 aggr_plot <- aggr(adult.data, col=c('navyblue','red'), numbers=TRUE, sortVars=TRUE, 
                   labels=names(adult.data), cex.axis=.7, gap=3, 
-                  ylab=c("Histogram of missing data","Pattern"))
+                  ylab=c("Histogram of missing data","Pattern")
+                  )
 
 ## Missing data imputation
 library(missForest)
@@ -148,11 +141,12 @@ qplot(income, data = adult.cmplt, fill = education) + facet_grid (. ~ education)
 
 # Building the prediction model
 # https://www.knowbigdata.com/blog/predicting-income-level-analytics-casestudy-r
-levels(adult.cmplt$income)<- list(leseq50K=c("<=50K"), gr50K=c(">50K"))
+#levels(adult.cmplt$income)<- list(leseq50K=c("<=50K"), gr50K=c(">50K"))
 
 ratio = sample(1:nrow(adult.cmplt), size = 0.25*nrow(adult.cmplt))
 test.data = adult.cmplt[ratio,] #Test dataset 25% of total
 train.data = adult.cmplt[-ratio,] #Train dataset 75% of total
+
 # scaling quantitative predictors
 train.data$fnlwgt<- scale(train.data$fnlwgt)
 test.data$fnlwgt<- scale(test.data$fnlwgt)
@@ -177,76 +171,37 @@ hist(glm.pred[test.data$income], col="red", breaks=20, add=TRUE)
 table(actual= test.data$income, predicted= glm.pred>0.5)
 # classification accuracy is (1384+5655)/8140 which gives an 86% accuracy rate
 # Note: if missing categorical data is not imputed, then the logistic regression accuracy is 85% and it increases by 1% when missing data is treated.
-
+# classifier accuracy on dirty data (3262+569)/8140 # 47% accuracy with logistic regression
+(5704+1315)/8140 # 86% accuracy on cleaned imputed data 
 ##########################
 
-library(randomForest)
-library(caret) # for VarImp()
-#fit the randomforest model
-model.rf <- randomForest(income~., 
-                      data = train.data, 
-                      importance=TRUE,
-                      keep.forest=TRUE
-)
-print(model.rf)
-#what are the important variables (via permutation)
-varImpPlot(model.rf, type=1)
-#predict the outcome of the testing data
-predict<- predict(model.rf, test.data)
-# Calculate prediction accuracy and error rates
-actuals_preds <- data.frame(cbind(actuals=test.data$income, predicteds=predict)) # make actuals_predicteds dataframe.
-correlation_accuracy <- cor(actuals_preds)
-correlation_accuracy # 66% accuracy
-
-# classification accuracy: https://www.r-bloggers.com/computing-classification-evaluation-metrics-in-r/
-library(gbm) # GBM models
+# decision tree
+library(rpart)
+library(rpart.plot)
+library(caret)
 str(train.data)
-trainX <-train.data[,-15]        # Pull out the dependent variable
-testX <- test.data[,-15]
-sapply(trainX,summary) # Look at a summary of the training data
-str(train.data)
-## GENERALIZED BOOSTED RGRESSION MODEL (BGM)  
+tree.model<- rpart(income~., data=train.data, method="class", minbucket=20)
+prp(tree.model)
+tree.predict<- predict(tree.model, test.data, type = "class")
+confusionMatrix(test.data$income, tree.predict) # 86% accuracy on cleaned data, 84% accuracy on dirty data
 
-# Set up training control
-ctrl <- trainControl(method = "repeatedcv",   # 10fold cross validation
-                     number = 5,							# do 5 repititions of cv
-                     summaryFunction=twoClassSummary,	# Use AUC to pick the best model
-                     classProbs=TRUE,
-                     allowParallel = TRUE)
-# Use the expand.grid to specify the search space	
-# Note that the default search grid selects multiple values of each tuning parameter
+# Support Vector Machine
+library(e1071) # for svm()
+svm.model<- svm(income~., data = train.data,kernel = "radial", cost = 1, gamma = 0.1)
+svm.predict <- predict(svm.model, test.data)
+confusionMatrix(test.data$income, svm.predict) # 87% accuracy
 
-grid <- expand.grid(interaction.depth=c(1,2), # Depth of variable interactions
-                    n.trees=c(10,20),	        # Num trees to fit
-                    shrinkage=c(0.01,0.1),		# Try 2 values for learning rate 
-                    n.minobsinnode = 20)
+# Random Forest
+rf.model<- randomForest(income~., 
+                        data = train.data, 
+                        importance=TRUE,
+                        keep.forest=TRUE)
+rf.predict <- predict(rf.model, test.data)
+confusionMatrix(test.data$income, rf.predict) # 89%
 
-set.seed(1234)  # set the seed
-# Set up to do parallel processing
-library(doParallel)
-registerDoParallel(4)		# Registrer a parallel backend for train
-getDoParWorkers()
-
-gbm.tune <- train(x=trainX,y=train.data$income,
-                  method = "gbm",
-                  metric = "ROC",
-                  trControl = ctrl,
-                  tuneGrid=grid,
-                  verbose=FALSE)
+# check the important predictors 
+varImpPlot(rf.model, type = 1)
 
 
-# Look at the tuning results
-# Note that ROC was the performance criterion used to select the optimal model.   
-
-gbm.tune$bestTune
-plot(gbm.tune)  		# Plot the performance of the training models
-res <- gbm.tune$results
-res
-
-### GBM Model Predictions and Performance
-# Make predictions using the test data set
-gbm.pred <- predict(gbm.tune,testX)
-
-#Look at the confusion matrix  
-confusionMatrix(gbm.pred,test.data$income)   # accuracy is 84%
+##########################
 
