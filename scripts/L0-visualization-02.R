@@ -185,3 +185,20 @@ bar <- ggplot(data = diamonds) +
   labs(x = NULL, y = NULL)
 bar+coord_flip()
 bar+coord_polar()
+
+ggplot(data=mpg, mapping = aes(x=cty, y=hwy))+
+  geom_point()+
+  geom_abline()+
+  coord_fixed()
+
+## Template for Plotting
+# ggplot(data = <DATA>) + 
+#  <GEOM_FUNCTION>(
+#    mapping = aes(<MAPPINGS>),
+#    stat = <STAT>, 
+#    position = <POSITION>
+#  ) +
+#  <COORDINATE_FUNCTION> +
+#  <FACET_FUNCTION>
+  
+  
