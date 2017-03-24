@@ -9,3 +9,4 @@ workspace.RData
 *.txt
 *.log
 *.test
+*.RData
