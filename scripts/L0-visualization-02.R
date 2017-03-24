@@ -149,3 +149,13 @@ ggplot(data = diamonds) +
                                 ymax = max))
 ggplot(data = diamonds)+
   geom_col(mapping = aes(x=cut, y=depth))
+
+## position = "dodge" places overlapping objects directly beside one another. This makes it easier to compare individual values.
+ggplot(data=diamonds)+
+  geom_bar(mapping = aes(x=cut, fill=clarity)) # generates a stacked bar graph
+ggplot(data=diamonds)+
+  geom_bar(mapping = aes(x=cut, fill= clarity), position="dodge") # better bar plot
+
+## overplotting is when some values clump together. position = "jitter" adds a small amount of random noise to each point. This spreads the points out because no two points are likely to receive the same amount of random noise.
+ggplot(data=mpg)+
+  geom_point(mapping = aes(x=displ, y=hwy), position="jitter")
