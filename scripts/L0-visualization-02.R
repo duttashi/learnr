@@ -159,3 +159,29 @@ ggplot(data=diamonds)+
 ## overplotting is when some values clump together. position = "jitter" adds a small amount of random noise to each point. This spreads the points out because no two points are likely to receive the same amount of random noise.
 ggplot(data=mpg)+
   geom_point(mapping = aes(x=displ, y=hwy), position="jitter")
+
+# Coordinate systems
+## coord_flip() switches the x and y axes.
+ggplot(data = mpg)+
+  geom_boxplot(mapping = aes(x=class, y=hwy))
+
+ggplot(data = mpg)+
+  geom_boxplot(mapping = aes(x=class, y=hwy))+
+  coord_flip()
+nz<- map_data("nz")
+ggplot(nz, aes(long, lat, group = group)) +
+  geom_polygon(fill = "white", colour = "black")
+
+## coord_quickmap() sets the aspect ratio correctly for maps
+ggplot(nz, aes(long, lat, group = group)) +
+  geom_polygon(fill = "white", colour = "black") +
+  coord_quickmap()
+
+## coord_polar() uses polar coordinates. Polar coordinates reveal an interesting connection between a bar chart and a Coxcomb chart.
+bar <- ggplot(data = diamonds) + 
+  geom_bar( mapping = aes(x = cut, fill = cut),
+            show.legend = FALSE, width = 1) +
+  theme(aspect.ratio = 1) +
+  labs(x = NULL, y = NULL)
+bar+coord_flip()
+bar+coord_polar()
