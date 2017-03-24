@@ -8,3 +8,4 @@ workspace.RData
 *.csv
 *.txt
 *.log
+*.test
