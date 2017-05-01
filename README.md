@@ -9,3 +9,5 @@ The repo `contains data, code, resources and plots` for statistical and machine 
 ## Contact
 If you'd like to contact me regarding bugs, questions, or general consulting, feel free to drop me a line - 
 [ashishdutt@yahoo.com.my]
+
+*Copyright 2016 [Ashish Dutt](https://duttashi.github.io/). Licensed under the MIT license.*
