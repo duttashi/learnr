@@ -1,4 +1,5 @@
 # Readme
+[![Donate](http://i.imgur.com/vCIGFrH.png)](paypal.me/ashishdutt)
 
 The one common issue which novice entrants in data science have always asked me is, "How to begin their data analysis journey?".
 My answer has always been the same, "Tell a data powered story!".
