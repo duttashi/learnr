@@ -5,10 +5,10 @@ rm(list=ls())
 
 
 # Load the required libraries
-library(ggplot2)
 library(tidyverse)
+library(ggplot2)
 library(corrplot) # for corrplot
-library(dplyr) # for select()
+
 # Read the data
 data_train<- read.csv("data/train.csv", header = TRUE, sep = ",")
 dim(data_train) # 30,471 observations in 292 variables
@@ -42,8 +42,35 @@ corrplot(cor(data_train[,internal_home_chars], use="complete.obs"))
 ## Correlation treatment (by subset the data) but first I will plot the high correlated vars
 ggplot(aes(x=full_sq, y=price_doc), data = data_train)+
   geom_point(color="red")
+## There is an outlier, lets remove and plot the data again
+data_train %>%
+  filter(full_sq<2000) %>%
+  ggplot(aes(x=full_sq, y=price_doc))+
+  geom_point(color="red", alpha=0.5)+
+  labs(x='Area', y='Price', title='Price by area in sq meters')
+
+names(data_train)
+
+## Lets look at the home built year
+table(data_train$build_year) # some nonsense built years like 4965,20052009,0,1,3,20,71,215
+## The distribution appears bimodal with a peak somewhere in the early 1970s and somewhere in the past few years.
+data_train %>%
+  filter(full_sq<2000 & build_year>1690 & build_year<=2018) %>%
+  ggplot(aes(x=build_year))+
+  geom_histogram(fill="blue", binwidth = 10)+
+  ggtitle("Distribution by build year")
+
+## Lets see if the build year and home price are related
+data_train %>% 
+  filter(build_year > 1691 & build_year < 2018) %>%
+  group_by(build_year) %>% 
+  summarize(mean_build_price=mean(price_doc)) %>%
+  ggplot(aes(x=build_year, y=mean_build_price)) +
+  geom_line(stat='identity', color='red') + 
+  geom_smooth(color='darkgrey') +
+  ggtitle('Mean price by year of build')
 
 
 
-boxplot(data_train) %>%
-  select(full_sq)
+  
+  
