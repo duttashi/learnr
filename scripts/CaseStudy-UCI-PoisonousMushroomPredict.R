@@ -79,18 +79,25 @@ levels(mushroom.data$habitat)<-c("woods","grasses","leaves","meadows","paths","u
 # Calculate number of levels for each variable
 mushroom.data.levels<-cbind.data.frame(Variable=names(mushroom.data), Total_Levels=sapply(mushroom.data,function(x){as.numeric(length(levels(x)))}))
 print(mushroom.data.levels)
-levels(mushroom.data$gill.attachment)
-
+levels(mushroom.data$veil.type)
 # dropping variable with constant variance
-mushroom.data$gill.attachment<- NULL
-
-set.seed(56)
+mushroom.data$veil.type<- NULL
 sum(is.na(mushroom.data)) # check for missing values. No missing values found
 
 # Initial data visualization
 library(ggplot2)
 str(mushroom.data)
 
+## is there a relationship between cap-surface and cap-shape
+p<- ggplot(data = mushroom.data, aes(x=cap.shape, y=cap.surface, color=class))
+p + geom_jitter(alpha=0.3) +  
+  scale_color_manual(breaks = c('edible','poisonous'),
+                     values=c('darkgreen','red'))
+## is there a relationship between odor and spore print color
+p<- ggplot(data = mushroom.data, aes(x=odor, y=spore.print.color, color=class))
+p + geom_jitter(alpha=0.3) +  
+  scale_color_manual(breaks = c('edible','poisonous'),
+                     values=c('darkgreen','red'))
 
 # check for high correlation
 library(corrplot) # for cor() and corrplot()
