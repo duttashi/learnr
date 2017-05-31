@@ -75,7 +75,7 @@ table(mushroom.data$population)
 levels(mushroom.data$population)<- c("abundant","clustered","numerous","scattered","several","solitary")
 table(mushroom.data$habitat)
 levels(mushroom.data$habitat)<-c("woods","grasses","leaves","meadows","paths","urban","waste")
-
+table(mushroom.data$habitat)
 # Calculate number of levels for each variable
 mushroom.data.levels<-cbind.data.frame(Variable=names(mushroom.data), Total_Levels=sapply(mushroom.data,function(x){as.numeric(length(levels(x)))}))
 print(mushroom.data.levels)
@@ -88,36 +88,65 @@ sum(is.na(mushroom.data)) # check for missing values. No missing values found
 library(ggplot2)
 str(mushroom.data)
 
-## is there a relationship between cap-surface and cap-shape
+## a. is there a relationship between cap-surface and cap-shape
 p<- ggplot(data = mushroom.data, aes(x=cap.shape, y=cap.surface, color=class))
 p + geom_jitter(alpha=0.3) +  
   scale_color_manual(breaks = c('edible','poisonous'),
                      values=c('darkgreen','red'))
-## is there a relationship between odor and spore print color
-p<- ggplot(data = mushroom.data, aes(x=odor, y=spore.print.color, color=class))
-p + geom_jitter(alpha=0.3) +  
-  scale_color_manual(breaks = c('edible','poisonous'),
-                     values=c('darkgreen','red'))
 
-# check for high correlation
-library(corrplot) # for cor() and corrplot()
-library(caret) # for findCorrelation()
-correl<- cor(mush.data[c(2:22)]) # skip the `class` variable
-highCorel<- colnames(mush.data[findCorrelation(correl,cutoff = 0.7, verbose = TRUE)])
-highCorel # [1] "cap.color"   "ring.number" "veil.type"  are highly correlated
-corrplot(cor(mush.data[,-1]))
+## b. is there a relationship between mushroom habitat and population
+p<- ggplot(data = mushroom.data, aes(x=population, y=habitat, color=class))
+p + geom_jitter(alpha=0.3) +  
+  scale_color_manual(breaks = c('edible','poisonous'),values=c('darkgreen','red'))
+
+## c. is there a relationship between mushroom habitat and odor
+p<- ggplot(data = mushroom.data, aes(x=habitat, y=habitat, color=class))
+p + geom_jitter(alpha=0.3) +scale_color_manual(breaks = c('edible','poisonous'),values=c('darkgreen','red'))
+
+## Significance Test: Chisquared test
+
+chisq.test(mushroom.data$cap.shape, mushroom.data$cap.surface, correct = FALSE)
+chisq.test(mushroom.data$population, mushroom.data$habitat, correct = FALSE)
+chi2<-chisq.test(mushroom.data$habitat, mushroom.data$odor, correct = FALSE)
+
+
+c(chi2$statistic, chi2$p.value)
+
+## Strength of association
+## As we know in this dataframe, there are 22 categorical variables with varied number of levels. So, first these categorical levels need to be converted to corresponding numeric values
+## By looking at the levels of these variables, I will say they are unordered in nature. Such categorical variables are called "nominal". So, the measure of association test for categorical unordered variable is "Goodman Kruskal tau test", see Agresti
+
+## See this vignette: https://cran.r-project.org/web/packages/GoodmanKruskal/vignettes/GoodmanKruskal.html
+## See the package details at https://cran.r-project.org/web/packages/GoodmanKruskal/GoodmanKruskal.pdf
+
+library(GoodmanKruskal)
+
+varset1<- c("cap.shape","cap.surface","population","habitat","odor")
+mushroomFrame1<- subset(mushroom.data, select = varset1)
+GKmatrix1<- GKtauDataframe(mushroomFrame1)
+plot(GKmatrix1)
+
+varset2<- c("cap.shape","cap.surface","population","habitat","odor","class")
+mushroomFrame2<- subset(mushroom.data, select = varset2)
+GKmatrix2<- GKtauDataframe(mushroomFrame2)
+plot(GKmatrix2, corrColors = "blue")
 
 
 # Predictive data analytics
-# A. split the dataset into training and testing sets
-library(caTools) # for the sample.split()
-set.seed(56) 
-sample = sample.split(mush.data$class, SplitRatio = .7)
-x_train = subset(mush.data, sample == TRUE)
-x_test = subset(mush.data, sample == FALSE)
 
-y_train<-x_train$class
-y_test <- x_test$class
+set.seed(56)
+ratio = sample(1:nrow(mushroom.data), size = 0.25*nrow(mushroom.data))
+test.data = mushroom.data[ratio,] #Test dataset 25% of total
+train.data = mushroom.data[-ratio,] #Train dataset 75% of total
 
-x_train$class<-NULL
-x_test$class<-NULL
+library(randomForest)
+#Fit Random Forest Model
+rf = randomForest(class ~ .,  ntree = 100,data = train.data)
+plot(rf)
+print(rf)
+
+# Variable Importance
+varImpPlot(rf,  
+           sort = T,
+           n.var=10,
+           main="Top 10 - Variable Importance")
