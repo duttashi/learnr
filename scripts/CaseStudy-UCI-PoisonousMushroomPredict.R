@@ -108,9 +108,7 @@ p + geom_jitter(alpha=0.3) +scale_color_manual(breaks = c('edible','poisonous'),
 chisq.test(mushroom.data$cap.shape, mushroom.data$cap.surface, correct = FALSE)
 chisq.test(mushroom.data$population, mushroom.data$habitat, correct = FALSE)
 chi2<-chisq.test(mushroom.data$habitat, mushroom.data$odor, correct = FALSE)
-
-
-c(chi2$statistic, chi2$p.value)
+chisq.test(mushroom.data$odor, mushroom.data$class, correct = FALSE)
 
 ## Strength of association
 ## As we know in this dataframe, there are 22 categorical variables with varied number of levels. So, first these categorical levels need to be converted to corresponding numeric values
@@ -126,11 +124,11 @@ mushroomFrame1<- subset(mushroom.data, select = varset1)
 GKmatrix1<- GKtauDataframe(mushroomFrame1)
 plot(GKmatrix1)
 
-varset2<- c("cap.shape","cap.surface","population","habitat","odor","class")
+varset2<- c("cap.shape","cap.surface","habitat","odor","class")
 mushroomFrame2<- subset(mushroom.data, select = varset2)
 GKmatrix2<- GKtauDataframe(mushroomFrame2)
 plot(GKmatrix2, corrColors = "blue")
-
+table(mushroom.data$class, mushroom.data$odor)
 
 # Predictive data analytics
 
