@@ -18,90 +18,81 @@ mushroom.data<- read.csv(file = theURL, header = FALSE, sep = ",",strip.white = 
 
 # summarise the data
 summary(mushroom.data) # stalk.root has 2480 missing values coded as ?, change ? to NA
-# The variables, `gill.attachment` has just 1 value, so dropping it
 # The variables, `gill.size`,`stalk.shape`,`stalk.root`, `stalk.surface.above.ring`,`stalk.surface.below.ring`,` stalk.color.above.ring`,`veil.type`,` veil.color`,` ring.number`,` ring.type`,` spore.print.color`,` population` has a missing level
 
 # Rename the levels
 str(mushroom.data)
-table(mushroom.data$class) # Before renaming the levels, e=4208 p=3916
 levels(mushroom.data$class)<- c("edible","poisonous")
-table(mushroom.data$class) # After renaming the levels, edible=4208 poisonous=3916
 levels(mushroom.data$cap.shape)<-c("bell","conical","flat","knobbed","sunken","convex") 
-table(mushroom.data$cap.surface)
 levels(mushroom.data$cap.surface)<- c("fibrous","grooves","smooth","scaly")
-table(mushroom.data$cap.color)
 levels(mushroom.data$cap.color)<- c("buff","cinnamon","red","gray","brown","pink","green",
                                     "purple","white","yellow")
-table(mushroom.data$bruises)
 levels(mushroom.data$bruises)<- c("bruisesno","bruisesyes")
-table(mushroom.data$odor)
 levels(mushroom.data$odor)<-c("almond","creosote","foul","anise","musty","nosmell","pungent",
                               "spicy","fishy")
-table(mushroom.data$gill.attachment)
 levels(mushroom.data$gill.attachment)<- c("attached","free")
-table(mushroom.data$gill.spacing)
 levels(mushroom.data$gill.spacing)<- c("close","crowded")
-table(mushroom.data$gill.size)
 levels(mushroom.data$gill.size)<-c("broad","narrow")
-table(mushroom.data$gill.color)
 levels(mushroom.data$gill.color)<- c("buff","red","gray","chocolate","black","brown","orange",
                                      "pink","green","purple","white","yellow")
-table(mushroom.data$stalk.shape)
 levels(mushroom.data$stalk.shape)<- c("enlarging","tapering")
-table(mushroom.data$stalk.root) # has a missing level coded as ?
 levels(mushroom.data$stalk.root)<- c("missing","bulbous","club","equal","rooted")
-table(mushroom.data$stalk.surface.above.ring)
 levels(mushroom.data$stalk.surface.above.ring)<-c("fibrous","silky","smooth","scaly")
-table(mushroom.data$stalk.surface.below.ring)
 levels(mushroom.data$stalk.surface.below.ring)<-c("fibrous","silky","smooth","scaly")
-table(mushroom.data$stalk.color.above.ring)
 levels(mushroom.data$stalk.color.above.ring)<- c("buff","cinnamon","red","gray","brown",
                                                  "orange","pink","white","yellow")
-table(mushroom.data$stalk.color.below.ring)
 levels(mushroom.data$stalk.color.below.ring)<- c("buff","cinnamon","red","gray","brown",
                                                  "orange","pink","white","yellow")
-table(mushroom.data$veil.type)
 levels(mushroom.data$veil.type)<-c("partial")
-table(mushroom.data$veil.color)
 levels(mushroom.data$veil.color)<- c("brown","orange","white","yellow")
-table(mushroom.data$ring.number)
 levels(mushroom.data$ring.number)<-c("none","one","two")
-table(mushroom.data$ring.type)
 levels(mushroom.data$ring.type)<- c("evanescent","flaring","large","none","pendant")
-table(mushroom.data$spore.print.color)
 levels(mushroom.data$spore.print.color)<- c("buff","chocolate","black","brown","orange","green",
                                             "purple","white","yellow")
-table(mushroom.data$population)
 levels(mushroom.data$population)<- c("abundant","clustered","numerous","scattered","several","solitary")
-table(mushroom.data$habitat)
 levels(mushroom.data$habitat)<-c("woods","grasses","leaves","meadows","paths","urban","waste")
-table(mushroom.data$habitat)
+
 # Calculate number of levels for each variable
 mushroom.data.levels<-cbind.data.frame(Variable=names(mushroom.data), Total_Levels=sapply(mushroom.data,function(x){as.numeric(length(levels(x)))}))
 print(mushroom.data.levels)
 levels(mushroom.data$veil.type)
-# dropping variable with constant variance
-mushroom.data$veil.type<- NULL
+
+# dropping veil type as it has only one level.
+mushroom.data$veil.type<-NULL
+
 sum(is.na(mushroom.data)) # check for missing values. No missing values found
 
 # Initial data visualization
 library(ggplot2)
 str(mushroom.data)
 
-## a. is there a relationship between cap-surface and cap-shape
-p<- ggplot(data = mushroom.data, aes(x=cap.shape, y=cap.surface, color=class))
-p + geom_jitter(alpha=0.3) +  
-  scale_color_manual(breaks = c('edible','poisonous'),
-                     values=c('darkgreen','red'))
+## a. Univariate categorical data visualization
+p<- ggplot(data = mushroom.data)
 
-## b. is there a relationship between mushroom habitat and population
-p<- ggplot(data = mushroom.data, aes(x=population, y=habitat, color=class))
-p + geom_jitter(alpha=0.3) +  
-  scale_color_manual(breaks = c('edible','poisonous'),values=c('darkgreen','red'))
+p+geom_bar(mapping = aes(x = cap.shape, fill=class), position = position_dodge())+
+  theme(legend.position = "top")
+table(mushroom.data$cap.shape, mushroom.data$class)
 
-## c. is there a relationship between mushroom habitat and odor
-p<- ggplot(data = mushroom.data, aes(x=habitat, y=habitat, color=class))
-p + geom_jitter(alpha=0.3) +scale_color_manual(breaks = c('edible','poisonous'),values=c('darkgreen','red'))
+# b. Multivariate categorical data visualization
+
+# Mosaic plot requires contingency table or a two way frequency table. Lets pick two predictors and create a two way table
+library(vcd)
+
+#mosaic(~ bruises+class, data = mushroom.data, legend=FALSE, gp=shading_Friendly,split_vertical=TRUE)
+
+#mosaic(~ habitat+class, data = mushroom.data, shade=TRUE, legend=TRUE, direction="v",  main = "Relationship between mushroom habitat and class")
+table(mushroom.data$habitat, mushroom.data$class)
+mosaicplot(~ habitat+class, data = mushroom.data,cex.axis = 0.9, shade = TRUE, 
+           main="Bivariate data visualization",
+           sub = "Relationship between mushroom habitat and class",
+           las=2, off=10,border="chocolate",xlab="habitat", ylab="class" )
+
+table(mushroom.data$population, mushroom.data$class)
+mosaicplot(~ population+class, data = mushroom.data, 
+           cex.axis = 0.9, shade = TRUE, 
+           main="Bivariate data visualization",
+           sub = "Relationship between mushroom population and class",
+           las=2, off=10,border="chocolate",xlab="population", ylab="class")
 
 ## Significance Test: Chisquared test
 
