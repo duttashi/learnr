@@ -1,8 +1,6 @@
 # Data Source: https://archive.ics.uci.edu/ml/datasets/Student+Performance#
 # 
 
-wdpath<-"C:/Users/Ashoo/Documents/R playground/LearningR/"
-setwd(wdpath)
 d1=read.table("data/student-mat.csv",sep=";",header=TRUE)
 d2=read.table("data/student-por.csv",sep=";",header=TRUE)
 names(student.mat)
