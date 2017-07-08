@@ -7,12 +7,19 @@ My answer has always been the same, "Tell a data powered story!".
 
 The repo `contains data, code, resources and plots` for statistical and machine learning
 
+###### Have a question?
 
-## Contact
-If you'd like to contact me regarding bugs, questions, or general consulting, feel free to drop me a line - 
-[ashishdutt@yahoo.com.my]
+Ask your question on [Stack Overflow](http://stackoverflow.com/questions/tagged/r)
+or the [R-SIG-Finance](https://stat.ethz.ch/mailman/listinfo/r-sig-finance)
+mailing list (you must subscribe to post).
 
-*Copyright 2016 [Ashish Dutt](https://duttashi.github.io/).*
+### Contributing
+
+Please see the [contributing guide](CONTRIBUTING.md).
+
+### Author
+[Ashish Dutt](https://duttashi.github.io/about/)
+
 
 <p align="center">
 <a href="https://www.paypal.me/ashishdutt">
