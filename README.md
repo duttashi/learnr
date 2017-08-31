@@ -1,6 +1,5 @@
 # Readme
-[![Project Status: Active – The project is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![Last-changedate](https://img.shields.io/badge/last%20change-2017--05--15-green.svg)](/commits/master) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Donate](http://i.imgur.com/vCIGFrH.png)](https://paypal.me/ashishdutt/25)
+[![Project Status: Active – The project is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![Last-changedate](https://img.shields.io/badge/last%20change-2017--05--15-green.svg)](/commits/master) [![Donate](http://i.imgur.com/vCIGFrH.png)](https://paypal.me/ashishdutt/25)
 
 The one common issue which novice entrants in data science have always asked me is, "How to begin their data analysis journey?".
 My answer has always been the same, "Tell a data powered story!".
