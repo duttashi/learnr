@@ -6,7 +6,3 @@
 ## Contribute
 
 Contributions welcome! Read the [contribution guidelines](contributing.md) first.
-
-## License
-
-This work is licenced under the MIT licence
