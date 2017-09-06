@@ -11,13 +11,13 @@ $ R`
 Open up the R console and type the following command,
 
 > `install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'devtools', 'uuid', 'digest'))`
-This command will prompt you to type in a number to select a CRAN mirror to install the necessary packages. Enter a number and the installation will continue.
+
+Select a CRAN mirror closest to your location to install the necessary packages. 
 
 Now execute the following command, > `devtools::install_github('IRkernel/IRkernel')`
 
 Your computer must have a working instantiation of `IPython`. If it is not installed, please install it from [here](https://www.anaconda.com/download/). Makes sure you choose, `Python 2.7` for installation. Install Anaconda IPython. Once the installation is completed, type the command, > `IRkernel::installspec(user = FALSE)` 
 
-Now open up the notebook application with `jupyter notebook` in `Anaconda Prompt` terminal. Do not type it in the R console for it will not work.
-You'll see R appearing in the list of kernels when you create a new notebook. 
+Now, launch the `Anaconda Prompt` terminal window and type the command `jupyter notebook`. Do not type it in the R console for it will not work. This will launch the IPython notebook in your browser window. You'll see R appearing in the list of kernels when you create a new notebook. 
 
 Enjoy and keep calm.
