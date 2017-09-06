@@ -10,12 +10,12 @@ $ R`
 
 Open up the R console and type the following command,
 
-`> install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'devtools', 'uuid', 'digest'))`
+> `install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'devtools', 'uuid', 'digest'))`
 This command will prompt you to type in a number to select a CRAN mirror to install the necessary packages. Enter a number and the installation will continue.
 
-Now execute the following command, `> devtools::install_github('IRkernel/IRkernel')`
+Now execute the following command, > `devtools::install_github('IRkernel/IRkernel')`
 
-Next type the command, `> IRkernel::installspec(user = FALSE)` 
+Next type the command, > `IRkernel::installspec(user = FALSE)` 
 
 Now open up the notebook application with `jupyter notebook` in `Anaconda Prompt` terminal. Do not type it in the R console for it will not work.
 You'll see R appearing in the list of kernels when you create a new notebook. 
