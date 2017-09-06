@@ -15,7 +15,7 @@ This command will prompt you to type in a number to select a CRAN mirror to inst
 
 Now execute the following command, > `devtools::install_github('IRkernel/IRkernel')`
 
-Your computer must have a working instantiation of `IPython`. If it is not installed, please install it from [here](https://www.anaconda.com/download/). Makes sure you choose, `Python 3.6` for installation. Install Anaconda IPython. Once the installation is completed, type the command, > `IRkernel::installspec(user = FALSE)` 
+Your computer must have a working instantiation of `IPython`. If it is not installed, please install it from [here](https://www.anaconda.com/download/). Makes sure you choose, `Python 2.7` for installation. Install Anaconda IPython. Once the installation is completed, type the command, > `IRkernel::installspec(user = FALSE)` 
 
 Now open up the notebook application with `jupyter notebook` in `Anaconda Prompt` terminal. Do not type it in the R console for it will not work.
 You'll see R appearing in the list of kernels when you create a new notebook. 
