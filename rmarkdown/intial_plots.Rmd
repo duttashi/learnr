@@ -1,0 +1,25 @@
+---
+title: "Diamond sizes"
+date: 2017-09-15
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+head(mpg)
+ggplot(data = mpg)+
+  geom_point(mapping = aes(x=displ, y=hwy)) # negative relationship 
+```
+
+```{r}
+smaller <- diamonds %>% 
+  filter(carat <= 2.5)
+```
+
+We have data about r nrow(diamonds) diamonds. Only r nrow(diamonds) - nrow(smaller) are larger than 2.5 carats. The distribution of the remainder is shown below:
+```{r}
+smaller %>% 
+  ggplot(aes(carat)) + 
+  geom_freqpoly(binwidth = 0.01)
+```
+
