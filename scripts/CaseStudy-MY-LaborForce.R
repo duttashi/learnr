@@ -98,15 +98,29 @@ imputdata$ximp
 # assign imputed values to a data frame
 df.cmplt<- imputdata$ximp
 str(df.cmplt)
-## FACTOR TO NUMERIC CONVERSION ##
-str(df.cmplt)
-levels(df.cmplt$State)
-table(df.cmplt$State)
 
-df.cmplt$State<-as.factor(gsub("W.P.Putrajaya","Putrajaya", df.cmplt$State,ignore.case=T))
-df.cmplt$State<-as.factor(gsub("W.P. Kuala Lumpur","Kuala Lumpur", df.cmplt$State,ignore.case=T))
-df.cmplt$State<-as.factor(gsub("W.P Labuan","Labuan", df.cmplt$State,ignore.case=T))
-df.cmplt$State<- as.numeric(df.cmplt$State)
+
+#### DETERMINE RELATIONSHIP BETWEEN VARIABLES ######
+library(vcd) # for xtabs() and assocstats()
+str(df.complete)
+
+mytable<- xtabs(~State+OutLabrFrc, data= df.complete)
+
+assocstats(mytable) # since pearsons chi-square p value = 0.15 which is greater than 0.05 indicating no relationship between state & employed 
+mytable<- xtabs(~State+LabrFrcPerct, data= df.complete)
+assocstats(mytable) # since pearsons chi-square p value = 0.00000049 which is less than 0.05 indicating relationship between state & Outside Labor Force 
+
+# 
+# 
+# ## FACTOR TO NUMERIC CONVERSION ##
+# str(df.cmplt)
+# levels(df.cmplt$State)
+# table(df.cmplt$State)
+# 
+# df.cmplt$State<-as.factor(gsub("W.P.Putrajaya","Putrajaya", df.cmplt$State,ignore.case=T))
+# df.cmplt$State<-as.factor(gsub("W.P. Kuala Lumpur","Kuala Lumpur", df.cmplt$State,ignore.case=T))
+# df.cmplt$State<-as.factor(gsub("W.P Labuan","Labuan", df.cmplt$State,ignore.case=T))
+# df.cmplt$State<- as.numeric(df.cmplt$State)
 
 # check for missing values in the new data frame
 colSums(is.na(df.cmplt))
@@ -129,20 +143,6 @@ prop.table(mytable)
 
 ### Percentage table
 prop.table(mytable)*100
-
-# Test of independence for the categorical variable
-library(vcd) # for xtabs() and assocstats()
-mytable<- xtabs(~State+Employed, data= df.cmplt)
-chisq.test(mytable) # p value is greater than 0.05, indicating no relationship between state & employed
-                    # Note: The warning message is generated because one of the 17 cells (State- some Year) has an expected value less than five, which may invalidate the chi-square approximation.  
-mytable<- xtabs(~State+UnempRatePerct, data= df.cmplt)
-chisq.test(mytable) # # p value is less than 0.05, indicating a relationship between state & Unemployed rate percent
-summary(mytable)
-
-mytable<- xtabs(~State+LabrFrcPerct, data= df.cmplt)
-chisq.test(mytable) # # p value is less than 0.05, indicating a relationship between state & labour force percent
-# Summary: The significance test conducted using chi-square test of independence evaluates whether or not sufficient evidence exists to reject a null hypothesis of independence between the variables. We could not reject the null hypothesis for State vs Employed, Labour Force and Outside Labour Force. 
-# Unfortunately we cannot test the association between the two categorical variables State and Year for our dataset because the measures of association like Phi and Cramer's V require the categorical variables to have at least two levels example "Sex" got two levels, "Male", "Female". For reference purpose, use the assocstats() from the vcd package to test association
 
 # Univariate Data Visualizations
 # Histogram's: NO GOOD IN SHOWING CONTINUOUS DATA
