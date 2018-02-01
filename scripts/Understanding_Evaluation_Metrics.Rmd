@@ -1,0 +1,92 @@
+---
+title: "Evalaution metrics"
+output: html_notebook
+---
+
+```{r}
+plot(cars)
+```
+
+1. Introduction: Building The Logistic Model
+To show the use of evaluation metrics, I need a classification model. So, let’s build one using logistic regression.
+
+```{r}
+# 1. Import dataset
+trainData <- read.csv('https://raw.githubusercontent.com/duttashi/datasets/master/breastcancer_training.csv')
+testData <- read.csv('https://raw.githubusercontent.com/duttashi/datasets/master/breastcancer_test.csv')
+
+# 2. Build Logistic Model
+logitmod <- glm(Class ~ Cl.thickness + Cell.size + Cell.shape, family = "binomial", data=trainData)
+
+# 3. Predict on testData
+pred <- predict(logitmod, newdata = testData, type = "response")
+
+# 4. If p > .5, then Class is 1 else 0
+y_pred <- ifelse(pred > 0.5, 1, 0)
+y_act <- testData$Class
+
+# 5. Accuracy
+mean(y_pred == y_act)  # 94%
+
+```
+
+The computed accuracy from the above model turned out to be 94%, which sounds pretty good. But, it doesn’t reveal much information about how well the model actually did in predicting the 1’s and 0’s independently.
+
+Nor does it say how well it would have performed with a different prediction probability cutoff.
+
+Let’s have a deeper look into this, starting with the confusion matrix.
+
+2. The Confusion Matrix
+The caret package provides the awesome confusionMatrix function for this. It takes in the predicted and actual values.
+
+And to avoid confusion, always specify the positive argument.
+
+Otherwise, it is possible for ‘0’ to be taken as ‘positive’ or the ‘event’, and will cause a big mistake which may go unnoticed.
+
+I want ‘malignant’ Class to be ‘positive’ so, I have set positive="1" below.
+
+```{r}
+library(caret)
+caret::confusionMatrix(y_pred, y_act, positive="1", mode="everything")
+```
+
+In the above output, the table in the first 4 lines of the output is the confusion matrix.
+
+The remaining part of the output shows a bunch of more valuable evaluation metrics. Let’s break down what they are.
+
+3. How to interpret caret’s confusionMatrix?
+First, let’s focus on the first 4 lines of the above output.
+
+```{r}
+Confusion Matrix and Statistics
+
+          Reference
+Prediction   0   1
+         0 122   1
+         1  11  70
+```
+The rows in the confusion matrix are the count of predicted 0’s and 1’s (from y_pred), while, the columns are the actuals (from y_act).
+
+So, you have 122 out of 133 benign instances predicted as benign and 70 out of 71 malignant instances predicted as malignant. This is good.
+
+Secondly, look at the 1 in top-right of the table. This means the model predicted 1 instance as benign which was actually positive.
+
+This is a classic case of ‘False Negative’ or Type II error. You want to avoid this at all costs, because, it says the patient is healthy when he is actually carrying malignant cells.
+
+Also, the model predicted 11 instances as ‘Malignant’ when the patient was actually ‘Benign’. This is called ‘False Positive’ or Type I error. This condition should also be avoided but in this case is not as dangerous as Type II error.
+
+
+
+
+
+
+
+
+
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
