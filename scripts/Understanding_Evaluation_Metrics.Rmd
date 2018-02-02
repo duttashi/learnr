@@ -1,17 +1,23 @@
 ---
-title: "Evalaution metrics"
+title: "Understanding Evalaution Metrics"
 output:
   pdf_document: default
   html_document:
     df_print: paged
+  author: Ashish Dutt
+  author contact: https://github.com/duttashi
 ---
 ### 1. Introduction: Building The Logistic Model
 To show the use of evaluation metrics, I need a classification model. So, let’s build one using logistic regression.
 
 ```{r}
+# 0. Path to access the data
+trainDataPath<- 'https://raw.githubusercontent.com/duttashi/datasets/master/breastcancer_training.csv'
+testDataPath<-'https://raw.githubusercontent.com/duttashi/datasets/master/breastcancer_test.csv'
+
 # 1. Import dataset
-trainData <- read.csv('https://raw.githubusercontent.com/duttashi/datasets/master/breastcancer_training.csv')
-testData <- read.csv('https://raw.githubusercontent.com/duttashi/datasets/master/breastcancer_test.csv')
+trainData <- read.csv(trainDataPath)
+testData <- read.csv(testDataPath)
 
 # 2. Build Logistic Model
 logitmod <- glm(Class ~ Cl.thickness + Cell.size + Cell.shape, family = "binomial", data=trainData)
@@ -178,7 +184,7 @@ By targeting the top 40% of the population (point it touches the X-axis), the mo
 
 The KS chart and statistic that is widely used in credit scoring scenarios and for selecting the optimal population size of target users for marketing campaigns.
 
-9. How to Interpret ROC Curve?
+### 9. How to Interpret ROC Curve?
 Often, choosing the best model is sort of a balance between predicting the one's accurately or the zeroes accurately. In other words sensitivity and specificity.
 
 But it would be great to have something that captures both these aspects in one single metric.
