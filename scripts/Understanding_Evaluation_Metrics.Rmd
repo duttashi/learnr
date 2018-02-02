@@ -6,6 +6,7 @@ output:
     df_print: paged
   author: Ashish Dutt
   author contact: https://github.com/duttashi
+  date created: 02/02/2018
 ---
 ### 1. Introduction: Building The Logistic Model
 To show the use of evaluation metrics, I need a classification model. So, let’s build one using logistic regression.
