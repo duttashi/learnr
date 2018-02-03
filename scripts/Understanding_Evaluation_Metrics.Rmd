@@ -283,7 +283,7 @@ rmse(error)
 
 ### 8. Cross Validation (CV)
 
-#### Understanding CV 
+#### 8.1 Understanding CV 
 In Machine Learning, Cross-validation is a resampling method used for model evaluation to avoid testing a model on the same dataset on which it was trained. This is a common mistake, especially that a separate testing dataset is not always available. 
 The concept of cross validation is actually simple: Instead of using the whole dataset to train and then test on same data, we could randomly divide our data into training and testing datasets.
 
@@ -295,21 +295,83 @@ K-Fold basically consists of the below steps:
 * Use the remaining part of the data as test set to validate the model. (Usually, in this step the accuracy or test error of the model is measured).
 * Repeat the procedure k times.
 
-#### Cross Validation with R: the caret package
+#### 8.2 Cross Validation with R: the caret package
 There are many R packages that provide functions for performing different flavors of CV. In my opinion, one of the best implementation of these ideas is available in the caret package by Max Kuhn (see Kuhn and Johnson 2013).
 
+##### 8.2.1 K-fold Cross Validation
+The k-fold cross validation method involves splitting the dataset into k-subsets. For each subset is held out while the model is trained on all other subsets. This process is completed until accuracy is determine for each instance in the dataset, and an overall accuracy estimate is provided.
 
+It is a robust method for estimating accuracy, and the size of k and tune the amount of bias in the estimate, with popular values set to 3, 5, 7 and 10.
 
+The following example uses 10-fold cross validation to estimate Naive Bayes on the iris dataset.
 
-### 9. What is Somers-D Statistic?
-Again, Somers D is an evaluation metric to judge the efficacy of the model.
-
-Somers D = (#Concordant Pairs - #Discordant Pairs - #Ties) / Total Pairs
 ```{r}
-somersD(y_act, y_pred) 
+# load the library
+library(caret)
+# load the iris dataset
+data(iris)
+# define training control
+train_control <- trainControl(method="cv", number=10)
+# train the model
+model <- train(Species~., data=iris, trControl=train_control, method="nb")
+# summarize results
+print(model)
+```
+
+##### 8.2.2 Repeated k-fold Cross Validation
+The process of splitting the data into k-folds can be repeated a number of times, this is called Repeated k-fold Cross Validation. The final model accuracy is taken as the mean from the number of repeats.
+
+The following example uses 10-fold cross validation with 3 repeats to estimate Naive Bayes on the iris dataset.
+```{r}
+# load the library
+library(caret)
+# load the iris dataset
+data(iris)
+# define training control
+train_control <- trainControl(method="repeatedcv", number=10, repeats=3)
+# train the model
+model <- train(Species~., data=iris, trControl=train_control, method="nb")
+# summarize results
+print(model)
+```
+
+##### 8.2.3 Leave One Out Cross Validation
+In Leave One Out Cross Validation (LOOCV), a data instance is left out and a model constructed on all other data instances in the training set. This is repeated for all data instances.
+
+The following example demonstrates LOOCV to estimate Naive Bayes on the iris dataset.
+
+Leave One Out Cross Validation in R
+```{r}
+# load the library
+library(caret)
+# load the iris dataset
+data(iris)
+# define training control
+train_control <- trainControl(method="LOOCV")
+# train the model
+model <- train(Species~., data=iris, trControl=train_control, method="nb")
+# summarize results
+print(model)
+
+```
+
+##### 8.2.4 Bootstrap
+Bootstrap resampling involves taking random samples from the dataset (with re-selection) against which to evaluate the model. In aggregate, the results provide an indication of the variance of the models performance. Typically, large number of resampling iterations are performed (thousands or tends of thousands).
+
+The following example uses a bootstrap with 10 resamples to prepare a Naive Bayes model.
+
+```{r}
+library(caret)
+# load the iris dataset
+data(iris)
+# define training control
+train_control <- trainControl(method="boot", number=100)
+# train the model
+model <- train(Species~., data=iris, trControl=train_control, method="nb")
+# summarize results
+print(model)
 ```
 
 
-
-### 13. Conclusion
+### 9. Conclusion
 Clearly, just the accuracy score is not enough to judge the performance of the models. One or a combination of the following evaluation metrics is typically required to do the job.
