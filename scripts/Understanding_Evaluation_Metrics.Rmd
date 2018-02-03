@@ -8,7 +8,7 @@ output:
   author contact: https://github.com/duttashi
   date created: 02/02/2018
 ---
-### 0. Introduction: Building The Logistic Model
+#### Introduction: Building The Logistic Model
 To show the use of evaluation metrics, I need a classification model. So, let’s build one using logistic regression.
 
 ```{r}
@@ -61,7 +61,7 @@ In the above output, the table in the first 4 lines of the output is the confusi
 
 The remaining part of the output shows a bunch of more valuable evaluation metrics. Let’s break down what they are.
 
-### 1.1. How to interpret caret’s confusionMatrix?
+#### 1.1. How to interpret caret’s confusionMatrix?
 First, let’s focus on the first 4 lines of the above output.
 
  Confusion Matrix and Statistics
@@ -83,7 +83,7 @@ Also, the model predicted 11 instances as ‘Malignant’ when the patient was a
 
 ![Figure: False Positive](false_positive.png)
 
-### 4. What is Sensitivity, Specificity and Detection Rate?
+#### 1.2. What is Sensitivity, Specificity and Detection Rate?
 Sensitivity is the percentage of actual 1’s that were correctly predicted. It shows what percentage of 1’s were covered by the model.
 
 The total number of 1’s is 71 out of which 70 was correctly predicted. So, sensitivity is 70/71 = 98.59%
@@ -101,7 +101,7 @@ Detection rate is the proportion of the whole sample where the events were detec
 You can see further explanation of all the metrics in this wiki link. https://en.wikipedia.org/wiki/Confusion_matrix
 
 
-### 2. What is Precision, Recall and F1 Score?
+#### 1.3. What is Precision, Recall and F1 Score?
 Another great way to know the goodness of the model is using the Precision, Recall and the F1 Score.
 
 The approach here is to find what percentage of the model’s positive (1’s) predictions are accurate. This is nothing but Precision.
@@ -148,14 +148,14 @@ Fmeasure
 ```
 We get an F1 score of 92 percent. That is pretty good.
 
-### 3. What is Cohen's Kappa?
+#### 1.4. What is Cohen's Kappa?
 Kappa is similar to Accuracy score, but it takes into account the accuracy that would have happened anyway through random predictions.
 
 Kappa = (Observed Accuracy - Expected Accuracy) / (1 - Expected Accuracy)
 
 Cohen's kappa is shown as an output of caret's confusionMatrix function.
 
-### 4. What is KS Statistic and How to interpret KS Chart?
+#### 2. What is KS Statistic and How to interpret KS Chart?
 The KS Statistic and the KS Chart (discussed next) are used to make decisions like: How many customers to target for a marketing campaign? or How many customers should we pay for to show ads etc.
 
 So how to compute the Kolmogorov-Smirnov statistic?
@@ -176,7 +176,7 @@ ks_stat(y_act, y_pred)
 
 ks_stat(y_act, y_pred, returnKSTable = T)
 ```
-### 4.1. How to plot Kolmogorov Smirnov Chart in R?
+#### 3. How to plot Kolmogorov Smirnov Chart in R?
 The KS Chart is particularly useful in marketing campaigns and ads click predictions where you want to know the right population size to target to get the maximum response rate.
 
 The KS chart below shows how this might look like. The length of the vertical dashed red line indicates the KS Statistic.
@@ -188,7 +188,7 @@ By targeting the top 40% of the population (point it touches the X-axis), the mo
 
 The KS chart and statistic that is widely used in credit scoring scenarios and for selecting the optimal population size of target users for marketing campaigns.
 
-### 5. How to Interpret ROC Curve?
+#### 4. How to Interpret ROC Curve?
 Often, choosing the best model is sort of a balance between predicting the one's accurately or the zeroes accurately. In other words sensitivity and specificity.
 
 But it would be great to have something that captures both these aspects in one single metric.
@@ -218,12 +218,12 @@ Therefore, the larger the area under the ROC curve, the better is your model.
 
 The ROC curve is the only metric that measures how well the model does for different values of prediction probability cutoffs. The `optimalCutoff` function from `InformationValue` can be used to know what cutoff gives the best sensitivity, specificity or both.
 
-### 6. What is Gini Coefficient?
+#### 5. What is Gini Coefficient?
 Gini Coefficient is an indicator of how well the model outperforms random predictions. It can be computed from the area under the ROC curve using the following formula:
 
 Gini Coefficient = (2 * AUROC) - 1
 
-### 7. Concordant-Discordant Ratio
+#### 6. Concordant-Discordant Ratio
 In an ideal model, the probability scores of all true 1's should be greater than the probability scores of ALL true 0's. Such a model is said to be perfectly concordant and this phenomenon can be measured by Concordance and Discordance.
 
 So how to calculate Concordance?
@@ -253,7 +253,7 @@ For a perfect model, this will be 100%. So, the higher the concordance, the bett
 InformationValue::Concordance(y_act, pred)
 ```
 
-### 8. Root Mean Square Error (RMSE)
+#### 7. Root Mean Square Error (RMSE)
 RMSE is the most popular evaluation metric used in regression problems. It follows an assumption that error are unbiased and follow a normal distribution. Here are the key points to consider on RMSE.
 
 * The RMSE is the square root of the variance of the residuals. 
@@ -281,7 +281,7 @@ rmse(error)
 
 ```
 
-### 8. Cross Validation (CV)
+#### 8. Cross Validation (CV)
 
 #### 8.1 Understanding CV 
 In Machine Learning, Cross-validation is a resampling method used for model evaluation to avoid testing a model on the same dataset on which it was trained. This is a common mistake, especially that a separate testing dataset is not always available. 
@@ -313,7 +313,8 @@ data(iris)
 # define training control
 train_control <- trainControl(method="cv", number=10)
 # train the model
-model <- train(Species~., data=iris, trControl=train_control, method="nb")
+# method="nb" where nb is naive bayes classification
+model <- train(Species~., data=iris,trControl=train_control,method="nb")
 # summarize results
 print(model)
 ```
@@ -330,6 +331,7 @@ data(iris)
 # define training control
 train_control <- trainControl(method="repeatedcv", number=10, repeats=3)
 # train the model
+# method="nb" where nb is naive bayes classification
 model <- train(Species~., data=iris, trControl=train_control, method="nb")
 # summarize results
 print(model)
@@ -349,6 +351,7 @@ data(iris)
 # define training control
 train_control <- trainControl(method="LOOCV")
 # train the model
+# method="nb" where nb is naive bayes classification
 model <- train(Species~., data=iris, trControl=train_control, method="nb")
 # summarize results
 print(model)
