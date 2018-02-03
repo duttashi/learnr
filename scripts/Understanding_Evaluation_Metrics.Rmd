@@ -8,7 +8,7 @@ output:
   author contact: https://github.com/duttashi
   date created: 02/02/2018
 ---
-### 1. Introduction: Building The Logistic Model
+### 0. Introduction: Building The Logistic Model
 To show the use of evaluation metrics, I need a classification model. So, let’s build one using logistic regression.
 
 ```{r}
@@ -41,7 +41,9 @@ Nor does it say how well it would have performed with a different prediction pro
 
 Let’s have a deeper look into this, starting with the confusion matrix.
 
-### 2. The Confusion Matrix
+## Evaluation Metrics Simplified 
+
+### 1. The Confusion Matrix
 The caret package provides the awesome confusionMatrix function for this. It takes in the predicted and actual values.
 
 And to avoid confusion, always specify the positive argument.
@@ -59,7 +61,7 @@ In the above output, the table in the first 4 lines of the output is the confusi
 
 The remaining part of the output shows a bunch of more valuable evaluation metrics. Let’s break down what they are.
 
-### 3. How to interpret caret’s confusionMatrix?
+### 1.1. How to interpret caret’s confusionMatrix?
 First, let’s focus on the first 4 lines of the above output.
 
  Confusion Matrix and Statistics
@@ -99,7 +101,7 @@ Detection rate is the proportion of the whole sample where the events were detec
 You can see further explanation of all the metrics in this wiki link. https://en.wikipedia.org/wiki/Confusion_matrix
 
 
-### 5. What is Precision, Recall and F1 Score?
+### 2. What is Precision, Recall and F1 Score?
 Another great way to know the goodness of the model is using the Precision, Recall and the F1 Score.
 
 The approach here is to find what percentage of the model’s positive (1’s) predictions are accurate. This is nothing but Precision.
@@ -145,14 +147,15 @@ Fmeasure <- 2 * precision_value * recall_value / (precision_value + recall_value
 Fmeasure
 ```
 We get an F1 score of 92 percent. That is pretty good.
-6. What is Cohen's Kappa?
+
+### 3. What is Cohen's Kappa?
 Kappa is similar to Accuracy score, but it takes into account the accuracy that would have happened anyway through random predictions.
 
 Kappa = (Observed Accuracy - Expected Accuracy) / (1 - Expected Accuracy)
 
 Cohen's kappa is shown as an output of caret's confusionMatrix function.
 
-### 7. What is KS Statistic and How to interpret KS Chart?
+### 4. What is KS Statistic and How to interpret KS Chart?
 The KS Statistic and the KS Chart (discussed next) are used to make decisions like: How many customers to target for a marketing campaign? or How many customers should we pay for to show ads etc.
 
 So how to compute the Kolmogorov-Smirnov statistic?
@@ -173,7 +176,7 @@ ks_stat(y_act, y_pred)
 
 ks_stat(y_act, y_pred, returnKSTable = T)
 ```
-### 8. How to plot Kolmogorov Smirnov Chart in R?
+### 4.1. How to plot Kolmogorov Smirnov Chart in R?
 The KS Chart is particularly useful in marketing campaigns and ads click predictions where you want to know the right population size to target to get the maximum response rate.
 
 The KS chart below shows how this might look like. The length of the vertical dashed red line indicates the KS Statistic.
@@ -185,7 +188,7 @@ By targeting the top 40% of the population (point it touches the X-axis), the mo
 
 The KS chart and statistic that is widely used in credit scoring scenarios and for selecting the optimal population size of target users for marketing campaigns.
 
-### 9. How to Interpret ROC Curve?
+### 5. How to Interpret ROC Curve?
 Often, choosing the best model is sort of a balance between predicting the one's accurately or the zeroes accurately. In other words sensitivity and specificity.
 
 But it would be great to have something that captures both these aspects in one single metric.
@@ -215,7 +218,12 @@ Therefore, the larger the area under the ROC curve, the better is your model.
 
 The ROC curve is the only metric that measures how well the model does for different values of prediction probability cutoffs. The `optimalCutoff` function from `InformationValue` can be used to know what cutoff gives the best sensitivity, specificity or both.
 
-### 10. Concordance and Discordance
+### 6. What is Gini Coefficient?
+Gini Coefficient is an indicator of how well the model outperforms random predictions. It can be computed from the area under the ROC curve using the following formula:
+
+Gini Coefficient = (2 * AUROC) - 1
+
+### 7. Concordant-Discordant Ratio
 In an ideal model, the probability scores of all true 1's should be greater than the probability scores of ALL true 0's. Such a model is said to be perfectly concordant and this phenomenon can be measured by Concordance and Discordance.
 
 So how to calculate Concordance?
@@ -244,7 +252,56 @@ For a perfect model, this will be 100%. So, the higher the concordance, the bett
 ```{r}
 InformationValue::Concordance(y_act, pred)
 ```
-### 11. What is Somers-D Statistic?
+
+### 8. Root Mean Square Error (RMSE)
+RMSE is the most popular evaluation metric used in regression problems. It follows an assumption that error are unbiased and follow a normal distribution. Here are the key points to consider on RMSE.
+
+* The RMSE is the square root of the variance of the residuals. 
+* It indicates the absolute fit of the model to the data–how close the observed data points are to the model’s predicted values. 
+* Whereas R-squared is a relative measure of fit, RMSE is an absolute measure of fit. 
+* Lower values of RMSE indicate better fit. RMSE is a good measure of how accurately the model predicts the response, and is the most important criterion for fit if the main purpose of the model is prediction.
+
+**The best measure of model fit depends on the researcher’s objectives, and more than one are often useful.**
+
+```{r}
+# Function that returns Root Mean Squared Error
+rmse <- function(error)
+{
+    sqrt(mean(error^2))
+}
+# Example data
+actual <- c(4, 6, 9, 10, 4, 6, 4, 7, 8, 7)
+predicted <- c(5, 6, 8, 10, 4, 8, 4, 9, 8, 9)
+ 
+# Calculate error
+error <- actual - predicted
+ 
+# Example of invocation of functions
+rmse(error)
+
+```
+
+### 8. Cross Validation (CV)
+
+#### Understanding CV 
+In Machine Learning, Cross-validation is a resampling method used for model evaluation to avoid testing a model on the same dataset on which it was trained. This is a common mistake, especially that a separate testing dataset is not always available. 
+The concept of cross validation is actually simple: Instead of using the whole dataset to train and then test on same data, we could randomly divide our data into training and testing datasets.
+
+There are several types of cross validation  methods (LOOCV – Leave-one-out cross validation, the holdout method, k-fold cross validation). Here, I’m going to discuss the K-Fold cross validation method.
+K-Fold basically consists of the below steps:
+
+* Randomly split the data into k subsets, also called folds.
+* Fit the model on the training data (or k-1 folds).
+* Use the remaining part of the data as test set to validate the model. (Usually, in this step the accuracy or test error of the model is measured).
+* Repeat the procedure k times.
+
+#### Cross Validation with R: the caret package
+There are many R packages that provide functions for performing different flavors of CV. In my opinion, one of the best implementation of these ideas is available in the caret package by Max Kuhn (see Kuhn and Johnson 2013).
+
+
+
+
+### 9. What is Somers-D Statistic?
 Again, Somers D is an evaluation metric to judge the efficacy of the model.
 
 Somers D = (#Concordant Pairs - #Discordant Pairs - #Ties) / Total Pairs
@@ -252,10 +309,7 @@ Somers D = (#Concordant Pairs - #Discordant Pairs - #Ties) / Total Pairs
 somersD(y_act, y_pred) 
 ```
 
-### 12. What is Gini Coefficient?
-Gini Coefficient is an indicator of how well the model outperforms random predictions. It can be computed from the area under the ROC curve using the following formula:
 
-Gini Coefficient = (2 * AUROC) - 1
 
 ### 13. Conclusion
 Clearly, just the accuracy score is not enough to judge the performance of the models. One or a combination of the following evaluation metrics is typically required to do the job.
