@@ -242,8 +242,6 @@ Finally, let's plot the k value against distance score.
 ## Summary ##
 In supervised learning problems, clustering offers a fantastic opportunity for feature engineering. Isn't it?
 
-Apart from k means, hierarchical clustering, there are other clustering techniques such as association mining. Association mining helps a lot in bundling products in a shopping store. Hence, it's being widely used in the retail industry. It's an interesting topic which we shall cover in future articles.
+Apart from k means, hierarchical clustering, there are other clustering techniques such as association mining. Association mining helps a lot in bundling products in a shopping store. Hence, it's being widely used in the retail industry. 
 
-In this tutorial, we learned about clustering techniques from scratch. We started with covering the fundamentals of clustering followed by getting hands-on experience in performing cluster analysis in R.
 
-Did you like this tutorial? Feel free to drop in your comments, suggestions, and share your experience while dealing with clustering problems.
