@@ -2,55 +2,101 @@
 title: "Basic Neural Network"
 author: "Ashish Dutt"
 date: "February 6, 2018"
-output: pdf_document
+output:
+  pdf_document: default
+  word_document: default
 ---
 
-A neural network (NN) model is very similar to a non-linear regression model, with the exception that the former can handle an incredibly large amount of model parameters. For this reason, neural network models are said to have the ability to approximate any continuous function.
+## Basics
 
-### Using the library neuralnet
+A neural network is a model characterized by an activation function, which is used by interconnected information processing units to transform input into output. A neural network has always been compared to human nervous system. Information in passed through interconnected units analogous to information passage through neurons in humans. The first layer of the neural network receives the raw input, processes it and passes the processed information to the hidden layers. The hidden layer passes the information to the last layer, which produces the output. The advantage of neural network is that it is adaptive in nature. It learns from the information provided, i.e. trains itself from the data, which has a known outcome and optimizes its weights for a better prediction in situations with unknown outcome.
+
+### 1. Perceptron Neural Network
+A perceptron, viz. single layer neural network, is the most basic form of a neural network.  A perceptron receives multidimensional input and processes it using a weighted summation and an activation function. It is trained using a labeled data and learning algorithm that optimize the weights in the summation processor. A major limitation of perceptron model is its inability to deal with non-linearity. 
+
+### 2. Multilayer Neural Network
+A multilayered neural network overcomes this limitation and helps solve non-linear problems. The input layer connects with hidden layer, which in turn connects to the output layer. The connections are weighted and weights are optimized using a learning rule.
+
+### 3. Learning Rules used by Neural Network
+
+The learning rule is used to calculate the error at the output unit. This error is backpropagated to all the units such that the error at each unit is proportional to the contribution of that unit towards total error at the output unit.  The errors at each unit are then used to optimize the weight at each connection. 
+
+There are many learning rules that are used with neural network:
+
+a) least mean square;
+b) gradient descent;
+c) newton’s rule;
+d) conjugate gradient etc.
+
+### Fitting a Neural Network in R
+I begin by dividing the data into train and test set using random sampling. 
+
+### Example
 ```{r}
-# Example # 1
-#Going to create a neural network to perform square rooting (using backpropagation)
-#Type ?neuralnet for more information on the neuralnet library
+# clean the workspace
+rm(list=ls())
+library(caTools) # for sample.split()
+data(iris)
+set.seed(2018)
+# Split the data into train and test
+sample = sample.split(iris$Species, SplitRatio = .75)
+iristrain = subset(iris, sample == TRUE)
+iristest  = subset(iris, sample == FALSE)
 
-#Generate 50 random numbers uniformly distributed between 0 and 100
-#And store them as a dataframe
-traininginput <-  as.data.frame(runif(50, min=0, max=100))
-trainingoutput <- sqrt(traininginput)
-
-#Column bind the data into one variable
-trainingdata <- cbind(traininginput,trainingoutput)
-colnames(trainingdata) <- c("Input","Output")
-
-#Train the neural network with backpropagation
-#Going to have 10 hidden layers
-#Threshold is a numeric value specifying the threshold for the partial
-#derivatives of the error function as stopping criteria.
-net.sqrt <- neuralnet(Output ~ Input, trainingdata, hidden=10, threshold=0.01)
-print(net.sqrt)
+dim(iristrain)
+dim(iristest)
+nnet_iristrain <- iristrain
 ```
-
-```{r net.sqrt }
-#Plot the neural network
-plot(net.sqrt)
-```
-####Test the neural network on some training data
+Next, I binarize the categorical output.
 ```{r}
-testdata <- as.data.frame((1:10)^2) #Generate some squared numbers
-net.results <- compute(net.sqrt, testdata) #Run them through the neural network
+# Binarize the categorical output
+nnet_iristrain <- cbind(nnet_iristrain, iristrain$Species == 'setosa')
+nnet_iristrain <- cbind(nnet_iristrain, iristrain$Species == 'versicolor')
+nnet_iristrain <- cbind(nnet_iristrain, iristrain$Species == 'virginica')
 
-#Lets see what properties net.sqrt has
-ls(net.results)
-#Lets see the results
-print(net.results$net.result)
+names(nnet_iristrain)[6] <- 'setosa'
+names(nnet_iristrain)[7] <- 'versicolor'
+names(nnet_iristrain)[8] <- 'virginica'
+
+head(nnet_iristrain)
 ```
-
-####Lets display a better version of the results
+#### create the neual network
 ```{r}
-cleanoutput <- cbind(testdata,sqrt(testdata),
-                     as.data.frame(net.results$net.result))
-colnames(cleanoutput) <- c("Input","Expected Output","Neural Net Output")
-print(cleanoutput)
-
+library(neuralnet)
+nn <- neuralnet(setosa+versicolor+virginica ~ 
+                  Sepal.Length+Sepal.Width
+                +Petal.Length
+                +Petal.Width,
+                data=nnet_iristrain, 
+                hidden=c(3))
 ```
 
+```{r nn}
+plot(nn)
+```
+#### Another plot
+```{r nn1}
+library(NeuralNetTools)
+nn1 <- neuralnet(setosa+versicolor+virginica ~ 
+                  Sepal.Length+Sepal.Width
+                +Petal.Length
+                +Petal.Width,
+                data=nnet_iristrain, 
+                hidden=c(3))
+plotnet(nn1, alpha=0.6)
+```
+In the above figure,  our model has 3 hidden layers. The black lines show the connections with weights. The weights are calculated using the back propagation algorithm explained earlier. The blue line is the displays the bias term.
+
+Now, we predict the Species using the neural network model.
+
+#### Make predictions
+```{r}
+mypredict <- compute(nn, iris[-5])$net.result
+# Put multiple binary output to categorical output
+maxidx <- function(arr) {
+  return(which(arr == max(arr)))
+}
+idx <- apply(mypredict, c(1), maxidx)
+prediction <- c('setosa', 'versicolor', 'virginica')[idx]
+table(prediction, iris$Species)
+```
