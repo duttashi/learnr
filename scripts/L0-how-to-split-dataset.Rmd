@@ -1,0 +1,68 @@
+---
+title: "How to split a dataset into train and test"
+author: "Ashish Dutt"
+date: "February 6, 2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Data Splitting
+
+There are several approaches to splitiing a dataset into train and test for a predictive modelling task. I present a few different approaches below;
+
+### Approach# 1: Manual approach: split into training and test sets having a 60/40 split 
+```{r}
+set.seed(2018)
+train_indices <- 1:round(0.6 * n)
+train <- shuffled_df[train_indices, ]
+test_indices <- (round(0.6 * n) + 1):n
+test <- shuffled_df[test_indices, ]
+dim(train)
+dim(test)
+```
+
+### Approach# 2: using the sample() method
+```{r}
+data(mtcars)
+dim(mtcars)
+```
+#### 75% of the sample size
+```{r}
+smp_size <- floor(0.75 * nrow(mtcars))
+```
+#### set the seed to make your partition reproductible
+```{r}
+set.seed(2018)
+train_ind <- sample(seq_len(nrow(mtcars)), size = smp_size)
+train <- mtcars[train_ind, ]
+test <- mtcars[-train_ind, ]
+dim(train)
+dim(test)
+```
+
+### Approach# 3: using the caTools package
+```{r}
+require(caTools)
+data(mtcars)
+dim(mtcars)
+set.seed(2018) 
+sample = sample.split(mtcars$mpg, SplitRatio = .75)
+train = subset(mtcars, sample == TRUE)
+test  = subset(mtcars, sample == FALSE)
+dim(train)
+dim(test)
+```
+### Approach# 4: using the createDataPartition() from the caret package
+```{r}
+library(caret)
+dim(mtcars)
+set.seed(2018)
+splitIndex<-createDataPartition(y=mtcars$mpg,p=0.7,list=FALSE)
+train<-mtcars[splitIndex,]
+test<-mtcars[-splitIndex,]
+dim(train)
+dim(test)
+```
