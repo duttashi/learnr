@@ -1,44 +1,47 @@
-# Random Forest
+# Random Forest example
+# In this example, I show both categorical and continuous classification using Random Forest
 
-#load required libraries – rpart for classification and regression trees
-library(rpart)
-#mlbench for Glass dataset
-library(mlbench)
-#load Glass
-data("Glass")
-#set seed to ensure reproducible results
-set.seed(51)
-#split into training and test sets
-Glass[,"train"] <- ifelse(runif(nrow(Glass))<0.8,1,0)
-#separate training and test sets
-trainGlass <- Glass[Glass$train==1,]
-testGlass <- Glass[Glass$train==0,]
-#get column index of train flag
-trainColNum <- grep("train",names(trainGlass))
-#remove train flag column from train and test sets
-trainGlass <- trainGlass[,-trainColNum]
-testGlass <- testGlass[,-trainColNum]
-#get column index of predicted variable in dataset
-typeColNum <- grep("Type",names(Glass))
-#build model
-rpart_model <- rpart(Type ~.,data = trainGlass, method="class")
-#plot tree
-plot(rpart_model);text(rpart_model)
-#…and the moment of truth
-rpart_predict <- predict(rpart_model,testGlass[,-typeColNum],type="class")
-mean(rpart_predict==testGlass$Type)
+# Classifcation
+require(caTools)
+data(mtcars)
+set.seed(2018) 
+# Split the data into train and test
+sample = sample.split(mtcars$mpg, SplitRatio = .75)
+train = subset(mtcars, sample == TRUE)
+test  = subset(mtcars, sample == FALSE)
+# Apply the random forest model
+fit<- randomForest( as.factor(gear) ~.,
+                    data=train, 
+                    importance=TRUE, 
+                    ntree=500)
+# Look at variable importance
+varImpPlot(fit)
 
-# random forest
-#build model
-library(randomForest)
-Glass.rf <- randomForest(Type ~.,data = trainGlass, importance=TRUE, xtest=testGlass[,-typeColNum],ntree=1000)
-#Get summary info
-Glass.rf
+letspredict<- predict(fit, test)
+finalresult<- data.frame(ActualGear= test$gear, PredictedGear=letspredict)
+View(finalresult)
+finalresult
 
-#accuracy for test set
-mean(Glass.rf$test$predicted==testGlass$Type)
-#confusion matrix
-table(Glass.rf$test$predicted,testGlass$Type)
 
-#variable importance plot
-varImpPlot(Glass.rf)
+# Regression 
+require(MASS)
+attach(Boston)
+str(Boston)
+# Split the data into train and test
+set.seed(2018) 
+sample = sample.split(Boston$medv, SplitRatio = .75)
+train = subset(Boston, sample == TRUE)
+test  = subset(Boston, sample == FALSE)
+fit<- randomForest( medv ~.,
+                    data=train, 
+                    importance=TRUE, 
+                    ntree=500)
+# Look at variable importance
+varImpPlot(fit)
+plot(fit)
+# Predicting 
+letspredict<- predict(fit, test)
+finalresult<- data.frame(ActualHousePrice= test$medv, PredictedHousePrice=letspredict)
+# view the result
+View(finalresult)
+head(finalresult, 5)
