@@ -5,10 +5,6 @@ date: "February 6, 2018"
 output: pdf_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ## Data Splitting
 
 There are several approaches to splitiing a dataset into train and test for a predictive modelling task. I present a few different approaches below;
