@@ -3,6 +3,7 @@
 
 # Classifcation
 require(caTools)
+library(randomForest)
 data(mtcars)
 set.seed(2018) 
 # Split the data into train and test
@@ -20,8 +21,7 @@ varImpPlot(fit)
 letspredict<- predict(fit, test)
 finalresult<- data.frame(ActualGear= test$gear, PredictedGear=letspredict)
 View(finalresult)
-finalresult
-
+head(finalresult, 5)
 
 # Regression 
 require(MASS)
