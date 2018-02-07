@@ -78,6 +78,9 @@ titanic.test <- titanic.data[-train_ind, ]
 
 # Model Building- Decision Tree
 # Create a new model `my_tree`
+# install.packages("rpart", dependencies=TRUE)
+library(rpart) # for rpart()
+library(rpart.plot) # for function prp()
 my_tree <- rpart(Survived ~ Pclass+Sex+Age+SibSp+Parch , 
                  data = titanic.train, method = "class")
 summary(my_tree)
