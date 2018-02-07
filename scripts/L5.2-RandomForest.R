@@ -1,6 +1,8 @@
 # Random Forest example
 # In this example, I show both categorical and continuous classification using Random Forest
 
+# clear the workspace
+rm(list = ls())
 # Classifcation
 require(caTools)
 library(randomForest)
