@@ -1,0 +1,39 @@
+---
+title: "Feature Selection Approach"
+author: "ashish dutt"
+date: "February 9, 2018"
+output: pdf_document
+---
+
+## Feature Selection Approach
+
+Finding the most important predictor variables (of features) that explains major part of variance of the response variable is key to identify and build high performing models.
+
+### Boruta package
+
+```{r}
+# Install the package if your using this library for the first time
+# install.packages("Boruta", dependencies = TRUE)
+# load the package
+library(Boruta)
+# load the BostonHousing dataset
+data("BostonHousing", package = "mlbench")
+str(BostonHousing)
+```
+Decide if a variable is important or not using Boruta
+```{r}
+boruta_output <- Boruta(medv ~ ., data=na.omit(BostonHousing), doTrace=2)  
+```
+```{r}
+boruta_signif <- names(boruta_output$finalDecision[boruta_output$finalDecision %in% c("Confirmed", "Tentative")])  # collect Confirmed and Tentative variables
+print(boruta_signif)  # significant variables
+```
+
+Plot the variable importance
+```{r}
+plot(boruta_output, cex.axis=.7, las=2, xlab="", main="Variable Importance")  # plot variable importance
+
+```
+
+
+
