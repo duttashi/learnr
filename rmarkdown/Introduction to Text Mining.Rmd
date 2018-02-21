@@ -1,0 +1,169 @@
+---
+title: "An introduction to text mining"
+author: "Ashish Dutt"
+date: "February 21, 2018"
+output: pdf_document
+---
+
+## An introduction to text mining
+Let’s use the text of Jane Austen’s 6 completed, published novels from the `janeaustenr` package, and transform them into a tidy format. The `janeaustenr` package provides these texts in a one-row-per-line format, where a line is this context is analogous to a literal printed line in a physical book. Let’s start with that, and also use `mutate()` to annotate a linenumber quantity to keep track of lines in the original format
+
+Let's start by installing and loading the required packages in the R environment.
+```{r}
+# install the following required packages
+# install.packages("janeaustenr", dependencies=TRUE)
+# install.packages("dplyr", dependencies=TRUE)
+# install.packages("stringr", dependencies=TRUE)
+# install.packages("utf8", dependencies=TRUE)
+# install.packages("wordcloud", dependencies=TRUE)
+# install.packages("reshape2", dependencies=TRUE)
+
+# Load the package 
+library(janeaustenr)
+library(dplyr)
+library(stringr)
+library(tidytext)
+library(ggplot2)
+library(utf8)
+library(wordcloud)
+library(reshape2)
+```
+Step 1: We will now look at the jane austen's books.
+```{r}
+original_books <- austen_books() %>%
+  group_by(book) %>%
+  mutate(linenumber = row_number(),
+         chapter = cumsum(str_detect(text, regex("^chapter[\\divxlc]",ignore_case = TRUE)))) %>%
+  ungroup()
+# Show the books
+head(original_books, 5)
+```
+Step 2: To work with this as a tidy dataset, we need to restructure it in the one-token-per-row format, which is done with `the unnest_tokens()` function.
+```{r}
+tidy_books<- original_books %>%
+  unnest_tokens(word, text)
+head(tidy_books, 5)
+
+```
+Now that the data is is in one-word-per-row format, we can manipulate it with tidy tools like `dplyr`. Often in text analysis, we will want to remove stop words; stop words are words that are not useful for an analysis, typically extremely common words such as “the”, “of”, “to”, and so forth in English. We can remove stop words (kept in the tidytext dataset `stop_words`) with an `anti_join()`.
+```{r}
+data("stop_words")
+tidy_books <- tidy_books %>%
+  anti_join(stop_words)
+```
+We can also use dplyr’s `count()` to find the most common words in all the books as a whole.
+```{r}
+tidy_books %>%
+  count(word, sort = TRUE) 
+```
+Let's plot the common occuring words
+```{r}
+tidy_books %>%
+  count(word, sort = TRUE)%>%
+  dplyr::filter(n>600) %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(word, n)) +
+  geom_col() +
+  xlab(NULL) +
+  coord_flip()
+```
+
+### Sentiment analysis with tidy data
+One way to analyze the sentiment of a text is to consider the text as a combination of its individual words and the sentiment content of the whole text as the sum of the sentiment content of the individual words. This isn’t the only way to approach sentiment analysis, but it is an often-used approach, and an approach that naturally takes advantage of the tidy tool ecosystem.
+
+As discussed above, there are a variety of methods and dictionaries that exist for evaluating the opinion or emotion in text. The tidytext package contains several sentiment lexicons in the `sentiments` dataset.
+
+```{r}
+sentiments
+```
+The three general-purpose lexicons are
+
+- `AFINN` from Finn Årup Nielsen,
+- `bing` from Bing Liu and collaborators, and
+- `nrc` from Saif Mohammad and Peter Turney.
+
+All three of these lexicons are based on unigrams, i.e., single words. These lexicons contain many English words and the words are assigned scores for positive/negative sentiment, and also possibly emotions like joy, anger, sadness, and so forth. 
+
+```{r}
+get_sentiments("afinn")
+```
+```{r}
+get_sentiments("bing")
+```
+### Sentiment analysis with inner join
+With data in a tidy format, sentiment analysis can be done as an inner join. This is another of the great successes of viewing text mining as a tidy data analysis task; much as removing stop words is an antijoin operation, performing sentiment analysis is an inner join operation.
+
+Let's look at the joy words in Emma? First, we need to take the text of the novels and convert the text to the tidy format using `unnest_tokens()`, just as we did above. Let’s also set up some other columns to keep track of which line and chapter of the book each word comes from; we use `group_by` and `mutate` to construct those columns.
+
+```{r}
+tidy_books <- austen_books() %>%
+  group_by(book) %>%
+  mutate(linenumber = row_number(),
+         chapter = cumsum(str_detect(text,
+regex("^chapter[\\divxlc]",ignore_case = TRUE)))) %>%
+  ungroup() %>%
+  unnest_tokens(word, text)
+head(tidy_books, 5)
+```
+
+Now that the text is in a tidy format with one word per row, we are ready to do the sentiment analysis. First, let’s use the NRC lexicon and `filter()` for the joy words. Next, let’s `filter()` the data frame with the text from the books for the words from Emma and then use `inner_join()` to perform the sentiment analysis. What are the most common joy words in Emma? Let’s use `count()` from `dplyr`.
+
+```{r}
+nrcjoy <- get_sentiments("nrc") %>% 
+  dplyr::filter(sentiment == "joy")
+
+tidy_books %>%
+  dplyr::filter(book == "Emma") %>%
+  inner_join(nrcjoy) %>%
+  count(word, sort = TRUE)
+
+```
+We see many positive, happy words about hope, friendship, and love here.
+
+### Most common positive and negative words
+```{r}
+bing_word_counts <- tidy_books %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  ungroup()
+
+bing_word_counts
+```
+This can be shown visually, and we can pipe straight into ggplot2, if we like, because of the way we are consistently using tools built for handling tidy data frames.
+
+```{r}
+bing_word_counts %>%
+  group_by(sentiment) %>%
+  top_n(10) %>%
+  ungroup() %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(word, n, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~sentiment, scales = "free_y") +
+  labs(y = "Contribution to sentiment",
+       x = NULL) +
+  coord_flip()
+```
+#### Lets look at wordcloud now
+
+Consider the `wordcloud` package, which uses base R graphics. Let’s look at the most common words in Jane Austen’s works as a whole again, but this time as a wordcloud.
+```{r}
+tidy_books %>%
+  anti_join(stop_words) %>%
+  count(word) %>%
+  with(wordcloud(word, n, max.words = 80))
+```
+Let’s do the sentiment analysis to tag positive and negative words using an inner join, then find the most common positive and negative words. 
+```{r}
+tidy_books %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  acast(word ~ sentiment, value.var = "n", fill = 0) %>%
+  comparison.cloud(colors = c("gray20", "gray80"),
+                   max.words = 100)
+
+```
+
+This should be enough to get you started with text mining in R. If you are interested to read further, I implore you to read the following text;
+
+- Mastering Text Mining with R by Ashish Kumar, Avinash Paul, Packt Publication 2016
