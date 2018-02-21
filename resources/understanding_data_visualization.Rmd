@@ -1,0 +1,61 @@
+---
+title: "understanding data visualization"
+author: "Ashish Dutt"
+date: "February 8, 2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction to data visualization
+With ever increasing volume of data, it is impossible to tell stories without visualizations. Data visualization is an art of how to turn numbers into useful knowledge. Before the technical implementations of the visualization, let’s see first how to select the right chart type.
+
+### Selecting the Right Chart Type
+There are four basic presentation types:
+
+* Comparison
+* Composition
+* Distribution
+* Relationship
+
+To determine which amongst these is best suited for your data, I suggest you should answer a few questions like,
+Below is a great explanation on selecting a right chart type by Dr. Andrew Abela
+
+```{r}
+knitr::include_graphics("C:\\Users\\ashish.dutt\\Downloads\\choosing-a-good-chart.pdf")
+
+```
+
+In your day-to-day activities, you’ll come across the below listed 7 charts most of the time.
+
+1. Scatter Plot
+2. Histogram
+3. Bar & Stack Bar Chart
+4. Box Plot
+5. Area Chart
+6. Heat Map
+7. Correlogram
+
+1. Scatter Plot
+
+**When to use**: Scatter Plot is used to see the relationship between two continuous variables.
+
+In R, a simple scatterplot can be constructed like,
+
+```{r}
+library(ggplot2)
+ggplot(data=mtcars, aes(x=disp, y=mpg))+
+  geom_point()
+```
+A categorical variable can be used in a scatterplot to show the characterstics of the plotted variables. So, the above code can be modified as,
+
+```{r}
+ggplot(data=mtcars, aes(x=disp, y=mpg))+
+  geom_point(aes(color=gear))
+```
+
+2. Histogram
+
+**When to use**: 
