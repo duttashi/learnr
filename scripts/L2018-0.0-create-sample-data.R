@@ -67,17 +67,30 @@ sum(probs)
 # 1. Set seed with value 345124
 # 2. Create a biased sample of length 100, having as input the coin vector, and as probabilities probs vector of probabilities.
 # Populate a variable called biased_coin with the sample results.
-# 
+set.seed(345124)
+biased_coin<- sample(coin, 100, replace = TRUE, prob = probs)
+
 # Exercise 7
 # Compare the sum of values in fair_coin and biased_coin
-# 
+sum(fair_coin) 
+sum(biased_coin)
+
 # Exercise 8
 # 1. Create a ‘Date’ variable called startDate with value 9th of February 2010 and a second ‘Date’ variable called endDate with value 9th of February 2005
-# 2. Create a descending sequence of dates having all 9th’s of the month between those two dates. Populate a variable called seqDates with the sequence of dates.
-# 
+# 2. Create a descending sequence of dates having all 9th’s of the month between those two dates. 
+# Populate a variable called seqDates with the sequence of dates.
+startDate<- as.Date("2010-02-09")
+endDate<- as.Date("2005-02-09")  
+seqDates<- seq.Date(startDate, endDate, by = "-1 month")
+seqDates
+
 # Exercise 9
 # Revert the sequence of dates created in the previous question, so they are in ascending order and place them in a variable called RevSeqDates
-# 
+RevSeqDates<- rev(seqDates)
+RevSeqDates 
+
 # Exercise 10
 # 1. Set seed with value 10
 # 2. Create a sample of 20 unique values from the RevSeqDates vector.
+set.seed(10)
+sample(RevSeqDates,20, replace = FALSE)
