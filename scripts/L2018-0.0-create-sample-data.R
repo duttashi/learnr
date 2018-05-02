@@ -94,3 +94,54 @@ RevSeqDates
 # 2. Create a sample of 20 unique values from the RevSeqDates vector.
 set.seed(10)
 sample(RevSeqDates,20, replace = FALSE)
+
+# Exercise 11
+# R has function for making distributions. What command will list the distributions that R knows how to use?
+# Read the help file on Distributions.
+help("Distributions")
+
+# Now we are going to use the distribution function to generate data.
+# First we are going to make this data reproducible by setting seed
+# Finish this command by choosing a number for the seed.
+# set.seed()
+set.seed(2018)
+
+# Next we will make an object called Lbody about the length of cat’s body.
+# This will be a continuous variable measured in inches. Change the parameters to another unit of measurement
+Lbody <- rnorm(100, mean = 18, sd =3)
+
+# Also we are going to weigh the cats. Change this code to your unit of measurement.
+weightslbs <- rnorm(100, mean = 10,sd =3)
+
+# What does rnorm() do?
+help(rnorm)
+
+# I measured a very large cat to get a mean of 18 inches. Change the code get lengths of cats in centimeters based on what you think the mean and standard deviation should be.
+# Also change the code to what you think the mean age of cats is.
+Age_of_cat <- rnorm(100, mean =12, sd =3)
+
+# Now go back and change the distribution of the cats age to any distribution you would like.
+Age_of_cat <- rpois(100, lambda = 3)
+Age_of_cat <- rexp(100,1)
+
+# Write code to generate a sample of 100 cats with or without claws
+hasClaws<- sample(c(TRUE, FALSE), size = 100 , replace = TRUE)
+# Write code to generate a sample of 100 cats with or without a tail
+hasTail<- sample(c(TRUE, FALSE), size=100, replace = TRUE)
+# Write code using function sample.int to generate 100 cats that have five different colors of coats
+furColor<- sample.int(5, size = 100, replace = TRUE)
+names(furColor)<- c("white","orange", "black","brown", "multi", "black and white")
+
+# Write code to generate bells for the cats
+b<- seq(2,10, by=2)
+bells<- rep.int(b, times = 20)
+
+# The cats like toys. Write code to generate toys for cats
+cattoys <- sample.int(5, size = 100, replace = TRUE)
+names(cattoys) <- c("mice","wheels","feathers","ball","bones", "block")
+
+# Write code for two more variables, an id variable and a grouping variable of small, medium and large.
+catid <- 1:100
+catsize <- sample(c("small", "meduim", "large"),size = 100, replace = TRUE)
+# Put all variables created for Exercise 11 in a adata frame
+CatData <- data.frame(catid,Lbody,catsize,Age_of_cat,weightslbs, cattoys,hasClaws,hasTail,furColor,bells)
