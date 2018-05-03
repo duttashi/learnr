@@ -145,3 +145,6 @@ catid <- 1:100
 catsize <- sample(c("small", "meduim", "large"),size = 100, replace = TRUE)
 # Put all variables created for Exercise 11 in a adata frame
 CatData <- data.frame(catid,Lbody,catsize,Age_of_cat,weightslbs, cattoys,hasClaws,hasTail,furColor,bells)
+
+
+
