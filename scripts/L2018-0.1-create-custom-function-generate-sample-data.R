@@ -6,22 +6,18 @@
 
 # clean the workspace
 rm(list=ls())
-makeData<- function(ncols, nrows, samplesize, varnames)
+makeData<- function(nrows,ncols, varnames)
 {
-  
   if(ncols<2) stop("column number must be greater than 1")
   else{
-    set.seed(2018)
-    DF<-data.frame(sample(c(nrows:ncols, samplesize, replace=TRUE)))
-  } # end else
-  
-  # assign column names
-  #if (!is.null(varnames)) 
-  colnames(DF) <- varnames
-  print(colnames(DF))
+    DF<- data.frame(matrix(nrows,ncols))
+    #DF<- data.frame(matrix(nrows,ncols,dimnames=list(varnames)))
+    colnames(DF)<-varnames
+    #DF[nrows, ncols]<- sample(c(nrows:ncols))
+    #print(colnames(DF))
+  } 
   return(DF)
-} # end function
+} 
 
-makeData(2,2,2)
-makeData(2, 4, 10)
-makeData(3,4,10,c("a"))
+makeData(10,2,c("a","b"))
+makeData(2,3,c("a"))
