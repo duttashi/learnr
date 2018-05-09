@@ -14,13 +14,11 @@ Ask your question on [Stack Overflow](http://stackoverflow.com/questions/tagged/
 or the [R-SIG-Finance](https://stat.ethz.ch/mailman/listinfo/r-sig-finance)
 mailing list (you must subscribe to post).
 
-### Contributing
-
 ## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
 
 Please see the [contributing guide](CONTRIBUTING.md).
 
-### Author
+## Author
 [Ashish Dutt](https://duttashi.github.io/about/)
 
 
