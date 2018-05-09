@@ -16,6 +16,8 @@ mailing list (you must subscribe to post).
 
 ### Contributing
 
+## Contributing [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
+
 Please see the [contributing guide](CONTRIBUTING.md).
 
 ### Author
