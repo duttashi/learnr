@@ -1,7 +1,7 @@
 # Readme
 [![Project Status: Active – The project is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![Last-changedate](https://img.shields.io/badge/last%20change-2017--05--15-green.svg)](/commits/master) [![Donate](http://i.imgur.com/vCIGFrH.png)](https://paypal.me/ashishdutt/25) [![DOI](https://zenodo.org/badge/62351661.svg)](https://zenodo.org/badge/latestdoi/62351661)
 
-*Copyright 2017 [Ashish Dutt](https://duttashi.github.io/). Licensed under the MIT license.*
+*Copyright 2017-2027 [Ashish Dutt](https://duttashi.github.io/). Licensed under the MIT license.*
 
 The one common issue which novice entrants in data science have always asked me is, "How to begin their data analysis journey?".
 My answer has always been the same, "Tell a data powered story!". But, one will be in a position to tell a "story" only if he/she knows the *nuts and bolts* of the story. If you are a *novice* in statistics or applied mathematics, I recommend to check out the `resources` folder, first.
