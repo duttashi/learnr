@@ -1,5 +1,5 @@
 # Readme
-[![Project Status: Active – The project is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![Last-changedate](https://img.shields.io/badge/last%20change-2017--05--15-green.svg)](/commits/master) [![Donate](http://i.imgur.com/vCIGFrH.png)](https://paypal.me/ashishdutt/25) [![DOI](https://zenodo.org/badge/62351661.svg)](https://zenodo.org/badge/latestdoi/62351661)
+[![Project Status: Active – The project is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![Last-changedate](https://img.shields.io/badge/last%20change-2017--05--15-green.svg)](/commits/master) [![Donate](http://i.imgur.com/vCIGFrH.png)](https://paypal.me/ashishdutt/25) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1322326.svg)](https://doi.org/10.5281/zenodo.1322326)
 
 *Copyright 2017-2027 [Ashish Dutt](https://duttashi.github.io/). Licensed under the MIT license.*
 
