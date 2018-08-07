@@ -1,0 +1,19 @@
+emotion :+1: :-1: :clap: :heart: :sparkles: :v: :zzz:
+
+icon :new: :ok: :cool: :vs: :tm: :warning: :wheelchair: :zap: :art: :bomb: :bulb: :key: :lock: :memo: :mag: 
+
+item :book: :gift: :moneybag: :mega: :scissors: :hammer:
+
+device :computer: :iphone: :calling: :email: 
+
+human :cop: :runner: :feet: :fist: :punch: :lipstick: :tophat:
+
+food :beer: :cake: :smoking:
+
+vehicle :airplane: :bike: :bus: :ski: :taxi: :train:
+
+animal :bear: :fish: :octocat:
+
+nature :fire: :leaves: :star: :sunny:
+
+aliases :+1:=:thumbsup: :-1:=:thumbsdown: :memo:=:pencil:
