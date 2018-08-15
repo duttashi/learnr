@@ -10,4 +10,4 @@ workspace.RData
 *.log
 *.test
 *.RData
-*-SO-*.tiff
+Rplot-SO-*.tiff
