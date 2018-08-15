@@ -10,4 +10,5 @@ workspace.RData
 *.log
 *.test
 *.RData
-Rplot-SO-*.tiff
+Rplot-SO-1.tiff
+Rplot-SO-2.tiff
