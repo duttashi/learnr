@@ -1,5 +1,6 @@
 # Data analysis for Good Health Survey Business Unit (SBU)
-
+# Script author: Ashish Dutt
+# Email: ashishdutt@yahoo.com.my
 
 # clean the workspace
 rm(list = ls())
@@ -13,11 +14,19 @@ library(FactoMineR) # for PCA() and MCA()
 library(gridExtra) # for grid.arrange()
 library(ggpubr) # for annotate_figure()
 library(grid) # for grid.rect()
+library(reshape2) # for melt()
+library(ggplot2)
 
 # load the data
 # change the blanks to NA
 surveydata<-read.csv("data/SBU_example_Surveydata_2014.csv", sep = ",",stringsAsFactors = TRUE,
                      na.strings=c("","NA"))
+# data structure
+dplyr::glimpse(surveydata)
+str(surveydata)
+head(surveydata)
+tail(surveydata)
+
 # Separate continuous and categorical variables
 df.data<- surveydata
 df.cat<- df.data[,sapply(df.data, is.factor)]
@@ -119,6 +128,16 @@ df.cat$TYPCNTRL2<- mapvalues(df.cat$TYPCNTRL2, from = levels(df.cat$TYPCNTRL2), 
 df.cat$NOBCUSE2<- mapvalues(df.cat$NOBCUSE2, from = levels(df.cat$NOBCUSE2), to=c(1:16))
 df.cat$PRNTLVIT<- mapvalues(df.cat$PRNTLVIT, from = levels(df.cat$PRNTLVIT), to=c(1:6))
 
+# check for correlation among continuous variables
+# There is no evidence of high correlation among the continuos variables
+melt_corr<- melt(cor(df.cont))
+ggplot(data = melt_corr, aes(x=Var1, y=Var2))+
+  geom_tile()+
+  scale_fill_gradient(low = "grey", high = "darkred")+
+  labs(title="Correlation Matrix", x="Numeric variable's", 
+       y="Numeric variable's", fill="Coefficient Range")+
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5))
+
 # Check for near zero variance again in both df.cat and df.cont data frames
 badCols<- nearZeroVar(df.cat)
 dim(df.cat[,badCols]) # there are 22 variables with near zero variance property 
@@ -127,7 +146,7 @@ colnames(df.cat[,badCols])
 df.cat<- df.cat[,-badCols]
 dim(df.cat) # [1] 6865   82
 badCols<- nearZeroVar(df.cont)
-dim(df.cont[,badCols]) # there are No variables with near zero variance property in continuous vars
+dim(df.cont[,badCols]) # 3 variables with near zero variance property in continuous vars
 df.cont<- df.cont[,-badCols]
 dim(df.cont) # [1] 6865   13
 
@@ -150,6 +169,7 @@ sum(is.na(df.cont.cmplt))
 # JOIN THE DATAFRAMES with no missing values
 dim(df.cat.cmplt) # [1] 6865   82
 dim(df.cont.cmplt) # [1] 6865   13
+
 ## since both dataframes have equal number of rows, we can bind the columns together 
 df.master<- cbind(df.cat.cmplt, df.cont.cmplt) # note: categorical vars are from 1:82 and continuous are from 83:92
 dim(df.master) # [1] 6865   95
