@@ -4,9 +4,6 @@
 .Ruserdata
 *.R.RData
 workspace.RData
-*.data
-*.csv
-*.txt
 *.log
 *.test
 *.RData
