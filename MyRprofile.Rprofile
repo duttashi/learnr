@@ -3,10 +3,11 @@
 ## Actual name of this file is, `Rprofile.site`.
 ## To edit this file, browse to the file location and open the file with `Notepad++` in administrative mode. Copy paste this file into your `Rprofile.site` file.
 ## last updated on: 22/Sep/2018 10:54am MYT
+## Revised again on: 25/March/2019 2:51pm MYT
 
 ## set up local cran mirror native to your current geographic location
 local({r <- getOption("repos")
-      r["CRAN"] <- "https://wbc.upm.edu.my/cran/"
+      r["CRAN"] <- "https://cran.cnr.berkeley.edu/"
       options(repos=r)}
 	  )
 ## set up the way R prompt should look
@@ -16,7 +17,7 @@ options("pdfviewer"="foxit")
 
 ## set up function to load libraries or display friendly message on startup
 .First <- function(){
- library(ggplot2)
+ suppressWarnings(suppressMessages(suppressPackageStartupMessages(library(ggplot2))))
  cat("\nWelcome Ashish at", date(), "\n")
  ## show message on which libraries have been loaded on startup. 
  cat("\nAshish, I've loaded the ggplot2 library for you.","\n")
