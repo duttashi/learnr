@@ -31,6 +31,14 @@ df.test$role<- mapvalues(df.test$role, from = levels(df.test$role), to=c(1:10))
 df.test$salary<- mapvalues(df.test$salary, from = levels(df.test$salary), to=c(1:3))
 
 df.train$left<- as.factor(df.train$left)
+
+### Save the id column in a separate variable
+test.id<- df.test$id
+
+### Drop the id columns
+df.train$id<- NULL
+df.test$id<- NULL
+
 ### Data splitting for initial model building
 set.seed(2019)
 smp_size <- floor(0.75 * nrow(df.train))
@@ -59,20 +67,25 @@ summary(results)
 dotplot(results) # best models are knn and cart
 
 # Make Predictions using the best model 
-predictions.1 <- predict(fit.cart, test) # #accuracy of 97%
+predictions.1 <- predict(fit.cart, test) # #accuracy of 95.5%
 confusionMatrix(predictions.1, test$left)  
 
-predictions.2 <- predict(fit.knn, test) #accuracy of 99.99%
+predictions.2 <- predict(fit.svm, test) #accuracy of 95.5%
 confusionMatrix(predictions.2, test$left)  
 
-final_model<- fit.knn
+final_model<- fit.cart
+
+# Add the id column from the df.test dataframe that was saved earlier to the df.test dataframe
+df.test$id<- test.id
+
 ## Modeling on the supplied test data
-model.final<- train(left~., data= df.train, method="knn", metric=metric, trControl=control)
+model.final<- train(left~., data= df.train, method="rpart", metric=metric, trControl=control)
 preds<- predict(model.final, newdata =  df.test, type = "raw")
 
 # write the predicted values to file
 pred_vals<- data.frame(cbind(df.test$id, pred=preds))
-write.csv(pred_vals, file="data/accendo_hr_attrition_predictions.csv", row.names=FALSE)
+write.csv(pred_vals, file="data/hr_attrition_predictions.csv", row.names=FALSE)
+
 
 ## Final Summary
 # Summary: With all of this information, this is what the management should know about his company and why his employees probably left:
