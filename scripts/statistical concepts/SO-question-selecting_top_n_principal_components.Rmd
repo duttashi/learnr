@@ -1,0 +1,61 @@
+---
+title: "select_top_n_principal_components"
+author: "ashish dutt"
+date: "July 3, 2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question
+
+Q. How to select the top-n principal components?
+
+reference: see this SO post- 
+
+https://stackoverflow.com/questions/56844447/any-way-to-select-top-n-pca-components-from-accumulative-pca-plot-in-r
+
+## Answer
+
+To use PCA for dimensionality reduction, in brief:
+
+1. Omit your output variable (that's cheating) and create contrast variables with model.matrix if necessary. (Don't directly one-hot encode factors with lots of levels like zip code, or the size of your data will explode. Think smarter.) Remove any zero-variance variables. Deal with NAs.
+
+2. Scale. A variable with a large scale (like salary) can make everything else look low-variance by comparison.
+
+3. Run `PCA` with `princomp` or `prcomp`
+
+```{r mtcars}
+pca <- princomp(scale(cbind(mtcars[-1])))
+```
+
+4. To get the percentage of variance explained, pull the `stdev` vector out of the PCA object, square it to get variance, and scale by the sum so it sums to 1.
+
+```{r}
+pct_var_explained <- pca$sdev^2 / sum(pca$sdev^2)
+pct_var_explained
+
+```
+
+5. Look at the cumulative sum of variance explained to see how many principal components you want to retain. For example, components 9 and 10 explain less that 0.25% of variance here. You can also use `summary` to do these calculations for you.
+```{r}
+cumsum(pct_var_explained)
+```
+```{r}
+summary(pca)
+```
+6. Subset to the principal components you want to keep and cbind your output variable back on.
+```{r}
+train <- data.frame(
+    mpg = mtcars$mpg, 
+    predict(pca)[, cumsum(pct_var_explained) < 0.95]
+)
+```
+7. Train your model.
+```{r}
+model <- lm(mpg ~ ., train)
+summary(model)
+```
+Thats all.
