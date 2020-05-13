@@ -45,7 +45,7 @@ aggr_plot <- aggr(titanic.data, col=c('navyblue','red'), numbers=TRUE, sortVars=
 
 # impute missing data using the mice package
 # install the package mice, if not already installed
-install.packages("mice", dependencies = TRUE)
+# install.packages("mice", dependencies = TRUE)
 # load the package in the environment
 library(mice)
 # imputation for continuous data using predictive mean matching (pmm)
